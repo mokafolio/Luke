@@ -111,6 +111,13 @@ namespace luke
             }
         }
 
+        static void mouseScrollCallback(GLFWwindow * _window, double _xoffset, double _yoffset)
+        {
+            WindowImpl * window = reinterpret_cast<WindowImpl *>(glfwGetWindowUserPointer(_window));
+            STICK_ASSERT(window);
+            window->m_window->publish(MouseScrollEvent(window->m_mouseState, _xoffset, _yoffset), true);
+        }
+
         Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
         {
             if (m_glfwWindow)
@@ -142,6 +149,7 @@ namespace luke
             glfwSetWindowUserPointer(m_glfwWindow, this);
             glfwSetMouseButtonCallback(m_glfwWindow, &mouseButtonCallback);
             glfwSetCursorPosCallback(m_glfwWindow, &mouseMoveCallback);
+            glfwSetScrollCallback(m_glfwWindow, &mouseScrollCallback);
             glfwDefaultWindowHints();
 
             return Error();

@@ -17,6 +17,11 @@ int main(int _argc, const char * _args[])
     Window window;
     auto err = window.open();
 
+    window.addEventCallback([](const MouseScrollEvent & _event)
+    {
+        printf("MOUSE SCROLL BROOO %f %f\n", _event.scrollX(), _event.scrollY());
+    });
+
     window.addEventCallback([](const MouseDownEvent & _event)
     {
         printf("MOUSE DOWN BROOO\n");
