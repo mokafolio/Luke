@@ -1,6 +1,7 @@
 #include <Luke/Display.hpp>
 #include <Luke/Window.hpp>
 #include <Luke/MouseEvents.hpp>
+#include <Luke/WindowEvents.hpp>
 #include <GLAnnotate/GLAnnotate.hpp>
 
 using namespace luke;
@@ -86,6 +87,27 @@ int main(int _argc, const char * _args[])
 
     printf("W %f H %f\n", window.width(), window.height());
     printf("W2 %f H2 %f\n", window.widthInPixels(), window.heightInPixels());
+
+    window.addEventCallback([](const WindowResizeEvent & _event)
+    {
+        printf("WINDOW RESIZED %f %f\n", _event.width(), _event.height());
+    });
+
+    window.addEventCallback([](const WindowMoveEvent & _event)
+    {
+        printf("WINDOW MOVED %f %f\n", _event.x(), _event.y());
+    });
+
+    window.addEventCallback([](const WindowFocusEvent & _event)
+    {
+        printf("WINDOW FOCUSED\n");
+    });
+
+    window.addEventCallback([](const WindowLostFocusEvent & _event)
+    {
+        printf("WINDOW LOOOOOOST FOCUSED\n");
+    });
+
     while (!window.shouldClose())
     {
         window.enableRenderContext();

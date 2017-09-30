@@ -12,10 +12,10 @@ namespace luke
 
         WindowMoveEvent(stick::Float32 _x, stick::Float32 _y);
 
-        WindowMoveEvent(const WindowMoveEvent &) = default;
-        WindowMoveEvent(WindowMoveEvent &&) = default;
-        WindowMoveEvent & operator = (const WindowMoveEvent &) = default;
-        WindowMoveEvent & operator = (WindowMoveEvent &&) = default;
+        // WindowMoveEvent(const WindowMoveEvent &) = default;
+        // WindowMoveEvent(WindowMoveEvent &&) = default;
+        // WindowMoveEvent & operator = (const WindowMoveEvent &) = default;
+        // WindowMoveEvent & operator = (WindowMoveEvent &&) = default;
 
         stick::Float32 x() const;
 
@@ -34,10 +34,10 @@ namespace luke
 
         WindowResizeEvent(stick::Float32 _width, stick::Float32 _height);
 
-        WindowResizeEvent(const WindowResizeEvent &) = default;
-        WindowResizeEvent(WindowResizeEvent &&) = default;
-        WindowResizeEvent & operator = (const WindowResizeEvent &) = default;
-        WindowResizeEvent & operator = (WindowResizeEvent &&) = default;
+        // WindowResizeEvent(const WindowResizeEvent &) = default;
+        // WindowResizeEvent(WindowResizeEvent &&) = default;
+        // WindowResizeEvent & operator = (const WindowResizeEvent &) = default;
+        // WindowResizeEvent & operator = (WindowResizeEvent &&) = default;
 
         stick::Float32 width() const;
 
@@ -55,10 +55,10 @@ namespace luke
     public:
 
         WindowFocusEvent();
-        WindowFocusEvent(const WindowFocusEvent &) = default;
-        WindowFocusEvent(WindowFocusEvent &&) = default;
-        WindowFocusEvent & operator = (const WindowFocusEvent &) = default;
-        WindowFocusEvent & operator = (WindowFocusEvent &&) = default;
+        // WindowFocusEvent(const WindowFocusEvent &) = default;
+        // WindowFocusEvent(WindowFocusEvent &&) = default;
+        // WindowFocusEvent & operator = (const WindowFocusEvent &) = default;
+        // WindowFocusEvent & operator = (WindowFocusEvent &&) = default;
     };
 
     class STICK_API WindowLostFocusEvent :
@@ -67,10 +67,10 @@ namespace luke
     public:
 
         WindowLostFocusEvent();
-        WindowLostFocusEvent(const WindowLostFocusEvent &) = default;
-        WindowLostFocusEvent(WindowLostFocusEvent &&) = default;
-        WindowLostFocusEvent & operator = (const WindowLostFocusEvent &) = default;
-        WindowLostFocusEvent & operator = (WindowLostFocusEvent &&) = default;
+        // WindowLostFocusEvent(const WindowLostFocusEvent &) = default;
+        // WindowLostFocusEvent(WindowLostFocusEvent &&) = default;
+        // WindowLostFocusEvent & operator = (const WindowLostFocusEvent &) = default;
+        // WindowLostFocusEvent & operator = (WindowLostFocusEvent &&) = default;
     };
 }
 

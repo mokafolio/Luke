@@ -1,5 +1,6 @@
 #include <Luke/GLFW/GLFWWindowImpl.hpp>
 #include <Luke/GLFW/GLFWInitializer.hpp>
+#include <Luke/WindowEvents.hpp>
 
 namespace luke
 {
@@ -118,6 +119,37 @@ namespace luke
             window->m_window->publish(MouseScrollEvent(window->m_mouseState, _xoffset, _yoffset), true);
         }
 
+        static void windowSizeCallback(GLFWwindow * _window, int _width, int _height)
+        {
+            WindowImpl * window = reinterpret_cast<WindowImpl *>(glfwGetWindowUserPointer(_window));
+            STICK_ASSERT(window);
+            window->m_window->publish(WindowResizeEvent(_width, _height), true);
+        }
+
+        static void windowPositionCallback(GLFWwindow * _window, int _x, int _y)
+        {
+            WindowImpl * window = reinterpret_cast<WindowImpl *>(glfwGetWindowUserPointer(_window));
+            STICK_ASSERT(window);
+            window->m_window->publish(WindowMoveEvent(_x, _y), true);
+        }
+
+        static void windowFocusCallback(GLFWwindow * _window, int _focused)
+        {
+            WindowImpl * window = reinterpret_cast<WindowImpl *>(glfwGetWindowUserPointer(_window));
+            STICK_ASSERT(window);
+            if (_focused)
+            {
+                // The window gained input focus
+                window->m_window->publish(WindowFocusEvent(), true);
+            }
+            else
+            {
+                // The window lost input focus
+                window->m_window->publish(WindowLostFocusEvent(), true);
+            }
+        }
+
+
         Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
         {
             if (m_glfwWindow)
@@ -150,6 +182,9 @@ namespace luke
             glfwSetMouseButtonCallback(m_glfwWindow, &mouseButtonCallback);
             glfwSetCursorPosCallback(m_glfwWindow, &mouseMoveCallback);
             glfwSetScrollCallback(m_glfwWindow, &mouseScrollCallback);
+            glfwSetWindowSizeCallback(m_glfwWindow, &windowSizeCallback);
+            glfwSetWindowPosCallback(m_glfwWindow, &windowPositionCallback);
+            glfwSetWindowFocusCallback(m_glfwWindow, &windowFocusCallback);
             glfwDefaultWindowHints();
 
             return Error();

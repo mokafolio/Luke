@@ -38,10 +38,10 @@ namespace luke
 
         MouseScrollEvent(const MouseState & _state, stick::Float32 _scrollX, stick::Float32 _scrollY);
 
-        MouseScrollEvent(const MouseScrollEvent &) = default;
-        MouseScrollEvent(MouseScrollEvent &&) = default;
-        MouseScrollEvent & operator = (const MouseScrollEvent &) = default;
-        MouseScrollEvent & operator = (MouseScrollEvent &&) = default;
+        // MouseScrollEvent(const MouseScrollEvent &) = default;
+        // MouseScrollEvent(MouseScrollEvent &&) = default;
+        // MouseScrollEvent & operator = (const MouseScrollEvent &) = default;
+        // MouseScrollEvent & operator = (MouseScrollEvent &&) = default;
 
         stick::Float32 scrollX() const;
 
@@ -61,10 +61,10 @@ namespace luke
 
         MouseMoveEvent(const MouseState & _state);
 
-        MouseMoveEvent(const MouseMoveEvent &) = default;
-        MouseMoveEvent(MouseMoveEvent &&) = default;
-        MouseMoveEvent & operator = (const MouseMoveEvent &) = default;
-        MouseMoveEvent & operator = (MouseMoveEvent &&) = default;
+        // MouseMoveEvent(const MouseMoveEvent &) = default;
+        // MouseMoveEvent(MouseMoveEvent &&) = default;
+        // MouseMoveEvent & operator = (const MouseMoveEvent &) = default;
+        // MouseMoveEvent & operator = (MouseMoveEvent &&) = default;
     };
 
     class STICK_API MouseDragEvent :
