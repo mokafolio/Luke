@@ -34,6 +34,13 @@ namespace luke
 
     }
 
+    bool DisplayMode::isValid() const
+    {
+        return m_width > 0 && m_height > 0 &&
+               (m_refreshRate == RefreshRate::DontCare || m_refreshRate > 0) &&
+               m_redBits > 0 && m_greenBits > 0 && m_blueBits > 0;
+    }
+
     bool DisplayMode::operator == (const DisplayMode & _other) const
     {
         return m_refreshRate == _other.m_refreshRate &&

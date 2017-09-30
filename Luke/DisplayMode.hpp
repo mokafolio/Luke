@@ -6,6 +6,14 @@
 
 namespace luke
 {
+    struct STICK_API RefreshRate
+    {
+        enum
+        {
+            DontCare = -1
+        };
+    };
+
     class STICK_API DisplayMode
     {
     public:
@@ -18,6 +26,8 @@ namespace luke
 
         ~DisplayMode();
 
+
+        bool isValid() const;
 
         bool operator == (const DisplayMode & _other) const;
 

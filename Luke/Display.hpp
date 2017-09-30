@@ -13,6 +13,7 @@ namespace luke
 
     namespace detail
     {
+        class WindowImpl;
         class DisplayImpl;
         using DisplayImplUniquePtr = stick::UniquePtr<DisplayImpl>;
     }
@@ -20,6 +21,7 @@ namespace luke
     class STICK_API Display
     {
         friend class detail::DisplayImpl;
+        friend class detail::WindowImpl;
 
     public:
 
@@ -35,7 +37,9 @@ namespace luke
 
         DisplayMode currentDisplayMode() const;
 
-        DisplayMode findBestDisplayMode(stick::Float32 _width, stick::Float32 _height, stick::UInt32 _colorDepth = 32, stick::Float32 _backingScale = 1.0f) const;
+        DisplayMode findBestDisplayMode(stick::Float32 _width, stick::Float32 _height,
+                                        stick::UInt32 _redBits = 8, stick::UInt32 _greenBits = 8, stick::UInt32 _blueBits = 8,
+                                        stick::UInt32 _refreshRate = RefreshRate::DontCare) const;
 
         DisplayModeArray displayModes() const;
 

@@ -11,6 +11,11 @@ int main(int _argc, const char * _args[])
     Display disp = Display::mainDisplay();
     auto current = disp.currentDisplayMode();
     auto modes = disp.displayModes();
+    for(auto & mode : modes)
+    {
+        printf("DISPLAY MODE W %f H %f RR %i R %i G %i B %i\n", mode.width(), mode.height(), mode.refreshRate(), mode.redBits(), mode.greenBits(), mode.blueBits());
+    }
+
     auto displays = Display::displays();
     disp.setDisplayMode(modes.last());
     printf("DISPLAY COUNT %lu\n", displays.count());
@@ -18,17 +23,20 @@ int main(int _argc, const char * _args[])
     Window window;
     auto err = window.open();
 
+    window.setVerticalSync(true);
     window.addEventCallback([](const MouseScrollEvent & _event)
     {
         printf("MOUSE SCROLL BROOO %f %f\n", _event.scrollX(), _event.scrollY());
     });
 
-    window.addEventCallback([](const MouseDownEvent & _event)
+    window.addEventCallback([&](const MouseDownEvent & _event)
     {
         printf("MOUSE DOWN BROOO\n");
         if (_event.button() == MouseButton::Left)
         {
             printf("LEFT BUTTON\n");
+            // window.enterFullscreen(800, 600);
+            window.enterFullscreen();
         }
         if (_event.button() == MouseButton::Middle)
         {

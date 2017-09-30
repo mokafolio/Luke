@@ -7,8 +7,8 @@ namespace luke
     WindowSettings::WindowSettings() :
         m_bIsResizeableByDragging(false),
         m_bFullscreen(false),
-        m_initialWidth(800),
-        m_initialHeight(600),
+        m_initialWidth(1280),
+        m_initialHeight(720),
         m_initialX(0),
         m_initialY(0),
         m_display(Display::mainDisplay()),

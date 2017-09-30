@@ -55,6 +55,11 @@ namespace luke
         m_pimpl->resize(_width, _height);
     }
 
+    void Window::maximize()
+    {
+        m_pimpl->maximize();
+    }
+
     void Window::focus()
     {
         m_pimpl->focus();
@@ -73,6 +78,43 @@ namespace luke
     void Window::setVerticalSync(bool _b)
     {
         m_pimpl->setVerticalSync(_b);
+    }
+
+    void Window::enterFullscreen(const Display & _display)
+    {
+        m_pimpl->enterFullscreen(_display);
+    }
+
+    void Window::enterFullscreen(const DisplayMode & _mode, const Display & _display)
+    {
+        m_pimpl->enterFullscreen(_mode, _display);
+    }
+
+    void Window::enterFullscreen(Float32 _width, Float32 _height, const Display & _display)
+    {
+        DisplayMode mode;
+        if (_display.isValid())
+        {
+            DisplayMode current = _display.currentDisplayMode();
+            mode = _display.findBestDisplayMode(_width, _height,
+                                                current.redBits(), current.greenBits(), current.blueBits(), current.refreshRate());
+        }
+        else
+        {
+            DisplayMode current = display().currentDisplayMode();
+            mode = display().findBestDisplayMode(_width, _height,
+                                                 current.redBits(), current.greenBits(), current.blueBits(), current.refreshRate());
+        }
+        if (mode.isValid())
+        {
+            printf("MODE W %f H %f\n", mode.width(), mode.height());
+            enterFullscreen(mode, _display);
+        }
+        else
+        {
+            //@TODO: Return error;
+            printf("NO CAN DO\n");
+        }
     }
 
     void Window::hideCursor()
@@ -163,5 +205,10 @@ namespace luke
     Float32 Window::y() const
     {
         return m_pimpl->y();
+    }
+
+    Display Window::display() const
+    {
+        return m_pimpl->display();
     }
 }

@@ -38,7 +38,6 @@ namespace luke
         {
             STICK_ASSERT(isValid());
             const GLFWvidmode * mode = glfwGetVideoMode(m_glfwMonitor);
-            printf("CURREEEENT: W %i H %i\n", mode->width, mode->height);
             return DisplayMode(mode->width, mode->height, mode->redBits, mode->greenBits, mode->blueBits, mode->refreshRate);
         }
 
@@ -55,7 +54,6 @@ namespace luke
             const GLFWvidmode * modes = glfwGetVideoModes(m_glfwMonitor, &count);
             for (Size i = 0; i < count; ++i)
             {
-                printf("W %i H %i\n", modes[i].width, modes[i].height);
                 ret.append(DisplayMode(modes[i].width, modes[i].height, modes[i].redBits, modes[i].greenBits, modes[i].blueBits, modes[i].refreshRate));
             }
             return ret;

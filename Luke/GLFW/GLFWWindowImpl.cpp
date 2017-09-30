@@ -1,4 +1,5 @@
 #include <Luke/GLFW/GLFWWindowImpl.hpp>
+#include <Luke/GLFW/GLFWDisplayImpl.hpp>
 #include <Luke/GLFW/GLFWInitializer.hpp>
 #include <Luke/WindowEvents.hpp>
 
@@ -123,6 +124,7 @@ namespace luke
         {
             WindowImpl * window = reinterpret_cast<WindowImpl *>(glfwGetWindowUserPointer(_window));
             STICK_ASSERT(window);
+            printf("GLFW RESIZE\n");
             window->m_window->publish(WindowResizeEvent(_width, _height), true);
         }
 
@@ -149,6 +151,21 @@ namespace luke
             }
         }
 
+        static void windowIconifyCallback(GLFWwindow * _window, int _iconified)
+        {
+            WindowImpl * window = reinterpret_cast<WindowImpl *>(glfwGetWindowUserPointer(_window));
+            STICK_ASSERT(window);
+            if (_iconified)
+            {
+                // The window was iconified
+                printf("ICONIFIED\n");
+            }
+            else
+            {
+                // The window was restored
+                printf("RESTORED\n");
+            }
+        }
 
         Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
         {
@@ -185,6 +202,7 @@ namespace luke
             glfwSetWindowSizeCallback(m_glfwWindow, &windowSizeCallback);
             glfwSetWindowPosCallback(m_glfwWindow, &windowPositionCallback);
             glfwSetWindowFocusCallback(m_glfwWindow, &windowFocusCallback);
+            glfwSetWindowIconifyCallback(m_glfwWindow, &windowIconifyCallback);
             glfwDefaultWindowHints();
 
             return Error();
@@ -231,6 +249,12 @@ namespace luke
             glfwSetWindowSize(m_glfwWindow, _width, _height);
         }
 
+        void WindowImpl::maximize()
+        {
+            STICK_ASSERT(m_glfwWindow);
+            glfwMaximizeWindow(m_glfwWindow);
+        }
+
         void WindowImpl::focus()
         {
             STICK_ASSERT(m_glfwWindow);
@@ -258,6 +282,79 @@ namespace luke
         {
             enableRenderContext();
             glfwSwapInterval(_b ? 1 : 0);
+        }
+
+        //GLFW does not keep track about which monitor a window is on.
+        //This routine gets the monitor based on the window position,
+        //based on this: https://stackoverflow.com/questions/21421074/how-to-create-a-full-screen-window-on-the-current-monitor-with-glfw
+        static GLFWmonitor * currentMonitor(GLFWwindow * _window)
+        {
+            int nmonitors, i;
+            int wx, wy, ww, wh;
+            int mx, my, mw, mh;
+            int overlap, bestoverlap;
+            GLFWmonitor * bestmonitor;
+            GLFWmonitor ** monitors;
+            const GLFWvidmode * mode;
+
+            bestoverlap = 0;
+            bestmonitor = NULL;
+
+            glfwGetWindowPos(_window, &wx, &wy);
+            glfwGetWindowSize(_window, &ww, &wh);
+            monitors = glfwGetMonitors(&nmonitors);
+
+            for (i = 0; i < nmonitors; ++i)
+            {
+                mode = glfwGetVideoMode(monitors[i]);
+                glfwGetMonitorPos(monitors[i], &mx, &my);
+                mw = mode->width;
+                mh = mode->height;
+
+                overlap =  std::max(0, std::min(wx + ww, mx + mw) - std::max(wx, mx)) *
+                           std::max(0, std::min(wy + wh, my + mh) - std::max(wy, my));
+
+                if (bestoverlap < overlap)
+                {
+                    bestoverlap = overlap;
+                    bestmonitor = monitors[i];
+                }
+            }
+
+            return bestmonitor;
+        }
+
+        void WindowImpl::enterFullscreen(const Display & _display)
+        {
+            STICK_ASSERT(m_glfwWindow);
+            GLFWmonitor * monitor = NULL;
+            if (!_display.isValid())
+            {
+                monitor = currentMonitor(m_glfwWindow);
+            }
+            else
+            {
+                monitor = _display.m_pimpl->m_glfwMonitor;
+            }
+            STICK_ASSERT(monitor);
+            const GLFWvidmode * mode = glfwGetVideoMode(monitor);
+            glfwSetWindowMonitor(m_glfwWindow, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        }
+
+        void WindowImpl::enterFullscreen(const DisplayMode & _mode, const Display & _display)
+        {
+            STICK_ASSERT(m_glfwWindow);
+            GLFWmonitor * monitor = NULL;
+            if (!_display.isValid())
+            {
+                monitor = currentMonitor(m_glfwWindow);
+            }
+            else
+            {
+                monitor = _display.m_pimpl->m_glfwMonitor;
+            }
+            STICK_ASSERT(monitor);
+            glfwSetWindowMonitor(m_glfwWindow, monitor, 0, 0, _mode.width(), _mode.height(), _mode.refreshRate());
         }
 
         void WindowImpl::hideCursor()
@@ -378,6 +475,19 @@ namespace luke
                 return y;
             }
             return 0;
+        }
+
+        Display WindowImpl::display() const
+        {
+            if (m_glfwWindow)
+            {
+                GLFWmonitor * monitor = currentMonitor(m_glfwWindow);
+                STICK_ASSERT(monitor);
+                Display ret;
+                ret.m_pimpl->m_glfwMonitor = monitor;
+                return ret;
+            }
+            return Display();
         }
 
         Error WindowImpl::pollEvents()

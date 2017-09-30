@@ -1,11 +1,13 @@
 #include <Luke/Display.hpp>
 #include <Luke/GLFW/GLFWDisplayImpl.hpp>
 
+#include <cmath>
+
 namespace luke
 {
     using namespace stick;
     using namespace crunch;
-    
+
     Display::Display() :
         m_pimpl(makeUnique<detail::DisplayImpl>(defaultAllocator()))
     {
@@ -18,7 +20,7 @@ namespace luke
     }
 
     Display::Display(const Display & _other) :
-    m_pimpl(_other.m_pimpl->clone())
+        m_pimpl(_other.m_pimpl->clone())
     {
 
     }
@@ -29,7 +31,7 @@ namespace luke
         return *this;
     }
 
-    stick::Error Display::setDisplayMode(const DisplayMode & _mode)
+    Error Display::setDisplayMode(const DisplayMode & _mode)
     {
         // if (isValidDisplayMode(_mode))
         //     detail::DisplayImpl::setDisplayMode(m_id, _mode, _error);
@@ -58,51 +60,41 @@ namespace luke
         return m_pimpl->displayModes();
     }
 
-    DisplayMode Display::findBestDisplayMode(Float32 _width, Float32 _height, UInt32 _colorDepth, Float32 _backingScale) const
+    DisplayMode Display::findBestDisplayMode(Float32 _width, Float32 _height,
+            UInt32 _redBits, UInt32 _greenBits, UInt32 _blueBits,
+            UInt32 _refreshRate) const
     {
-        // DisplayModeArray modes = displayModes();
-        // DisplayMode ret = modes[0];
-        // Float32 bestBackingScaleDiff = std::numeric_limits<Float32>::max();
-        // Float32 bestWidthDiff = std::numeric_limits<Float32>::max();
-        // Float32 bestHeightDiff = std::numeric_limits<Float32>::max();
+        DisplayModeArray modes = displayModes();
+        DisplayMode ret = modes[0];
+        Float32 bestWidthDiff = std::numeric_limits<Float32>::max();
+        Float32 bestHeightDiff = std::numeric_limits<Float32>::max();
 
-        // DisplayModeArray::iterator it = modes.begin();
+        //@TODO: This is not very good yet as it requires perfect color depth matching
+        //to even consider the dimensions.
+        for (auto & mode : modes)
+        {
+            if (_refreshRate == RefreshRate::DontCare || mode.refreshRate() == _refreshRate)
+            {
+                if (_redBits == mode.redBits() && _greenBits == mode.greenBits() && _blueBits == mode.blueBits())
+                {
+                    Float32 widthDiff = std::abs(mode.width() - _width);
+                    Float32 heightDiff = std::abs(mode.height() - _height);
 
-        // for (; it != modes.end(); ++it)
-        // {
-        //     DisplayMode & mode = (*it);
-        //     if (mode.colorDepth() == _colorDepth)
-        //     {
-        //         Float32 bsDiff = std::abs(_backingScale - (*it).backingScaleFactor());
-        //         Float32 widthDiff = std::abs((*it).width() - _width);
-        //         Float32 heightDiff = std::abs((*it).height() - _height);
+                    //perfect match found
+                    if (mode.width() == _width && mode.height() == _height)
+                        return mode;
 
-        //         //perfect match found
-        //         if ((*it).width() == _width && (*it).height() == _height && (*it).backingScaleFactor() == _backingScale)
-        //             return *it;
+                    if (widthDiff <= bestWidthDiff && heightDiff <= bestHeightDiff)
+                    {
+                        ret = mode;
+                        bestWidthDiff = widthDiff;
+                        bestHeightDiff = heightDiff;
+                    }
+                }
+            }
+        }
 
-        //         //found a better backing scale match
-        //         if (bsDiff < bestBackingScaleDiff)
-        //         {
-        //             ret = *it;
-        //             bestBackingScaleDiff = bsDiff;
-        //             bestWidthDiff = widthDiff;
-        //             bestHeightDiff = heightDiff;
-        //         }
-        //         //found a better size match
-        //         else if (bsDiff == bestBackingScaleDiff)
-        //         {
-        //             if (widthDiff <= bestWidthDiff && heightDiff <= bestHeightDiff)
-        //             {
-        //                 ret = *it;
-        //                 bestWidthDiff = widthDiff;
-        //                 bestHeightDiff = heightDiff;
-        //             }
-        //         }
-        //     }
-        // }
-
-        // return ret;
+        return ret;
     }
 
     Display Display::mainDisplay()

@@ -36,6 +36,8 @@ namespace luke
 
         void resize(stick::Float32 _width, stick::Float32 _height);
 
+        void maximize();
+
         void focus();
 
 
@@ -43,6 +45,14 @@ namespace luke
 
         void disableRenderContext();
 
+
+        void enterFullscreen(const Display & _display = Display());
+
+        void enterFullscreen(const DisplayMode & _mode, const Display & _display = Display());
+
+        void enterFullscreen(stick::Float32 _width, stick::Float32 _height, const Display & _display = Display());
+
+        void exitFullscreen();
 
         void setVerticalSync(bool _b);
 
@@ -68,6 +78,8 @@ namespace luke
         bool verticalSync() const;
 
         const stick::String & title() const;
+
+        Display display() const;
 
         stick::Float32 backingScaleFactor() const;
 

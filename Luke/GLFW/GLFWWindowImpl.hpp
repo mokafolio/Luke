@@ -33,6 +33,8 @@ namespace luke
 
             void resize(stick::Float32 _width, stick::Float32 _height);
 
+            void maximize();
+
             void focus();
 
 
@@ -44,6 +46,10 @@ namespace luke
 
 
             void setVerticalSync(bool _b);
+
+            void enterFullscreen(const Display & _display);
+
+            void enterFullscreen(const DisplayMode & _mode, const Display & _display);
 
             void hideCursor();
 
@@ -79,6 +85,8 @@ namespace luke
             stick::Float32 x() const;
 
             stick::Float32 y() const;
+
+            Display display() const;
 
             static stick::Error pollEvents();
 
