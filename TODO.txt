@@ -1,0 +1,7 @@
+Short Term:
+- Add Key Events
+- Finish WindowSettings and corresponding GLFW implementation
+- Write some basic tests
+
+Long Term:
+- Native implementations for OSX / Linux
