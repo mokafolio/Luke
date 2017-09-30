@@ -189,10 +189,13 @@ namespace luke
             glfwWindowHint(GLFW_BLUE_BITS, _settings.colorPrecision());
             glfwWindowHint(GLFW_ALPHA_BITS, _settings.alphaPrecision());
             glfwWindowHint(GLFW_SAMPLES, _settings.sampleCount());
+            glfwWindowHint(GLFW_RESIZABLE, _settings.isResizeable());
 
             //create the window
             m_glfwWindow = glfwCreateWindow(_settings.width(), _settings.height(),
-                                            _settings.title().length() ? _settings.title().cString() : "Luke Window", NULL, _shared ? _shared->m_glfwWindow : NULL);
+                                            _settings.title().length() ? _settings.title().cString() : "Luke Window", 
+                                            _settings.display().isValid() ? _settings.display().m_pimpl->m_glfwMonitor : NULL, 
+                                            _shared ? _shared->m_glfwWindow : NULL);
 
             if (!m_glfwWindow)
             {

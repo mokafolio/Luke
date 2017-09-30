@@ -21,7 +21,9 @@ int main(int _argc, const char * _args[])
     printf("DISPLAY COUNT %lu\n", displays.count());
 
     Window window;
-    auto err = window.open();
+    WindowSettings settings;
+    settings.setResizeable(true);
+    auto err = window.open(settings);
 
     window.setVerticalSync(true);
     window.addEventCallback([](const MouseScrollEvent & _event)

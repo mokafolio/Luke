@@ -6,12 +6,10 @@ namespace luke
 
     WindowSettings::WindowSettings() :
         m_bIsResizeableByDragging(false),
-        m_bFullscreen(false),
         m_initialWidth(1280),
         m_initialHeight(720),
         m_initialX(0),
         m_initialY(0),
-        m_display(Display::mainDisplay()),
         m_samples(0),
         m_colorPrecision(32),
         m_alphaPrecision(8),
@@ -21,14 +19,9 @@ namespace luke
 
     }
 
-    void WindowSettings::setResizeableByDragging(bool _b)
+    void WindowSettings::setResizeable(bool _b)
     {
         m_bIsResizeableByDragging = _b;
-    }
-
-    void WindowSettings::setFullscreen(bool _b)
-    {
-        m_bFullscreen = _b;
     }
 
     void WindowSettings::setTitle(const String & _title)
@@ -53,7 +46,7 @@ namespace luke
         m_display = _display;
     }
 
-    bool WindowSettings::isResizeableByDragging() const
+    bool WindowSettings::isResizeable() const
     {
         return m_bIsResizeableByDragging;
     }
@@ -66,11 +59,6 @@ namespace luke
     const Display & WindowSettings::display() const
     {
         return m_display;
-    }
-
-    bool WindowSettings::fullscreen() const
-    {
-        return m_bFullscreen;
     }
 
     Float32 WindowSettings::x() const
