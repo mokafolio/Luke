@@ -190,6 +190,7 @@ namespace luke
             glfwWindowHint(GLFW_ALPHA_BITS, _settings.alphaPrecision());
             glfwWindowHint(GLFW_SAMPLES, _settings.sampleCount());
             glfwWindowHint(GLFW_RESIZABLE, _settings.isResizeable());
+            glfwWindowHint(GLFW_DECORATED, _settings.isDecorated());
 
             //create the window
             m_glfwWindow = glfwCreateWindow(_settings.width(), _settings.height(),

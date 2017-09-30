@@ -13,13 +13,13 @@ namespace luke
 
         void setResizeable(bool _b);
 
+        void setDecorated(bool _b);
+
         void setTitle(const stick::String & _title);
 
         void setPosition(stick::Float32 _left, stick::Float32 _bottom);
 
         void setSize(stick::Float32 _width, stick::Float32 _height);
-
-        bool isResizeable() const;
 
         void setDisplay(const Display & _display);
 
@@ -33,6 +33,10 @@ namespace luke
 
         void setStencilPrecision(stick::UInt32 _stencil);
 
+
+        bool isResizeable() const;
+
+        bool isDecorated() const;
 
         const Display & display() const;
 
@@ -60,6 +64,7 @@ namespace luke
     private:
 
         bool m_bIsResizeableByDragging; //if true, the window can be resized by dragging
+        bool m_bDecorated;
         stick::String m_title;
         stick::Float32 m_initialWidth;
         stick::Float32 m_initialHeight;

@@ -6,6 +6,7 @@ namespace luke
 
     WindowSettings::WindowSettings() :
         m_bIsResizeableByDragging(false),
+        m_bDecorated(true),
         m_initialWidth(1280),
         m_initialHeight(720),
         m_initialX(0),
@@ -22,6 +23,11 @@ namespace luke
     void WindowSettings::setResizeable(bool _b)
     {
         m_bIsResizeableByDragging = _b;
+    }
+
+    void WindowSettings::setDecorated(bool _b)
+    {
+        m_bDecorated = _b;
     }
 
     void WindowSettings::setTitle(const String & _title)
@@ -49,6 +55,11 @@ namespace luke
     bool WindowSettings::isResizeable() const
     {
         return m_bIsResizeableByDragging;
+    }
+
+    bool WindowSettings::isDecorated() const
+    {
+        return m_bDecorated;
     }
 
     const String & WindowSettings::title() const
