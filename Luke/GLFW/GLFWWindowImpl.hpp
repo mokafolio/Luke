@@ -47,9 +47,11 @@ namespace luke
 
             void setVerticalSync(bool _b);
 
-            void enterFullscreen(const Display & _display);
+            stick::Error enterFullscreen(const Display & _display);
 
-            void enterFullscreen(const DisplayMode & _mode, const Display & _display);
+            stick::Error enterFullscreen(const DisplayMode & _mode, const Display & _display);
+
+            void exitFullscreen();
 
             void hideCursor();
 
@@ -69,6 +71,8 @@ namespace luke
             bool isCursorVisible() const;
 
             bool verticalSync() const;
+
+            bool isFullscreen() const;
 
             const stick::String & title() const;
 
@@ -94,6 +98,10 @@ namespace luke
             GLFWwindow * m_glfwWindow;
             Window * m_window;
             MouseState m_mouseState;
+            stick::Float32 m_preFullscreenWidth;
+            stick::Float32 m_preFullscreenHeight;
+            stick::Float32 m_preFullscreenX;
+            stick::Float32 m_preFullscreenY;
         };
     }
 }

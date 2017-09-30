@@ -36,7 +36,11 @@ int main(int _argc, const char * _args[])
         {
             printf("LEFT BUTTON\n");
             // window.enterFullscreen(800, 600);
-            window.enterFullscreen();
+            if(!window.isFullscreen())
+                window.enterFullscreen();
+            else
+                window.exitFullscreen();
+            // window.move(400, 400);
         }
         if (_event.button() == MouseButton::Middle)
         {

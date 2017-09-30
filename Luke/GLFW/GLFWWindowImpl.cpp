@@ -11,7 +11,11 @@ namespace luke
 
         WindowImpl::WindowImpl(Window * _window) :
             m_glfwWindow(NULL),
-            m_window(_window)
+            m_window(_window),
+            m_preFullscreenWidth(0),
+            m_preFullscreenHeight(0),
+            m_preFullscreenX(0),
+            m_preFullscreenY(0)
         {
 
         }
@@ -195,6 +199,11 @@ namespace luke
                 return Error(ec::InvalidOperation, "Could not create GLFW window", STICK_FILE, STICK_LINE);
             }
 
+            m_preFullscreenWidth = _settings.width();
+            m_preFullscreenHeight = _settings.height();
+            m_preFullscreenX = x();
+            m_preFullscreenY = y();
+
             glfwSetWindowUserPointer(m_glfwWindow, this);
             glfwSetMouseButtonCallback(m_glfwWindow, &mouseButtonCallback);
             glfwSetCursorPosCallback(m_glfwWindow, &mouseMoveCallback);
@@ -324,7 +333,8 @@ namespace luke
             return bestmonitor;
         }
 
-        void WindowImpl::enterFullscreen(const Display & _display)
+        //@TODO: Merge the code for both enter fullscreen functions into a helper
+        Error WindowImpl::enterFullscreen(const Display & _display)
         {
             STICK_ASSERT(m_glfwWindow);
             GLFWmonitor * monitor = NULL;
@@ -336,12 +346,17 @@ namespace luke
             {
                 monitor = _display.m_pimpl->m_glfwMonitor;
             }
+            m_preFullscreenWidth = width();
+            m_preFullscreenHeight = height();
+            m_preFullscreenX = x();
+            m_preFullscreenY = y();
             STICK_ASSERT(monitor);
             const GLFWvidmode * mode = glfwGetVideoMode(monitor);
             glfwSetWindowMonitor(m_glfwWindow, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+            return Error();
         }
 
-        void WindowImpl::enterFullscreen(const DisplayMode & _mode, const Display & _display)
+        Error WindowImpl::enterFullscreen(const DisplayMode & _mode, const Display & _display)
         {
             STICK_ASSERT(m_glfwWindow);
             GLFWmonitor * monitor = NULL;
@@ -353,8 +368,19 @@ namespace luke
             {
                 monitor = _display.m_pimpl->m_glfwMonitor;
             }
+            m_preFullscreenWidth = width();
+            m_preFullscreenHeight = height();
+            m_preFullscreenX = x();
+            m_preFullscreenY = y();
             STICK_ASSERT(monitor);
             glfwSetWindowMonitor(m_glfwWindow, monitor, 0, 0, _mode.width(), _mode.height(), _mode.refreshRate());
+            return Error();
+        }
+
+        void WindowImpl::exitFullscreen()
+        {
+            STICK_ASSERT(m_glfwWindow);
+            glfwSetWindowMonitor(m_glfwWindow, NULL, m_preFullscreenX, m_preFullscreenY, m_preFullscreenWidth, m_preFullscreenHeight, GLFW_DONT_CARE);
         }
 
         void WindowImpl::hideCursor()
@@ -399,6 +425,12 @@ namespace luke
         bool WindowImpl::verticalSync() const
         {
 
+        }
+
+        bool WindowImpl::isFullscreen() const
+        {
+            STICK_ASSERT(m_glfwWindow);
+            return glfwGetWindowMonitor(m_glfwWindow) != NULL;
         }
 
         const String & WindowImpl::title() const

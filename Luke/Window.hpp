@@ -46,11 +46,11 @@ namespace luke
         void disableRenderContext();
 
 
-        void enterFullscreen(const Display & _display = Display());
+        stick::Error enterFullscreen(const Display & _display = Display());
 
-        void enterFullscreen(const DisplayMode & _mode, const Display & _display = Display());
+        stick::Error enterFullscreen(const DisplayMode & _mode, const Display & _display = Display());
 
-        void enterFullscreen(stick::Float32 _width, stick::Float32 _height, const Display & _display = Display());
+        stick::Error enterFullscreen(stick::Float32 _width, stick::Float32 _height, const Display & _display = Display());
 
         void exitFullscreen();
 
@@ -70,6 +70,8 @@ namespace luke
         bool isVisible() const;
 
         bool isFocussed() const;
+
+        bool isFullscreen() const;
 
         const WindowSettings & settings() const;
 

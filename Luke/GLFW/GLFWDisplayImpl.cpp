@@ -31,7 +31,7 @@ namespace luke
             STICK_ASSERT(isValid());
             //THERE IS NO GLFW WAY TO CHANGE THE DISPLAY MODE UNLESS
             //YOU ARE GOING FULLSCREEN WITH A WINDOW
-            return Error();
+            return Error(ec::Unsupported, "GLFW only allows you to change the display mode when entering fullscreen with a window", STICK_FILE, STICK_LINE);
         }
 
         DisplayMode DisplayImpl::currentDisplayMode() const

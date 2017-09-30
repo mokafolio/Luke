@@ -80,17 +80,17 @@ namespace luke
         m_pimpl->setVerticalSync(_b);
     }
 
-    void Window::enterFullscreen(const Display & _display)
+    Error Window::enterFullscreen(const Display & _display)
     {
-        m_pimpl->enterFullscreen(_display);
+        return m_pimpl->enterFullscreen(_display);
     }
 
-    void Window::enterFullscreen(const DisplayMode & _mode, const Display & _display)
+    Error Window::enterFullscreen(const DisplayMode & _mode, const Display & _display)
     {
-        m_pimpl->enterFullscreen(_mode, _display);
+        return m_pimpl->enterFullscreen(_mode, _display);
     }
 
-    void Window::enterFullscreen(Float32 _width, Float32 _height, const Display & _display)
+    Error Window::enterFullscreen(Float32 _width, Float32 _height, const Display & _display)
     {
         DisplayMode mode;
         if (_display.isValid())
@@ -107,14 +107,18 @@ namespace luke
         }
         if (mode.isValid())
         {
-            printf("MODE W %f H %f\n", mode.width(), mode.height());
-            enterFullscreen(mode, _display);
+            return enterFullscreen(mode, _display);
         }
         else
         {
-            //@TODO: Return error;
-            printf("NO CAN DO\n");
+            //@TODO: Create Luke error codes that are more informative
+            return Error(ec::InvalidOperation, "Could not find display mode", STICK_FILE, STICK_LINE);
         }
+    }
+
+    void Window::exitFullscreen()
+    {
+        m_pimpl->exitFullscreen();
     }
 
     void Window::hideCursor()
@@ -145,6 +149,11 @@ namespace luke
     bool Window::isFocussed() const
     {
         return m_pimpl->isFocussed();
+    }
+
+    bool Window::isFullscreen() const
+    {
+        return m_pimpl->isFullscreen();
     }
 
     const WindowSettings & Window::settings() const
