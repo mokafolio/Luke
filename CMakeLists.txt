@@ -36,9 +36,9 @@ Luke/WindowSettings.cpp
 )
 
 add_library (Luke SHARED ${LUKESRC})
-target_link_libraries(Luke ${GLFW_STATIC_LIBRARIES})
+target_link_libraries(Luke ${LUKEDEPS})
 add_library (LukeStatic STATIC ${LUKESRC})
-target_link_libraries(LukeStatic ${GLFW_STATIC_LIBRARIES})
+target_link_libraries(LukeStatic ${LUKEDEPS})
 
 install (TARGETS Luke LukeStatic DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 foreach ( file ${LUKEINC} )

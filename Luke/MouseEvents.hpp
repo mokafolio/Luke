@@ -10,17 +10,13 @@ namespace luke
     {
     public:
 
-        MouseEvent(const MouseState & _state, stick::Float32 _scrollX, stick::Float32 _scrollY, MouseButton _button = MouseButton::None);
+        MouseEvent(const MouseState & _state, MouseButton _button = MouseButton::None);
 
         virtual ~MouseEvent();
 
         stick::Float32 x() const;
 
         stick::Float32 y() const;
-
-        stick::Float32 scrollX() const;
-
-        stick::Float32 scrollY() const;
 
         //returns the button associated with this event
         MouseButton button() const;
@@ -31,6 +27,28 @@ namespace luke
 
         MouseState m_state;
         MouseButton m_modifiedButton;
+    };
+
+    class STICK_API MouseScrollEvent :
+        public MouseEvent,
+        public stick::EventT<MouseScrollEvent>
+    {
+    public:
+
+
+        MouseScrollEvent(const MouseState & _state, stick::Float32 _scrollX, stick::Float32 _scrollY);
+
+        MouseScrollEvent(const MouseScrollEvent &) = default;
+        MouseScrollEvent(MouseScrollEvent &&) = default;
+        MouseScrollEvent & operator = (const MouseScrollEvent &) = default;
+        MouseScrollEvent & operator = (MouseScrollEvent &&) = default;
+
+        stick::Float32 scrollX() const;
+
+        stick::Float32 scrollY() const;
+
+    private:
+
         //scroll data is not in MouseStae since it is only a relative change and thus only valid during the event
         stick::Float32 m_scrollX, m_scrollY;
     };
@@ -43,10 +61,10 @@ namespace luke
 
         MouseMoveEvent(const MouseState & _state);
 
-        MouseMoveEvent(const MouseMoveEvent&) = default;
-        MouseMoveEvent(MouseMoveEvent&&) = default;
-        MouseMoveEvent & operator = (const MouseMoveEvent&) = default;
-        MouseMoveEvent & operator = (MouseMoveEvent&&) = default;
+        MouseMoveEvent(const MouseMoveEvent &) = default;
+        MouseMoveEvent(MouseMoveEvent &&) = default;
+        MouseMoveEvent & operator = (const MouseMoveEvent &) = default;
+        MouseMoveEvent & operator = (MouseMoveEvent &&) = default;
     };
 
     class STICK_API MouseDragEvent :
@@ -74,15 +92,6 @@ namespace luke
     public:
 
         MouseUpEvent(const MouseState & _state, MouseButton _button);
-    };
-
-    class STICK_API MouseScrollEvent :
-        public MouseEvent,
-        public stick::EventT<MouseScrollEvent>
-    {
-    public:
-
-        MouseScrollEvent(const MouseState & _state, stick::Float32 _scrollX, stick::Float32 _scrollY);
     };
 
     class STICK_API MouseEnterEvent :
