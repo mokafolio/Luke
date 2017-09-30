@@ -84,6 +84,8 @@ int main(int _argc, const char * _args[])
         return EXIT_FAILURE;
     }
 
+    printf("W %f H %f\n", window.width(), window.height());
+    printf("W2 %f H2 %f\n", window.widthInPixels(), window.heightInPixels());
     while (!window.shouldClose())
     {
         window.enableRenderContext();

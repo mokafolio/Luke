@@ -167,9 +167,10 @@ namespace luke
             return glfwWindowShouldClose(m_glfwWindow);
         }
 
-        void WindowImpl::move(Float32 _left, Float32 _bottom)
+        void WindowImpl::move(Float32 _x, Float32 _y)
         {
-
+            STICK_ASSERT(m_glfwWindow);
+            glfwSetWindowPos(m_glfwWindow, _x, _y);
         }
 
         void WindowImpl::moveToCenter()
@@ -191,12 +192,14 @@ namespace luke
 
         void WindowImpl::resize(Float32 _width, Float32 _height)
         {
-
+            STICK_ASSERT(m_glfwWindow);
+            glfwSetWindowSize(m_glfwWindow, _width, _height);
         }
 
         void WindowImpl::focus()
         {
-
+            STICK_ASSERT(m_glfwWindow);
+            glfwFocusWindow(m_glfwWindow);
         }
 
         void WindowImpl::enableRenderContext()
@@ -218,17 +221,20 @@ namespace luke
 
         void WindowImpl::setVerticalSync(bool _b)
         {
-
+            enableRenderContext();
+            glfwSwapInterval(_b ? 1 : 0);
         }
 
         void WindowImpl::hideCursor()
         {
-
+            STICK_ASSERT(m_glfwWindow);
+            glfwSetInputMode(m_glfwWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
         }
 
         void WindowImpl::showCursor()
         {
-
+            STICK_ASSERT(m_glfwWindow);
+            glfwSetInputMode(m_glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         }
 
         void WindowImpl::setTitle(const String & _str)
@@ -238,12 +244,14 @@ namespace luke
 
         bool WindowImpl::isVisible() const
         {
-
+            STICK_ASSERT(m_glfwWindow);
+            return glfwGetWindowAttrib(m_glfwWindow, GLFW_VISIBLE);
         }
 
         bool WindowImpl::isFocussed() const
         {
-
+            STICK_ASSERT(m_glfwWindow);
+            return glfwGetWindowAttrib(m_glfwWindow, GLFW_FOCUSED);
         }
 
         const WindowSettings & WindowImpl::settings() const
@@ -253,7 +261,7 @@ namespace luke
 
         bool WindowImpl::isCursorVisible() const
         {
-
+            return glfwGetInputMode(m_glfwWindow, GLFW_CURSOR) == GLFW_CURSOR_NORMAL;
         }
 
         bool WindowImpl::verticalSync() const
@@ -268,27 +276,73 @@ namespace luke
 
         Float32 WindowImpl::backingScaleFactor() const
         {
-
+            return widthInPixels() / width();
         }
 
         Float32 WindowImpl::width() const
         {
-
+            if (m_glfwWindow)
+            {
+                int w, h;
+                glfwGetWindowSize(m_glfwWindow, &w, &h);
+                return w;
+            }
+            return 0;
         }
 
         Float32 WindowImpl::height() const
         {
-
+            if (m_glfwWindow)
+            {
+                int w, h;
+                glfwGetWindowSize(m_glfwWindow, &w, &h);
+                return h;
+            }
+            return 0;
         }
 
         Float32 WindowImpl::widthInPixels() const
         {
-
+            if (m_glfwWindow)
+            {
+                int w, h;
+                glfwGetFramebufferSize(m_glfwWindow, &w, &h);
+                return w;
+            }
+            return 0;
         }
 
         Float32 WindowImpl::heightInPixels() const
         {
+            if (m_glfwWindow)
+            {
+                int w, h;
+                glfwGetFramebufferSize(m_glfwWindow, &w, &h);
+                return h;
+            }
+            return 0;
+        }
 
+        Float32 WindowImpl::x() const
+        {
+            if (m_glfwWindow)
+            {
+                int x, y;
+                glfwGetWindowPos(m_glfwWindow, &x, &y);
+                return x;
+            }
+            return 0;
+        }
+
+        Float32 WindowImpl::y() const
+        {
+            if (m_glfwWindow)
+            {
+                int x, y;
+                glfwGetWindowPos(m_glfwWindow, &x, &y);
+                return y;
+            }
+            return 0;
         }
 
         Error WindowImpl::pollEvents()

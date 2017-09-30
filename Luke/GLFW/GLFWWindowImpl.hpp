@@ -23,7 +23,7 @@ namespace luke
             void close();
 
 
-            void move(stick::Float32 _left, stick::Float32 _bottom);
+            void move(stick::Float32 _x, stick::Float32 _y);
 
             void moveToCenter();
 
@@ -75,6 +75,10 @@ namespace luke
             stick::Float32 widthInPixels() const;
 
             stick::Float32 heightInPixels() const;
+
+            stick::Float32 x() const;
+
+            stick::Float32 y() const;
 
             static stick::Error pollEvents();
 

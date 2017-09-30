@@ -5,7 +5,7 @@ namespace luke
     using namespace stick;
 
     Window::Window() :
-    m_pimpl(makeUnique<detail::WindowImpl>(defaultAllocator(), this))
+        m_pimpl(makeUnique<detail::WindowImpl>(defaultAllocator(), this))
     {
 
     }
@@ -30,9 +30,9 @@ namespace luke
         return m_pimpl->shouldClose();
     }
 
-    void Window::move(Float32 _left, Float32 _bottom)
+    void Window::move(Float32 _x, Float32 _y)
     {
-        m_pimpl->move(_left, _bottom);
+        m_pimpl->move(_x, _y);
     }
 
     void Window::moveToCenter()
@@ -131,7 +131,7 @@ namespace luke
     }
 
     Float32 Window::width() const
-    {   
+    {
         return m_pimpl->width();
     }
 
@@ -153,5 +153,15 @@ namespace luke
     Error pollEvents()
     {
         return detail::WindowImpl::pollEvents();
+    }
+
+    Float32 Window::x() const
+    {
+        return m_pimpl->x();
+    }
+
+    Float32 Window::y() const
+    {
+        return m_pimpl->y();
     }
 }
