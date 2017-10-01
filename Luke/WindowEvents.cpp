@@ -5,8 +5,8 @@ namespace luke
     using namespace stick;
 
     WindowMoveEvent::WindowMoveEvent(Float32 _x, Float32 _y) :
-    m_x(_x),
-    m_y(_y)
+        m_x(_x),
+        m_y(_y)
     {
 
     }
@@ -22,8 +22,8 @@ namespace luke
     }
 
     WindowResizeEvent::WindowResizeEvent(Float32 _width, Float32 _height) :
-    m_width(_width),
-    m_height(_height)
+        m_width(_width),
+        m_height(_height)
     {
 
     }
@@ -44,6 +44,16 @@ namespace luke
     }
 
     WindowLostFocusEvent::WindowLostFocusEvent()
+    {
+
+    }
+    
+    WindowIconifyEvent::WindowIconifyEvent()
+    {
+
+    }
+
+    WindowRestoreEvent::WindowRestoreEvent()
     {
 
     }

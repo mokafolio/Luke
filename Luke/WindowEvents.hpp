@@ -72,6 +72,30 @@ namespace luke
         // WindowLostFocusEvent & operator = (const WindowLostFocusEvent &) = default;
         // WindowLostFocusEvent & operator = (WindowLostFocusEvent &&) = default;
     };
+
+    class STICK_API WindowIconifyEvent :
+        public stick::EventT<WindowIconifyEvent>
+    {
+    public:
+
+        WindowIconifyEvent();
+        // WindowLostFocusEvent(const WindowLostFocusEvent &) = default;
+        // WindowLostFocusEvent(WindowLostFocusEvent &&) = default;
+        // WindowLostFocusEvent & operator = (const WindowLostFocusEvent &) = default;
+        // WindowLostFocusEvent & operator = (WindowLostFocusEvent &&) = default;
+    };
+
+    class STICK_API WindowRestoreEvent :
+        public stick::EventT<WindowRestoreEvent>
+    {
+    public:
+
+        WindowRestoreEvent();
+        // WindowLostFocusEvent(const WindowLostFocusEvent &) = default;
+        // WindowLostFocusEvent(WindowLostFocusEvent &&) = default;
+        // WindowLostFocusEvent & operator = (const WindowLostFocusEvent &) = default;
+        // WindowLostFocusEvent & operator = (WindowLostFocusEvent &&) = default;
+    };
 }
 
 #endif //LUKE_WINDOWEVENTS_HPP

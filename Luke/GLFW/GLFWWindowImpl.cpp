@@ -163,11 +163,13 @@ namespace luke
             {
                 // The window was iconified
                 printf("ICONIFIED\n");
+                window->m_window->publish(WindowIconifyEvent(), true);
             }
             else
             {
                 // The window was restored
                 printf("RESTORED\n");
+                window->m_window->publish(WindowRestoreEvent(), true);
             }
         }
 

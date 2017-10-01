@@ -11,7 +11,7 @@ int main(int _argc, const char * _args[])
     Display disp = Display::mainDisplay();
     auto current = disp.currentDisplayMode();
     auto modes = disp.displayModes();
-    for(auto & mode : modes)
+    for (auto & mode : modes)
     {
         printf("DISPLAY MODE W %f H %f RR %i R %i G %i B %i\n", mode.width(), mode.height(), mode.refreshRate(), mode.redBits(), mode.greenBits(), mode.blueBits());
     }
@@ -38,7 +38,7 @@ int main(int _argc, const char * _args[])
         {
             printf("LEFT BUTTON\n");
             // window.enterFullscreen(800, 600);
-            if(!window.isFullscreen())
+            if (!window.isFullscreen())
                 window.enterFullscreen();
             else
                 window.exitFullscreen();
@@ -120,6 +120,16 @@ int main(int _argc, const char * _args[])
     window.addEventCallback([](const WindowLostFocusEvent & _event)
     {
         printf("WINDOW LOOOOOOST FOCUSED\n");
+    });
+
+    window.addEventCallback([](const WindowIconifyEvent & _event)
+    {
+        printf("WINDOW ICOOOOOONIFYYY\n");
+    });
+
+    window.addEventCallback([](const WindowRestoreEvent & _event)
+    {
+        printf("WINDOW RESTOROOOOROOROROREEE\n");
     });
 
     while (!window.shouldClose())
