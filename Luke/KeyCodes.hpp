@@ -1,0 +1,134 @@
+#ifndef LUKE_KEYCODES_HPP
+#define LUKE_KEYCODES_HPP
+
+#include <Stick/Platform.hpp>
+
+namespace luke
+{
+    // based on USB HID Usage Tables
+    STICK_API_ENUM_CLASS(KeyCode)
+    {
+        //Unknown
+        Unknown = -1,
+
+        // Letters
+        A = 4,
+        B = 5,
+        C = 6,
+        D = 7,
+        E = 8,
+        F = 9,
+        G = 10,
+        H = 11,
+        I = 12,
+        J = 13,
+        K = 14,
+        L = 15,
+        M = 16,
+        N = 17,
+        O = 18,
+        P = 19,
+        Q = 20,
+        R = 21,
+        S = 22,
+        T = 23,
+        U = 24,
+        V = 25,
+        W = 26,
+        X = 27,
+        Y = 28,
+        Z = 29,
+
+        // Numbers
+        One = 30,
+        Two = 31,
+        Three = 32,
+        Four = 33,
+        Five = 34,
+        Six = 35,
+        Seven = 36,
+        Eight = 37,
+        Nine = 38,
+        Zero = 39,
+
+        // Other
+        Return = 40, // Enter
+        Escape = 41,
+        Delete = 42,
+        Tab = 43,
+        Spacebar = 44,
+        Minus = 45,
+        Equals = 46,
+        LeftBracket = 47,
+        RightBracket = 48,
+        Backslash = 49,
+        Quote = 50,    //??
+        Semicolon = 51,
+        Apostrophe = 52,
+        GraveAccent = 53,
+        Comma = 54,
+        Dot = 55,
+        Slash = 56,
+        CapsLock = 57,
+        F1 = 58,
+        F2 = 59,
+        F3 = 60,
+        F4 = 61,
+        F5 = 62,
+        F6 = 63,
+        F7 = 64,
+        F8 = 65,
+        F9 = 66,
+        F10 = 67,
+        F11 = 68,
+        F12 = 69,
+        F13 = 104,
+        F14 = 105,
+        F15 = 106,
+        F16 = 107,
+
+        Caret = 100, //only on ISO keyboards
+
+        LeftControl = 224,
+        LeftShift = 225,
+        LeftAlt = 226,
+        LeftCommand = 227, //left windows key on windows,
+        RightControl = 228,
+        RightShift = 229,
+        RightAlt = 230,
+        RightCommand = 231, //right windows key on windows,
+
+        RightArrow = 79,
+        LeftArrow = 80,
+        DownArrow = 81,
+        UpArrow = 82,
+
+        //special
+        Help = 117,
+        ForwardDelete = 123,
+        Mute = 127,
+        VolumeUp = 128,
+        VolumeDown = 129,
+
+        //keypad
+        KPDivide = 84,
+        KPMultiply = 85,
+        KPMinus = 86,
+        KPPlus = 87,
+        KPReturn = 88,
+        KPOne = 89,
+        KPTwo = 90,
+        KPThree = 91,
+        KPFour = 92,
+        KPFive = 93,
+        KPSix = 94,
+        KPSeven = 95,
+        KPEight = 96,
+        KPNine = 97,
+        KPZero = 98,
+        KPEquals = 103,
+        KPComma = 133
+    };
+}
+
+#endif //LUKE_KEYCODES_HPP

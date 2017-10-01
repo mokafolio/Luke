@@ -16,6 +16,8 @@ Luke/GLFW/GLFWInitializer.hpp
 Luke/GLFW/GLFWWindowImpl.hpp
 Luke/Display.hpp
 Luke/DisplayMode.hpp
+Luke/KeyCodes.hpp
+Luke/KeyEvents.hpp
 Luke/MouseEvents.hpp
 Luke/MouseState.hpp
 Luke/Window.hpp
@@ -28,6 +30,7 @@ Luke/GLFW/GLFWDisplayImpl.cpp
 Luke/GLFW/GLFWWindowImpl.cpp
 Luke/Display.cpp
 Luke/DisplayMode.cpp
+Luke/KeyEvents.cpp
 Luke/MouseEvents.cpp
 Luke/MouseState.cpp
 Luke/Window.cpp
