@@ -56,18 +56,18 @@ namespace luke
         Escape = 41,
         Delete = 42,
         Tab = 43,
-        Spacebar = 44,
-        Minus = 45,
-        Equals = 46,
+        Space = 44,
+        Subtract = 45,
+        Equal = 46,
         LeftBracket = 47,
         RightBracket = 48,
         Backslash = 49,
-        Quote = 50,    //??
+        WorldOne = 50,
         Semicolon = 51,
         Apostrophe = 52,
         GraveAccent = 53,
         Comma = 54,
-        Dot = 55,
+        Period = 55,
         Slash = 56,
         CapsLock = 57,
         F1 = 58,
@@ -98,10 +98,10 @@ namespace luke
         RightAlt = 230,
         RightCommand = 231, //right windows key on windows,
 
-        RightArrow = 79,
-        LeftArrow = 80,
-        DownArrow = 81,
-        UpArrow = 82,
+        Right = 79,
+        Left = 80,
+        Down = 81,
+        Up = 82,
 
         //special
         Help = 117,
@@ -113,8 +113,8 @@ namespace luke
         //keypad
         KPDivide = 84,
         KPMultiply = 85,
-        KPMinus = 86,
-        KPPlus = 87,
+        KPSubtract = 86,
+        KPAdd = 87,
         KPReturn = 88,
         KPOne = 89,
         KPTwo = 90,
@@ -126,7 +126,8 @@ namespace luke
         KPEight = 96,
         KPNine = 97,
         KPZero = 98,
-        KPEquals = 103,
+        KPDecimal = 99,
+        KPEqual = 103,
         KPComma = 133
     };
 }

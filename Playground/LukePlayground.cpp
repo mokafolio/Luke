@@ -1,6 +1,7 @@
 #include <Luke/Display.hpp>
 #include <Luke/Window.hpp>
 #include <Luke/MouseEvents.hpp>
+#include <Luke/KeyEvents.hpp>
 #include <Luke/WindowEvents.hpp>
 #include <GLAnnotate/GLAnnotate.hpp>
 
@@ -130,6 +131,26 @@ int main(int _argc, const char * _args[])
     window.addEventCallback([](const WindowRestoreEvent & _event)
     {
         printf("WINDOW RESTOROOOOROOROROREEE\n");
+    });
+
+    window.addEventCallback([](const KeyUpEvent & _event)
+    {
+        printf("KEY UP %i\n", _event.key());
+
+        if(_event.key() == KeyCode::Subtract)
+        {
+            printf("DA SUBTRACT\n");
+        }
+        else if(_event.key() == KeyCode::Slash)
+        {
+            printf("DA SLAAASH\n");
+        }
+
+    });
+
+    window.addEventCallback([](const KeyDownEvent & _event)
+    {
+        // printf("KEY DOWN\n");
     });
 
     while (!window.shouldClose())

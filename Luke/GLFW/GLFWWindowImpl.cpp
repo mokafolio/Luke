@@ -2,6 +2,7 @@
 #include <Luke/GLFW/GLFWDisplayImpl.hpp>
 #include <Luke/GLFW/GLFWInitializer.hpp>
 #include <Luke/WindowEvents.hpp>
+#include <Luke/KeyEvents.hpp>
 
 namespace luke
 {
@@ -173,6 +174,333 @@ namespace luke
             }
         }
 
+        static void keyCallback(GLFWwindow * _window, int _key, int _scancode, int _action, int _mods)
+        {
+            WindowImpl * window = reinterpret_cast<WindowImpl *>(glfwGetWindowUserPointer(_window));
+            STICK_ASSERT(window);
+
+            KeyCode code;
+
+            switch (_key)
+            {
+                case GLFW_KEY_0:
+                    code = KeyCode::Zero;
+                    break;
+                case GLFW_KEY_1:
+                    code = KeyCode::One;
+                    break;
+                case GLFW_KEY_2:
+                    code = KeyCode::Two;
+                    break;
+                case GLFW_KEY_3:
+                    code = KeyCode::Three;
+                    break;
+                case GLFW_KEY_4:
+                    code = KeyCode::Four;
+                    break;
+                case GLFW_KEY_5:
+                    code = KeyCode::Five;
+                    break;
+                case GLFW_KEY_6:
+                    code = KeyCode::Six;
+                    break;
+                case GLFW_KEY_7:
+                    code = KeyCode::Seven;
+                    break;
+                case GLFW_KEY_8:
+                    code = KeyCode::Eight;
+                    break;
+                case GLFW_KEY_9:
+                    code = KeyCode::Nine;
+                    break;
+
+                case GLFW_KEY_A:
+                    code = KeyCode::A;
+                    break;
+                case GLFW_KEY_B:
+                    code = KeyCode::B;
+                    break;
+                case GLFW_KEY_C:
+                    code = KeyCode::C;
+                    break;
+                case GLFW_KEY_D:
+                    code = KeyCode::D;
+                    break;
+                case GLFW_KEY_E:
+                    code = KeyCode::E;
+                    break;
+                case GLFW_KEY_F:
+                    code = KeyCode::F;
+                    break;
+                case GLFW_KEY_G:
+                    code = KeyCode::G;
+                    break;
+                case GLFW_KEY_H:
+                    code = KeyCode::H;
+                    break;
+                case GLFW_KEY_I:
+                    code = KeyCode::I;
+                    break;
+                case GLFW_KEY_J:
+                    code = KeyCode::J;
+                    break;
+                case GLFW_KEY_K:
+                    code = KeyCode::K;
+                    break;
+                case GLFW_KEY_L:
+                    code = KeyCode::L;
+                    break;
+                case GLFW_KEY_M:
+                    code = KeyCode::M;
+                    break;
+                case GLFW_KEY_N:
+                    code = KeyCode::N;
+                    break;
+                case GLFW_KEY_O:
+                    code = KeyCode::O;
+                    break;
+                case GLFW_KEY_P:
+                    code = KeyCode::P;
+                    break;
+                case GLFW_KEY_Q:
+                    code = KeyCode::Q;
+                    break;
+                case GLFW_KEY_R:
+                    code = KeyCode::R;
+                    break;
+                case GLFW_KEY_S:
+                    code = KeyCode::S;
+                    break;
+                case GLFW_KEY_T:
+                    code = KeyCode::T;
+                    break;
+                case GLFW_KEY_U:
+                    code = KeyCode::U;
+                    break;
+                case GLFW_KEY_V:
+                    code = KeyCode::V;
+                    break;
+                case GLFW_KEY_W:
+                    code = KeyCode::W;
+                    break;
+                case GLFW_KEY_X:
+                    code = KeyCode::X;
+                    break;
+                case GLFW_KEY_Y:
+                    code = KeyCode::Y;
+                    break;
+                case GLFW_KEY_Z:
+                    code = KeyCode::Z;
+                    break;
+
+                case GLFW_KEY_ENTER:
+                    code = KeyCode::Return;
+                    break;
+                case GLFW_KEY_ESCAPE:
+                    code = KeyCode::Escape;
+                    break;
+                case GLFW_KEY_DELETE:
+                    code = KeyCode::Delete;
+                    break;
+                case GLFW_KEY_TAB:
+                    code = KeyCode::Tab;
+                    break;
+                case GLFW_KEY_SPACE:
+                    code = KeyCode::Space;
+                    break;
+                case GLFW_KEY_MINUS:
+                    code = KeyCode::Subtract;
+                    break;
+                case GLFW_KEY_EQUAL:
+                    code = KeyCode::Equal;
+                    break;
+                case GLFW_KEY_LEFT_BRACKET:
+                    code = KeyCode::LeftBracket;
+                    break;
+                case GLFW_KEY_RIGHT_BRACKET:
+                    code = KeyCode::RightBracket;
+                    break;
+                case GLFW_KEY_BACKSLASH:
+                    code = KeyCode::Backslash;
+                    break;
+                case GLFW_KEY_WORLD_1:
+                    code = KeyCode::WorldOne;
+                    break;
+                case GLFW_KEY_SEMICOLON:
+                    code = KeyCode::Semicolon;
+                    break;
+                case GLFW_KEY_APOSTROPHE:
+                    code = KeyCode::Apostrophe;
+                    break;
+                case GLFW_KEY_GRAVE_ACCENT:
+                    code = KeyCode::GraveAccent;
+                    break;
+                case GLFW_KEY_COMMA:
+                    code = KeyCode::Comma;
+                    break;
+                case GLFW_KEY_PERIOD:
+                    code = KeyCode::Period;
+                    break;
+                case GLFW_KEY_SLASH:
+                    code = KeyCode::Slash;
+                    break;
+                case GLFW_KEY_CAPS_LOCK:
+                    code = KeyCode::CapsLock;
+                    break;
+
+                case GLFW_KEY_F1:
+                    code = KeyCode::F1;
+                    break;
+                case GLFW_KEY_F2:
+                    code = KeyCode::F2;
+                    break;
+                case GLFW_KEY_F3:
+                    code = KeyCode::F3;
+                    break;
+                case GLFW_KEY_F4:
+                    code = KeyCode::F4;
+                    break;
+                case GLFW_KEY_F5:
+                    code = KeyCode::F5;
+                    break;
+                case GLFW_KEY_F6:
+                    code = KeyCode::F6;
+                    break;
+                case GLFW_KEY_F7:
+                    code = KeyCode::F7;
+                    break;
+                case GLFW_KEY_F8:
+                    code = KeyCode::F8;
+                    break;
+                case GLFW_KEY_F9:
+                    code = KeyCode::F9;
+                    break;
+                case GLFW_KEY_F10:
+                    code = KeyCode::F10;
+                    break;
+                case GLFW_KEY_F11:
+                    code = KeyCode::F11;
+                    break;
+                case GLFW_KEY_F12:
+                    code = KeyCode::F12;
+                    break;
+                case GLFW_KEY_F13:
+                    code = KeyCode::F13;
+                    break;
+                case GLFW_KEY_F14:
+                    code = KeyCode::F14;
+                    break;
+                case GLFW_KEY_F15:
+                    code = KeyCode::F15;
+                    break;
+                case GLFW_KEY_F16:
+                    code = KeyCode::F16;
+                    break;
+
+                case GLFW_KEY_LEFT_CONTROL:
+                    code = KeyCode::LeftControl;
+                    break;
+                case GLFW_KEY_LEFT_SHIFT:
+                    code = KeyCode::LeftShift;
+                    break;
+                case GLFW_KEY_LEFT_ALT:
+                    code = KeyCode::LeftAlt;
+                    break;
+                case GLFW_KEY_LEFT_SUPER:
+                    code = KeyCode::LeftCommand;
+                    break;
+                case GLFW_KEY_RIGHT_CONTROL:
+                    code = KeyCode::RightControl;
+                    break;
+                case GLFW_KEY_RIGHT_SHIFT:
+                    code = KeyCode::RightShift;
+                    break;
+                case GLFW_KEY_RIGHT_ALT:
+                    code = KeyCode::RightAlt;
+                    break;
+                case GLFW_KEY_RIGHT_SUPER:
+                    code = KeyCode::RightCommand;
+                    break;
+
+                case GLFW_KEY_RIGHT:
+                    code = KeyCode::Right;
+                    break;
+                case GLFW_KEY_LEFT:
+                    code = KeyCode::Left;
+                    break;
+                case GLFW_KEY_DOWN:
+                    code = KeyCode::Down;
+                    break;
+                case GLFW_KEY_UP:
+                    code = KeyCode::Up;
+                    break;
+
+                case GLFW_KEY_KP_DIVIDE:
+                    code = KeyCode::KPDivide;
+                    break;
+                case GLFW_KEY_KP_MULTIPLY:
+                    code = KeyCode::KPMultiply;
+                    break;
+                case GLFW_KEY_KP_SUBTRACT:
+                    code = KeyCode::KPSubtract;
+                    break;
+                case GLFW_KEY_KP_ADD:
+                    code = KeyCode::KPAdd;
+                    break;
+                case GLFW_KEY_KP_ENTER:
+                    code = KeyCode::KPReturn;
+                    break;
+                case GLFW_KEY_KP_1:
+                    code = KeyCode::KPOne;
+                    break;
+                case GLFW_KEY_KP_2:
+                    code = KeyCode::KPTwo;
+                    break;
+                case GLFW_KEY_KP_3:
+                    code = KeyCode::KPThree;
+                    break;
+                case GLFW_KEY_KP_4:
+                    code = KeyCode::KPFour;
+                    break;
+                case GLFW_KEY_KP_5:
+                    code = KeyCode::KPFive;
+                    break;
+                case GLFW_KEY_KP_6:
+                    code = KeyCode::KPSix;
+                    break;
+                case GLFW_KEY_KP_7:
+                    code = KeyCode::KPSeven;
+                    break;
+                case GLFW_KEY_KP_8:
+                    code = KeyCode::KPEight;
+                    break;
+                case GLFW_KEY_KP_9:
+                    code = KeyCode::KPNine;
+                    break;
+                case GLFW_KEY_KP_0:
+                    code = KeyCode::KPZero;
+                    break;
+                case GLFW_KEY_KP_EQUAL:
+                    code = KeyCode::KPEqual;
+                    break;
+
+                default:
+                    code = KeyCode::Unknown;
+            }
+
+            const char * key_name = glfwGetKeyName(_key, 0);
+            printf("DA KEY: %s %i %i\n", key_name, _key, _scancode);
+
+            if (_action == GLFW_PRESS || _action == GLFW_REPEAT)
+            {
+                window->m_window->publish(KeyDownEvent(code, _action == GLFW_REPEAT), true);
+            }
+            else if (_action == GLFW_RELEASE)
+            {
+                window->m_window->publish(KeyUpEvent(code), true);
+            }
+        }
+
         Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
         {
             if (m_glfwWindow)
@@ -196,8 +524,8 @@ namespace luke
 
             //create the window
             m_glfwWindow = glfwCreateWindow(_settings.width(), _settings.height(),
-                                            _settings.title().length() ? _settings.title().cString() : "Luke Window", 
-                                            _settings.display().isValid() ? _settings.display().m_pimpl->m_glfwMonitor : NULL, 
+                                            _settings.title().length() ? _settings.title().cString() : "Luke Window",
+                                            _settings.display().isValid() ? _settings.display().m_pimpl->m_glfwMonitor : NULL,
                                             _shared ? _shared->m_glfwWindow : NULL);
 
             if (!m_glfwWindow)
@@ -214,6 +542,7 @@ namespace luke
             glfwSetMouseButtonCallback(m_glfwWindow, &mouseButtonCallback);
             glfwSetCursorPosCallback(m_glfwWindow, &mouseMoveCallback);
             glfwSetScrollCallback(m_glfwWindow, &mouseScrollCallback);
+            glfwSetKeyCallback(m_glfwWindow, &keyCallback);
             glfwSetWindowSizeCallback(m_glfwWindow, &windowSizeCallback);
             glfwSetWindowPosCallback(m_glfwWindow, &windowPositionCallback);
             glfwSetWindowFocusCallback(m_glfwWindow, &windowFocusCallback);

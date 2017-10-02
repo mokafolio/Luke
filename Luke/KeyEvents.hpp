@@ -14,20 +14,12 @@ namespace luke
 
         KeyboardEvent(KeyCode _key);
 
-        KeyboardEvent(KeyCode _key, const stick::String & _unicode);
-
-        ~KeyboardEvent();
-
-
-        stick::String unicode() const;
-
         KeyCode key() const;
 
 
     private:
 
         KeyCode m_key;
-        stick::String m_unicode; //holds unicode characters if unicode translation is activated
     };
 
     class STICK_API KeyDownEvent :
@@ -36,7 +28,7 @@ namespace luke
     {
     public:
 
-        KeyDownEvent(KeyCode _key, const stick::String & _unicode, bool _bRepeat);
+        KeyDownEvent(KeyCode _key, bool _bRepeat);
 
         bool isRepeat() const;
 
@@ -51,7 +43,7 @@ namespace luke
     {
     public:
 
-        KeyUpEvent(KeyCode _key, const stick::String & _unicode);
+        KeyUpEvent(KeyCode _key);
     };
 }
 
