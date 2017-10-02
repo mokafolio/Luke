@@ -12,14 +12,16 @@ namespace luke
 
     public:
 
-        KeyboardEvent(KeyCode _key);
+        KeyboardEvent(KeyCode _key, stick::Int32 _scancode);
 
         KeyCode key() const;
 
+        stick::Int32 scancode() const;
 
     private:
 
         KeyCode m_key;
+        stick::Int32 m_scancode;
     };
 
     class STICK_API KeyDownEvent :
@@ -28,7 +30,7 @@ namespace luke
     {
     public:
 
-        KeyDownEvent(KeyCode _key, bool _bRepeat);
+        KeyDownEvent(KeyCode _key, stick::Int32 _scancode, bool _bRepeat);
 
         bool isRepeat() const;
 
@@ -43,7 +45,7 @@ namespace luke
     {
     public:
 
-        KeyUpEvent(KeyCode _key);
+        KeyUpEvent(KeyCode _key, stick::Int32 _scancode);
     };
 }
 

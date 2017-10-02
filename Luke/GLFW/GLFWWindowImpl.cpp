@@ -163,13 +163,11 @@ namespace luke
             if (_iconified)
             {
                 // The window was iconified
-                printf("ICONIFIED\n");
                 window->m_window->publish(WindowIconifyEvent(), true);
             }
             else
             {
                 // The window was restored
-                printf("RESTORED\n");
                 window->m_window->publish(WindowRestoreEvent(), true);
             }
         }
@@ -488,16 +486,13 @@ namespace luke
                     code = KeyCode::Unknown;
             }
 
-            const char * key_name = glfwGetKeyName(_key, 0);
-            printf("DA KEY: %s %i %i\n", key_name, _key, _scancode);
-
             if (_action == GLFW_PRESS || _action == GLFW_REPEAT)
             {
-                window->m_window->publish(KeyDownEvent(code, _action == GLFW_REPEAT), true);
+                window->m_window->publish(KeyDownEvent(code, _scancode, _action == GLFW_REPEAT), true);
             }
             else if (_action == GLFW_RELEASE)
             {
-                window->m_window->publish(KeyUpEvent(code), true);
+                window->m_window->publish(KeyUpEvent(code, _scancode), true);
             }
         }
 
