@@ -18,6 +18,7 @@ Luke/Display.hpp
 Luke/DisplayMode.hpp
 Luke/KeyCodes.hpp
 Luke/KeyEvents.hpp
+Luke/Luke.hpp
 Luke/MouseEvents.hpp
 Luke/MouseState.hpp
 Luke/Window.hpp

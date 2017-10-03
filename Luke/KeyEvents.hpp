@@ -6,13 +6,11 @@
 
 namespace luke
 {
-    class STICK_API KeyboardEvent
+    class STICK_API KeyEvent
     {
-        friend class Keyboard;
-
     public:
 
-        KeyboardEvent(KeyCode _key, stick::Int32 _scancode);
+        KeyEvent(KeyCode _key, stick::Int32 _scancode);
 
         KeyCode key() const;
 
@@ -25,7 +23,7 @@ namespace luke
     };
 
     class STICK_API KeyDownEvent :
-        public KeyboardEvent,
+        public KeyEvent,
         public stick::EventT<KeyDownEvent>
     {
     public:
@@ -40,7 +38,7 @@ namespace luke
     };
 
     class STICK_API KeyUpEvent :
-        public KeyboardEvent,
+        public KeyEvent,
         public stick::EventT<KeyUpEvent>
     {
     public:

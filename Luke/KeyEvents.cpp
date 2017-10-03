@@ -4,25 +4,25 @@ namespace luke
 {
     using namespace stick;
 
-    KeyboardEvent::KeyboardEvent(KeyCode _key, Int32 _scancode) :
+    KeyEvent::KeyEvent(KeyCode _key, Int32 _scancode) :
         m_key(_key),
         m_scancode(_scancode)
     {
 
     }
 
-    KeyCode KeyboardEvent::key() const
+    KeyCode KeyEvent::key() const
     {
         return m_key;
     }
 
-    Int32 KeyboardEvent::scancode() const
+    Int32 KeyEvent::scancode() const
     {
         return m_scancode;
     }
 
     KeyDownEvent::KeyDownEvent(KeyCode _key, Int32 _scancode, bool _bIsRepeat) :
-        KeyboardEvent(_key, _scancode),
+        KeyEvent(_key, _scancode),
         m_bIsRepeat(_bIsRepeat)
     {
 
@@ -34,7 +34,7 @@ namespace luke
     }
 
     KeyUpEvent::KeyUpEvent(KeyCode _key, Int32 _scancode) :
-        KeyboardEvent(_key, _scancode)
+        KeyEvent(_key, _scancode)
     {
 
     }
