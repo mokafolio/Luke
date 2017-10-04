@@ -93,24 +93,6 @@ namespace luke
 
         MouseUpEvent(const MouseState & _state, MouseButton _button);
     };
-
-    class STICK_API MouseEnterEvent :
-        public MouseEvent,
-        public stick::EventT<MouseEnterEvent>
-    {
-    public:
-
-        MouseEnterEvent(const MouseState & _state);
-    };
-
-    class STICK_API MouseLeaveEvent :
-        public MouseEvent,
-        public stick::EventT<MouseLeaveEvent>
-    {
-    public:
-
-        MouseLeaveEvent(const MouseState & _state);
-    };
 }
 
 #endif //LUKE_MOUSEEVENTS_HPP

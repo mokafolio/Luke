@@ -76,16 +76,4 @@ namespace luke
     {
 
     }
-
-    MouseEnterEvent::MouseEnterEvent(const MouseState & _state) :
-        MouseEvent(_state, MouseButton::None)
-    {
-
-    }
-
-    MouseLeaveEvent::MouseLeaveEvent(const MouseState & _state) :
-        MouseEvent(_state, MouseButton::None)
-    {
-
-    }
 }
