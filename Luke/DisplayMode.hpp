@@ -2,7 +2,6 @@
 #define LUKE_DISPLAYMODE_HPP
 
 #include <Stick/DynamicArray.hpp>
-#include <Crunch/Rectangle.hpp>
 
 namespace luke
 {
