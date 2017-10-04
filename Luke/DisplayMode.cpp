@@ -3,8 +3,7 @@
 namespace luke
 {
     using namespace stick;
-    using namespace crunch;
-
+    
     DisplayMode::DisplayMode() :
         m_width(0),
         m_height(0),

@@ -6,7 +6,6 @@
 namespace luke
 {
     using namespace stick;
-    using namespace crunch;
 
     Display::Display() :
         m_pimpl(makeUnique<detail::DisplayImpl>(defaultAllocator()))
@@ -112,8 +111,13 @@ namespace luke
         return m_pimpl->isValid();
     }
 
-    Vec2f Display::position() const
+    Float32 Display::x() const
     {
-        return m_pimpl->position();
+        return m_pimpl->x();
+    }
+
+    Float32 Display::y() const
+    {
+        return m_pimpl->y();
     }
 }

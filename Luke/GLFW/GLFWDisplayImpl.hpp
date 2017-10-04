@@ -25,7 +25,9 @@ namespace luke
 
             bool isValid() const;
 
-            crunch::Vec2f position() const;
+            stick::Float32 x() const;
+
+            stick::Float32 y() const;
 
             static Display mainDisplay();
 

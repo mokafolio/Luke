@@ -6,7 +6,6 @@ namespace luke
     namespace detail
     {
         using namespace stick;
-        using namespace crunch;
 
         DisplayImpl::DisplayImpl() :
             m_glfwMonitor(NULL)
@@ -73,12 +72,20 @@ namespace luke
             return Display();
         }
 
-        Vec2f DisplayImpl::position() const
+        Float32 DisplayImpl::x() const
         {
             STICK_ASSERT(isValid());
             int x, y;
             glfwGetMonitorPos (m_glfwMonitor, &x, &y);
-            return Vec2f(x, y);
+            return x;
+        }
+
+        Float32 DisplayImpl::y() const
+        {
+            STICK_ASSERT(isValid());
+            int x, y;
+            glfwGetMonitorPos (m_glfwMonitor, &x, &y);
+            return y;
         }
 
         DisplayArray DisplayImpl::displays()
