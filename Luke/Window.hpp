@@ -3,6 +3,7 @@
 
 #include <Stick/EventForwarder.hpp>
 #include <Luke/WindowSettings.hpp>
+#include <Luke/KeyCodes.hpp>
 
 namespace luke
 {
@@ -72,6 +73,8 @@ namespace luke
         bool isFocussed() const;
 
         bool isFullscreen() const;
+
+        bool isKeyDown(KeyCode _key) const;
 
         const WindowSettings & settings() const;
 

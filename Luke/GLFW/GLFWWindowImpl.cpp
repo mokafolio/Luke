@@ -59,7 +59,6 @@ namespace luke
             if (_action == GLFW_PRESS)
             {
                 window->m_mouseState.setButtonBitMask(window->m_mouseState.buttonBitMask() | (UInt32)btn);
-                printf("DA BITMASK %i\n", window->m_mouseState.buttonBitMask());
                 window->m_window->publish(MouseDownEvent(window->m_mouseState, btn), true);
             }
             else if (_action == GLFW_RELEASE)
@@ -129,7 +128,6 @@ namespace luke
         {
             WindowImpl * window = reinterpret_cast<WindowImpl *>(glfwGetWindowUserPointer(_window));
             STICK_ASSERT(window);
-            printf("GLFW RESIZE\n");
             window->m_window->publish(WindowResizeEvent(_width, _height), true);
         }
 
@@ -498,6 +496,8 @@ namespace luke
 
         Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
         {
+            GLFWInitializer::instance();
+            
             if (m_glfwWindow)
                 glfwDestroyWindow(m_glfwWindow);
 
@@ -516,6 +516,8 @@ namespace luke
             glfwWindowHint(GLFW_SAMPLES, _settings.sampleCount());
             glfwWindowHint(GLFW_RESIZABLE, _settings.isResizeable());
             glfwWindowHint(GLFW_DECORATED, _settings.isDecorated());
+
+            printf("WS %f %f\n", _settings.width(), _settings.height());
 
             //create the window
             m_glfwWindow = glfwCreateWindow(_settings.width(), _settings.height(),
@@ -763,9 +765,322 @@ namespace luke
             return glfwGetWindowMonitor(m_glfwWindow) != NULL;
         }
 
+        bool WindowImpl::isKeyDown(KeyCode _code) const
+        {
+            int code;
+             switch (_code)
+            {
+                case KeyCode::Zero:
+                    code = GLFW_KEY_0;
+                    break;
+                case KeyCode::One:
+                    code = GLFW_KEY_1;
+                    break;
+                case KeyCode::Two:
+                    code = GLFW_KEY_2;
+                    break;
+                case KeyCode::Three:
+                    code = GLFW_KEY_3;
+                    break;
+                case KeyCode::Four:
+                    code = GLFW_KEY_4;
+                    break;
+                case KeyCode::Five:
+                    code = GLFW_KEY_5;
+                    break;
+                case KeyCode::Six:
+                    code = GLFW_KEY_6;
+                    break;
+                case KeyCode::Seven:
+                    code = GLFW_KEY_7;
+                    break;
+                case KeyCode::Eight:
+                    code = GLFW_KEY_8;
+                    break;
+                case KeyCode::Nine:
+                    code = GLFW_KEY_9;
+                    break;
+
+                case KeyCode::A:
+                    code = GLFW_KEY_A;
+                    break;
+                case KeyCode::B:
+                    code = GLFW_KEY_B;
+                    break;
+                case KeyCode::C:
+                    code = GLFW_KEY_C;
+                    break;
+                case KeyCode::D:
+                    code = GLFW_KEY_D;
+                    break;
+                case KeyCode::E:
+                    code = GLFW_KEY_E;
+                    break;
+                case KeyCode::F:
+                    code = GLFW_KEY_F;
+                    break;
+                case KeyCode::G:
+                    code = GLFW_KEY_G;
+                    break;
+                case KeyCode::H:
+                    code = GLFW_KEY_H;
+                    break;
+                case KeyCode::I:
+                    code = GLFW_KEY_I;
+                    break;
+                case KeyCode::J:
+                    code = GLFW_KEY_J;
+                    break;
+                case KeyCode::K:
+                    code = GLFW_KEY_K;
+                    break;
+                case KeyCode::L:
+                    code = GLFW_KEY_L;
+                    break;
+                case KeyCode::M:
+                    code = GLFW_KEY_M;
+                    break;
+                case KeyCode::N:
+                    code = GLFW_KEY_N;
+                    break;
+                case KeyCode::O:
+                    code = GLFW_KEY_O;
+                    break;
+                case KeyCode::P:
+                    code = GLFW_KEY_P;
+                    break;
+                case KeyCode::Q:
+                    code = GLFW_KEY_Q;
+                    break;
+                case KeyCode::R:
+                    code = GLFW_KEY_R;
+                    break;
+                case KeyCode::S:
+                    code = GLFW_KEY_S;
+                    break;
+                case KeyCode::T:
+                    code = GLFW_KEY_T;
+                    break;
+                case KeyCode::U:
+                    code = GLFW_KEY_U;
+                    break;
+                case KeyCode::V:
+                    code = GLFW_KEY_V;
+                    break;
+                case KeyCode::W:
+                    code = GLFW_KEY_W;
+                    break;
+                case KeyCode::X:
+                    code = GLFW_KEY_X;
+                    break;
+                case KeyCode::Y:
+                    code = GLFW_KEY_Y;
+                    break;
+                case KeyCode::Z:
+                    code = GLFW_KEY_Z;
+                    break;
+
+                case KeyCode::Return:
+                    code = GLFW_KEY_ENTER;
+                    break;
+                case KeyCode::Escape:
+                    code = GLFW_KEY_ESCAPE;
+                    break;
+                case KeyCode::Delete:
+                    code = GLFW_KEY_DELETE;
+                    break;
+                case KeyCode::Tab:
+                    code = GLFW_KEY_TAB;
+                    break;
+                case KeyCode::Space:
+                    code = GLFW_KEY_SPACE;
+                    break;
+                case KeyCode::Subtract:
+                    code = GLFW_KEY_MINUS;
+                    break;
+                case KeyCode::Equal:
+                    code = GLFW_KEY_EQUAL;
+                    break;
+                case KeyCode::LeftBracket:
+                    code = GLFW_KEY_LEFT_BRACKET;
+                    break;
+                case KeyCode::RightBracket:
+                    code = GLFW_KEY_RIGHT_BRACKET;
+                    break;
+                case KeyCode::Backslash:
+                    code = GLFW_KEY_BACKSLASH;
+                    break;
+                case KeyCode::WorldOne:
+                    code = GLFW_KEY_WORLD_1;
+                    break;
+                case KeyCode::Semicolon:
+                    code = GLFW_KEY_SEMICOLON;
+                    break;
+                case KeyCode::Apostrophe:
+                    code = GLFW_KEY_APOSTROPHE;
+                    break;
+                case KeyCode::GraveAccent:
+                    code = GLFW_KEY_GRAVE_ACCENT;
+                    break;
+                case KeyCode::Comma:
+                    code = GLFW_KEY_COMMA;
+                    break;
+                case KeyCode::Period:
+                    code = GLFW_KEY_PERIOD;
+                    break;
+                case KeyCode::Slash:
+                    code = GLFW_KEY_SLASH;
+                    break;
+                case KeyCode::CapsLock:
+                    code = GLFW_KEY_CAPS_LOCK;
+                    break;
+
+                case KeyCode::F1:
+                    code = GLFW_KEY_F1;
+                    break;
+                case KeyCode::F2:
+                    code = GLFW_KEY_F2;
+                    break;
+                case KeyCode::F3:
+                    code = GLFW_KEY_F3;
+                    break;
+                case KeyCode::F4:
+                    code = GLFW_KEY_F4;
+                    break;
+                case KeyCode::F5:
+                    code = GLFW_KEY_F5;
+                    break;
+                case KeyCode::F6:
+                    code = GLFW_KEY_F6;
+                    break;
+                case KeyCode::F7:
+                    code = GLFW_KEY_F7;
+                    break;
+                case KeyCode::F8:
+                    code = GLFW_KEY_F8;
+                    break;
+                case KeyCode::F9:
+                    code = GLFW_KEY_F9;
+                    break;
+                case KeyCode::F10:
+                    code = GLFW_KEY_F10;
+                    break;
+                case KeyCode::F11:
+                    code = GLFW_KEY_F11;
+                    break;
+                case KeyCode::F12:
+                    code = GLFW_KEY_F12;
+                    break;
+                case KeyCode::F13:
+                    code = GLFW_KEY_F13;
+                    break;
+                case KeyCode::F14:
+                    code = GLFW_KEY_F14;
+                    break;
+                case KeyCode::F15:
+                    code = GLFW_KEY_F15;
+                    break;
+                case KeyCode::F16:
+                    code = GLFW_KEY_F16;
+                    break;
+
+                case KeyCode::LeftControl:
+                    code = GLFW_KEY_LEFT_CONTROL;
+                    break;
+                case KeyCode::LeftShift:
+                    code = GLFW_KEY_LEFT_SHIFT;
+                    break;
+                case KeyCode::LeftAlt:
+                    code = GLFW_KEY_LEFT_ALT;
+                    break;
+                case KeyCode::LeftCommand:
+                    code = GLFW_KEY_LEFT_SUPER;
+                    break;
+                case KeyCode::RightControl:
+                    code = GLFW_KEY_RIGHT_CONTROL;
+                    break;
+                case KeyCode::RightShift:
+                    code = GLFW_KEY_RIGHT_SHIFT;
+                    break;
+                case KeyCode::RightAlt:
+                    code = GLFW_KEY_RIGHT_ALT;
+                    break;
+                case KeyCode::RightCommand:
+                    code = GLFW_KEY_RIGHT_SUPER;
+                    break;
+
+                case KeyCode::Right:
+                    code = GLFW_KEY_RIGHT;
+                    break;
+                case KeyCode::Left:
+                    code = GLFW_KEY_LEFT;
+                    break;
+                case KeyCode::Down:
+                    code = GLFW_KEY_DOWN;
+                    break;
+                case KeyCode::Up:
+                    code = GLFW_KEY_UP;
+                    break;
+
+                case KeyCode::KPDivide:
+                    code = GLFW_KEY_KP_DIVIDE;
+                    break;
+                case KeyCode::KPMultiply:
+                    code = GLFW_KEY_KP_MULTIPLY;
+                    break;
+                case KeyCode::KPSubtract:
+                    code = GLFW_KEY_KP_SUBTRACT;
+                    break;
+                case KeyCode::KPAdd:
+                    code = GLFW_KEY_KP_ADD;
+                    break;
+                case KeyCode::KPReturn:
+                    code = GLFW_KEY_KP_ENTER;
+                    break;
+                case KeyCode::KPOne:
+                    code = GLFW_KEY_KP_1;
+                    break;
+                case KeyCode::KPTwo:
+                    code = GLFW_KEY_KP_2;
+                    break;
+                case KeyCode::KPThree:
+                    code = GLFW_KEY_KP_3;
+                    break;
+                case KeyCode::KPFour:
+                    code = GLFW_KEY_KP_4;
+                    break;
+                case KeyCode::KPFive:
+                    code = GLFW_KEY_KP_5;
+                    break;
+                case KeyCode::KPSix:
+                    code = GLFW_KEY_KP_6;
+                    break;
+                case KeyCode::KPSeven:
+                    code = GLFW_KEY_KP_7;
+                    break;
+                case KeyCode::KPEight:
+                    code = GLFW_KEY_KP_8;
+                    break;
+                case KeyCode::KPNine:
+                    code = GLFW_KEY_KP_9;
+                    break;
+                case KeyCode::KPZero:
+                    code = GLFW_KEY_KP_0;
+                    break;
+                case KeyCode::KPEqual:
+                    code = GLFW_KEY_KP_EQUAL;
+                    break;
+
+                default:
+                    code = -1;
+            }
+
+            return glfwGetKey(m_glfwWindow, code) == GLFW_PRESS;
+        }
+
         const String & WindowImpl::title() const
         {
-
+            //@TODO
         }
 
         Float32 WindowImpl::backingScaleFactor() const

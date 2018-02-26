@@ -1,8 +1,6 @@
 Short Term:
-- Add Key Events
 - Finish WindowSettings and corresponding GLFW implementation
 - Write some basic tests
-- Add iconify events
 - Reset mouse state in glfw implementation when going fullscreen (bugged on their end)
 
 Long Term:
