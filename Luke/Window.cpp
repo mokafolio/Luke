@@ -29,6 +29,11 @@ namespace luke
         m_pimpl->close();
     }
 
+    void Window::setShouldClose(bool _b)
+    {
+        m_pimpl->setShouldClose(_b);
+    }
+
     bool Window::shouldClose() const
     {
         return m_pimpl->shouldClose();

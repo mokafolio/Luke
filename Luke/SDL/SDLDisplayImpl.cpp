@@ -85,19 +85,16 @@ namespace luke
         DisplayModeArray DisplayImpl::displayModes() const
         {
             SDLInitializer::instance();
-            printf("BOOP\n");
             DisplayModeArray ret;
             if (m_displayID >= 0)
             {
                 SDL_DisplayMode mode;
                 for (Size i = 0; i < SDL_GetNumDisplayModes(m_displayID); ++i)
                 {
-                    printf("I %lu\n", i);
                     SDL_GetDisplayMode(m_displayID, i, &mode);
                     ret.append(fromSDLDisplaymode(mode));
                 }
             }
-            printf("BAAAP\n");
             return ret;
         }
 

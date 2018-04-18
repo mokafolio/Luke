@@ -25,6 +25,8 @@ namespace luke
 
             void close();
 
+            void setShouldClose(bool _b);
+            
 
             void move(stick::Float32 _x, stick::Float32 _y);
 
