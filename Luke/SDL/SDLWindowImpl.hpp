@@ -4,7 +4,10 @@
 #include <Luke/Window.hpp>
 #include <Luke/MouseEvents.hpp>
 
-struct SDL_Window;
+// struct SDL_Window;
+// struct SDL_GLContext;
+
+#include "SDL.h"
 
 namespace luke
 {
@@ -96,14 +99,21 @@ namespace luke
 
             static stick::Error pollEvents();
 
+            void deallocateSDLWindowAndContext();
+
+            stick::UInt32 sdlWindowID() const;
+
 
             SDL_Window * m_sdlWindow;
+            SDL_GLContext m_sdlGLContext;
             Window * m_window;
             MouseState m_mouseState;
             stick::Float32 m_preFullscreenWidth;
             stick::Float32 m_preFullscreenHeight;
             stick::Float32 m_preFullscreenX;
             stick::Float32 m_preFullscreenY;
+            bool m_bShouldClose;
+            mutable stick::String m_title;
         };
     }
 }

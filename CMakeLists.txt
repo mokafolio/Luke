@@ -2,13 +2,13 @@ cmake_minimum_required (VERSION 2.8.11)
 project (Luke)
 set(CMAKE_CXX_FLAGS "-std=c++11 -fno-exceptions -w")
 
+set(LUKEIMPL "SDL" CACHE STRING "The implementation to compile")
+
 find_package(PkgConfig REQUIRED)
 pkg_search_module(GLFW REQUIRED glfw3)
 
-include_directories (${CMAKE_CURRENT_SOURCE_DIR} /usr/local/include)
+include_directories (${CMAKE_CURRENT_SOURCE_DIR} /usr/local/include /usr/local/include/SDL2)
 link_directories(/usr/local/lib ${GLFW_INCLUDE_DIRS})
-
-set (LUKEDEPS Stick ${GLFW_STATIC_LIBRARIES})
 
 set (LUKEINC 
 Luke/GLFW/GLFWDisplayImpl.hpp
@@ -27,9 +27,6 @@ Luke/WindowSettings.hpp
 )
 
 set (LUKESRC 
-Luke/GLFW/GLFWDisplayImpl.cpp
-Luke/GLFW/GLFWInitializer.cpp
-Luke/GLFW/GLFWWindowImpl.cpp
 Luke/Display.cpp
 Luke/DisplayMode.cpp
 Luke/KeyEvents.cpp
@@ -39,6 +36,34 @@ Luke/Window.cpp
 Luke/WindowEvents.cpp
 Luke/WindowSettings.cpp
 )
+
+if(${LUKEIMPL} STREQUAL "GLFW")
+    add_definitions(-DLUKE_IMPLEMENTATION_GLFW)
+    set (LUKEDEPS Stick ${GLFW_STATIC_LIBRARIES})
+    set (LUKEINC ${LUKEINC}
+        Luke/GLFW/GLFWDisplayImpl.hpp
+        Luke/GLFW/GLFWInitializer.hpp
+        Luke/GLFW/GLFWWindowImpl.hpp
+    )
+    set (LUKESRC ${LUKESRC}
+        Luke/GLFW/GLFWDisplayImpl.cpp
+        Luke/GLFW/GLFWInitializer.cpp
+        Luke/GLFW/GLFWWindowImpl.cpp
+    )
+elseif(${LUKEIMPL} STREQUAL "SDL")
+    add_definitions(-DLUKE_IMPLEMENTATION_SDL)
+    set (LUKEDEPS Stick sdl2)
+    set (LUKEINC ${LUKEINC}
+        Luke/SDL/SDLDisplayImpl.hpp
+        Luke/SDL/SDLInitializer.hpp
+        Luke/SDL/SDLWindowImpl.hpp
+    )
+    set (LUKESRC ${LUKESRC}
+        Luke/SDL/SDLDisplayImpl.cpp
+        Luke/SDL/SDLInitializer.cpp
+        Luke/SDL/SDLWindowImpl.cpp
+    )
+endif()
 
 add_library (Luke SHARED ${LUKESRC})
 target_link_libraries(Luke ${LUKEDEPS})

@@ -39,6 +39,8 @@ namespace luke
 
         void maximize();
 
+        //@TODO add minimize/iconify to API
+
         void focus();
 
 

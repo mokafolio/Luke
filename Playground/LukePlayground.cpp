@@ -9,9 +9,13 @@ using namespace luke;
 
 int main(int _argc, const char * _args[])
 {
+    printf("START\n");
     Display disp = Display::mainDisplay();
+    printf("B\n");
     auto current = disp.currentDisplayMode();
+    printf("C\n");
     auto modes = disp.displayModes();
+    printf("D\n");
     for (auto & mode : modes)
     {
         printf("DISPLAY MODE W %f H %f RR %i R %i G %i B %i\n", mode.width(), mode.height(), mode.refreshRate(), mode.redBits(), mode.greenBits(), mode.blueBits());

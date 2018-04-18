@@ -1,5 +1,10 @@
 #include <Luke/Display.hpp>
+
+#if defined(LUKE_IMPLEMENTATION_GLFW)
 #include <Luke/GLFW/GLFWDisplayImpl.hpp>
+#elif defined(LUKE_IMPLEMENTATION_SDL)
+#include <Luke/SDL/SDLDisplayImpl.hpp>
+#endif
 
 #include <cmath>
 

@@ -519,18 +519,19 @@ namespace luke
             glfwWindowHint(GLFW_RESIZABLE, _settings.isResizeable());
             glfwWindowHint(GLFW_DECORATED, _settings.isDecorated());
 
-            printf("WS %f %f\n", _settings.width(), _settings.height());
-
             //create the window
             m_glfwWindow = glfwCreateWindow(_settings.width(), _settings.height(),
                                             _settings.title().length() ? _settings.title().cString() : "Luke Window",
                                             _settings.display().isValid() ? _settings.display().m_pimpl->m_glfwMonitor : NULL,
                                             _shared ? _shared->m_glfwWindow : NULL);
 
+            //@TODO Proper error code
             if (!m_glfwWindow)
             {
                 return Error(ec::InvalidOperation, "Could not create GLFW window", STICK_FILE, STICK_LINE);
             }
+
+            //@TODO move the window to the position specified in settings?
 
             m_preFullscreenWidth = _settings.width();
             m_preFullscreenHeight = _settings.height();
@@ -571,7 +572,7 @@ namespace luke
 
         void WindowImpl::moveToCenter()
         {
-
+            //@TODO
         }
 
         void WindowImpl::show()
@@ -731,7 +732,7 @@ namespace luke
 
         void WindowImpl::setTitle(const String & _str)
         {
-
+            //@TODO!!!!!!
         }
 
         bool WindowImpl::isVisible() const
@@ -748,7 +749,7 @@ namespace luke
 
         const WindowSettings & WindowImpl::settings() const
         {
-
+            //@TODO!!!!!! or remove from api?
         }
 
         bool WindowImpl::isCursorVisible() const
@@ -758,7 +759,7 @@ namespace luke
 
         bool WindowImpl::verticalSync() const
         {
-
+            //@TODO!!!!!!
         }
 
         bool WindowImpl::isFullscreen() const

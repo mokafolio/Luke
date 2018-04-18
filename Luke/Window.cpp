@@ -1,4 +1,8 @@
+#if defined(LUKE_IMPLEMENTATION_GLFW)
 #include <Luke/GLFW/GLFWWindowImpl.hpp>
+#elif defined(LUKE_IMPLEMENTATION_SDL)
+#include <Luke/SDL/SDLWindowImpl.hpp>
+#endif
 
 namespace luke
 {

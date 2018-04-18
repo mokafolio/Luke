@@ -27,6 +27,8 @@ namespace luke
         stick::Float32 m_y;
     };
 
+    //@TODO: Window show/hide events, maximize event
+
     class STICK_API WindowResizeEvent :
         public stick::EventT<WindowResizeEvent>
     {
