@@ -43,10 +43,10 @@ int main(int _argc, const char * _args[])
         {
             printf("LEFT BUTTON\n");
             // window.enterFullscreen(800, 600);
-            if (!window.isFullscreen())
-                window.enterFullscreen();
-            else
-                window.exitFullscreen();
+            // if (!window.isFullscreen())
+            //     window.enterFullscreen();
+            // else
+            //     window.exitFullscreen();
             // window.move(400, 400);
         }
         if (_event.button() == MouseButton::Middle)
@@ -137,19 +137,25 @@ int main(int _argc, const char * _args[])
         printf("WINDOW RESTOROOOOROOROROREEE\n");
     });
 
-    window.addEventCallback([](const KeyUpEvent & _event)
+    window.addEventCallback([&](const KeyUpEvent & _event)
     {
         printf("KEY UP %i\n", _event.key());
 
-        if(_event.key() == KeyCode::Subtract)
+        if (_event.key() == KeyCode::Subtract)
         {
             printf("DA SUBTRACT\n");
         }
-        else if(_event.key() == KeyCode::Slash)
+        else if (_event.key() == KeyCode::Slash)
         {
             printf("DA SLAAASH\n");
         }
-
+        else if (_event.key() == KeyCode::Space)
+        {
+            if (!window.isFullscreen())
+                window.enterFullscreen();
+            else
+                window.exitFullscreen();
+        }
     });
 
     window.addEventCallback([](const KeyDownEvent & _event)
@@ -160,10 +166,12 @@ int main(int _argc, const char * _args[])
     while (!window.shouldClose())
     {
         window.enableRenderContext();
+        printf("WS %f %f\n", window.widthInPixels(), window.heightInPixels());
+        glViewport(0, 0, window.widthInPixels(), window.heightInPixels());
         glClearColor(1, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        pollEvents();
+        luke::pollEvents();
         window.swapBuffers();
     }
 

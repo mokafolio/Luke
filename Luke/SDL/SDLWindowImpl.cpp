@@ -211,6 +211,7 @@ namespace luke
         void WindowImpl::exitFullscreen()
         {
             STICK_ASSERT(m_sdlWindow);
+            printf("EXIT FULLSCREEN\n");
             SDL_SetWindowFullscreen(m_sdlWindow, 0);
         }
 
@@ -235,11 +236,13 @@ namespace luke
         bool WindowImpl::isVisible() const
         {
             STICK_ASSERT(m_sdlWindow);
+            return (SDL_GetWindowFlags(m_sdlWindow) & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_SHOWN;
         }
 
         bool WindowImpl::isFocussed() const
         {
             STICK_ASSERT(m_sdlWindow);
+            return (SDL_GetWindowFlags(m_sdlWindow) & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_INPUT_FOCUS;
         }
 
         const WindowSettings & WindowImpl::settings() const
@@ -260,6 +263,7 @@ namespace luke
         bool WindowImpl::isFullscreen() const
         {
             STICK_ASSERT(m_sdlWindow);
+            return (SDL_GetWindowFlags(m_sdlWindow) & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN;
         }
 
         bool WindowImpl::isKeyDown(KeyCode _code) const
@@ -688,63 +692,66 @@ namespace luke
                 switch (_event->window.event)
                 {
                     case SDL_WINDOWEVENT_SHOWN:
-                        SDL_Log("Window %d shown", _event->window.windowID);
+                        // SDL_Log("Window %d shown", _event->window.windowID);
                         break;
                     case SDL_WINDOWEVENT_HIDDEN:
-                        SDL_Log("Window %d hidden", _event->window.windowID);
+                        // SDL_Log("Window %d hidden", _event->window.windowID);
                         break;
                     case SDL_WINDOWEVENT_EXPOSED:
                         SDL_Log("Window %d exposed", _event->window.windowID);
+                        //this should not be necessary but on osx the window flickers after
+                        //exitting from fullscreen unless we move it (or force a refresh somehow)
+                        (*it)->moveToCenter();
                         break;
                     case SDL_WINDOWEVENT_MOVED:
-                        SDL_Log("Window %d moved to %d,%d",
-                                _event->window.windowID, _event->window.data1,
-                                _event->window.data2);
+                        // SDL_Log("Window %d moved to %d,%d",
+                        //         _event->window.windowID, _event->window.data1,
+                        //         _event->window.data2);
                         (*it)->m_window->publish(WindowMoveEvent(_event->window.data1, _event->window.data2), true);
                         break;
                     case SDL_WINDOWEVENT_RESIZED:
                     case SDL_WINDOWEVENT_SIZE_CHANGED:
-                        SDL_Log("Window %d resized to %dx%d",
-                                _event->window.windowID, _event->window.data1,
-                                _event->window.data2);
+                        // SDL_Log("Window %d resized to %dx%d",
+                        //         _event->window.windowID, _event->window.data1,
+                        //         _event->window.data2);
                         (*it)->m_window->publish(WindowResizeEvent(_event->window.data1, _event->window.data2), true);
                         break;
                     case SDL_WINDOWEVENT_MINIMIZED:
-                        SDL_Log("Window %d minimized", _event->window.windowID);
+                        // SDL_Log("Window %d minimized", _event->window.windowID);
                         (*it)->m_window->publish(WindowIconifyEvent(), true);
                         break;
                     case SDL_WINDOWEVENT_MAXIMIZED:
-                        SDL_Log("Window %d maximized", _event->window.windowID);
+                        // SDL_Log("Window %d maximized", _event->window.windowID);
                         break;
                     case SDL_WINDOWEVENT_RESTORED:
-                        SDL_Log("Window %d restored", _event->window.windowID);
+                        // SDL_Log("Window %d restored", _event->window.windowID);
                         (*it)->m_window->publish(WindowRestoreEvent(), true);
                         break;
                     case SDL_WINDOWEVENT_ENTER:
-                        SDL_Log("Mouse entered window %d",
-                                _event->window.windowID);
+                        // SDL_Log("Mouse entered window %d",
+                                // _event->window.windowID);
                         break;
                     case SDL_WINDOWEVENT_LEAVE:
-                        SDL_Log("Mouse left window %d", _event->window.windowID);
+                        // SDL_Log("Mouse left window %d", _event->window.windowID);
                         break;
                     case SDL_WINDOWEVENT_FOCUS_GAINED:
-                        SDL_Log("Window %d gained keyboard focus",
-                                _event->window.windowID);
-                        (*it)->m_window->publish(WindowLostFocusEvent(), true);
-                        break;
-                    case SDL_WINDOWEVENT_FOCUS_LOST:
-                        SDL_Log("Window %d lost keyboard focus",
-                                _event->window.windowID);
+                        // SDL_Log("Window %d gained keyboard focus",
+                        //         _event->window.windowID);
                         (*it)->m_window->publish(WindowFocusEvent(), true);
                         break;
+                    case SDL_WINDOWEVENT_FOCUS_LOST:
+                        // SDL_Log("Window %d lost keyboard focus",
+                        //         _event->window.windowID);
+                        (*it)->m_window->publish(WindowLostFocusEvent(), true);
+                        break;
                     case SDL_WINDOWEVENT_CLOSE:
-                        SDL_Log("Window %d closed", _event->window.windowID);
+                        // SDL_Log("Window %d closed", _event->window.windowID);
                         (*it)->hide();
                         (*it)->m_bShouldClose = true;
                         break;
                     default:
-                        SDL_Log("Window %d got unknown event %d",
-                                _event->window.windowID, _event->window.event);
+                        // SDL_Log("Window %d got unknown event %d",
+                        //         _event->window.windowID, _event->window.event);
                         break;
                 }
 
@@ -1080,7 +1087,6 @@ namespace luke
 
         Error WindowImpl::pollEvents()
         {
-            printf("POLL EVENTS\n");
             SDL_Event e;
             while (SDL_PollEvent(&e) != 0)
             {
@@ -1096,6 +1102,7 @@ namespace luke
                             break;
                         }
                     case SDL_KEYDOWN:
+                    case SDL_KEYUP:
                         handkeKeyEvent(&e);
                         break;
                 }
