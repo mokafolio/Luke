@@ -1,6 +1,8 @@
 #include <Luke/GLFW/GLFWDisplayImpl.hpp>
 #include <Luke/GLFW/GLFWInitializer.hpp>
 
+#include <GLFW/glfw3.h>
+
 namespace luke
 {
     namespace detail

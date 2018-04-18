@@ -28,6 +28,7 @@ Luke/WindowSettings.hpp
 
 set (LUKESRC 
 Luke/GLFW/GLFWDisplayImpl.cpp
+Luke/GLFW/GLFWInitializer.cpp
 Luke/GLFW/GLFWWindowImpl.cpp
 Luke/Display.cpp
 Luke/DisplayMode.cpp

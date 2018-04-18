@@ -1,7 +1,7 @@
 #ifndef LUKE_GLFW_GLFWINITIALIZER_HPP
 #define LUKE_GLFW_GLFWINITIALIZER_HPP
 
-#include <GLFW/glfw3.h>
+#include <Stick/Platform.hpp>
 
 namespace luke
 {
@@ -9,21 +9,11 @@ namespace luke
     {
         struct STICK_LOCAL GLFWInitializer
         {
-            GLFWInitializer()
-            {
-                STICK_ASSERT(glfwInit());
-            }
+            GLFWInitializer();
 
-            ~GLFWInitializer()
-            {
-                glfwTerminate();
-            }
+            ~GLFWInitializer();
 
-            static GLFWInitializer & instance()
-            {
-                static GLFWInitializer s_instance;
-                return s_instance;
-            }
+            static GLFWInitializer & instance();
         };
     }
 }

@@ -1,10 +1,8 @@
-#include <Luke/GLFW/GLFWWindowImpl.hpp>
-#include <Luke/GLFW/GLFWDisplayImpl.hpp>
-#include <Luke/GLFW/GLFWInitializer.hpp>
+#include <Luke/SDL/SDLWindowImpl.hpp>
+// #include <Luke/GLFW/GLFWDisplayImpl.hpp>
+#include <Luke/SDL/SDLInitializer.hpp>
 #include <Luke/WindowEvents.hpp>
 #include <Luke/KeyEvents.hpp>
-
-#include <GLFW/glfw3.h>
 
 namespace luke
 {
