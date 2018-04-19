@@ -26,7 +26,7 @@ namespace luke
             void close();
 
             void setShouldClose(bool _b);
-            
+
 
             void move(stick::Float32 _x, stick::Float32 _y);
 
@@ -52,7 +52,7 @@ namespace luke
 
             void setVerticalSync(bool _b);
 
-            stick::Error enterFullscreen(const Display & _display);
+            stick::Error enterFullscreen(FullScreenMode _mode, const Display & _display);
 
             stick::Error enterFullscreen(const DisplayMode & _mode, const Display & _display);
 

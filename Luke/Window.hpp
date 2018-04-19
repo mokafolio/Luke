@@ -13,6 +13,12 @@ namespace luke
         using WindowImplUniquePtr = stick::UniquePtr<WindowImpl>;
     }
 
+    STICK_API_ENUM_CLASS(FullScreenMode)
+    {
+        Borderless, //borderless fullscreenwindow in the current desktop resolution
+        Fullsceen //actually changs the display mode
+    };
+
     class STICK_API Window :
         public stick::EventForwarderT<stick::Event, stick::detail::ForwardingPolicyBasic, stick::detail::PublishingPolicyBasic>
     {
@@ -27,7 +33,7 @@ namespace luke
         void close();
 
         void setShouldClose(bool _b);
-        
+
 
         void move(stick::Float32 _x, stick::Float32 _y);
 
@@ -51,7 +57,7 @@ namespace luke
         void disableRenderContext();
 
 
-        stick::Error enterFullscreen(const Display & _display = Display());
+        stick::Error enterFullscreen(FullScreenMode _mode = FullScreenMode::Borderless, const Display & _display = Display());
 
         stick::Error enterFullscreen(const DisplayMode & _mode, const Display & _display = Display());
 

@@ -192,10 +192,16 @@ namespace luke
         }
 
         //@TODO: Merge the code for both enter fullscreen functions into a helper
-        Error WindowImpl::enterFullscreen(const Display & _display)
+        Error WindowImpl::enterFullscreen(FullScreenMode _mode, const Display & _display)
         {
             STICK_ASSERT(m_sdlWindow);
-            SDL_SetWindowFullscreen(m_sdlWindow, SDL_WINDOW_FULLSCREEN);
+
+            int x, y;
+            SDL_GetWindowPosition(m_sdlWindow, &x, &y);
+            m_preFullscreenX = x;
+            m_preFullscreenY = y;
+            SDL_SetWindowFullscreen(m_sdlWindow,
+                                    _mode == FullScreenMode::Borderless ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_FULLSCREEN);
 
             return Error();
         }
@@ -213,6 +219,7 @@ namespace luke
             STICK_ASSERT(m_sdlWindow);
             printf("EXIT FULLSCREEN\n");
             SDL_SetWindowFullscreen(m_sdlWindow, 0);
+            // move(m_preFullscreenX, m_preFullscreenY);
         }
 
         void WindowImpl::hideCursor()
@@ -701,7 +708,6 @@ namespace luke
                         SDL_Log("Window %d exposed", _event->window.windowID);
                         //this should not be necessary but on osx the window flickers after
                         //exitting from fullscreen unless we move it (or force a refresh somehow)
-                        (*it)->moveToCenter();
                         break;
                     case SDL_WINDOWEVENT_MOVED:
                         // SDL_Log("Window %d moved to %d,%d",
@@ -729,7 +735,7 @@ namespace luke
                         break;
                     case SDL_WINDOWEVENT_ENTER:
                         // SDL_Log("Mouse entered window %d",
-                                // _event->window.windowID);
+                        // _event->window.windowID);
                         break;
                     case SDL_WINDOWEVENT_LEAVE:
                         // SDL_Log("Mouse left window %d", _event->window.windowID);

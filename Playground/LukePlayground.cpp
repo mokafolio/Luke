@@ -28,6 +28,7 @@ int main(int _argc, const char * _args[])
     Window window;
     WindowSettings settings;
     settings.setResizeable(true);
+    settings.setSize(1440, 900);
     auto err = window.open(settings);
 
     window.setVerticalSync(true);
