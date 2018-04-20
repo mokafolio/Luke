@@ -110,10 +110,6 @@ namespace luke
             SDL_GLContext m_sdlGLContext;
             Window * m_window;
             MouseState m_mouseState;
-            stick::Float32 m_preFullscreenWidth;
-            stick::Float32 m_preFullscreenHeight;
-            stick::Float32 m_preFullscreenX;
-            stick::Float32 m_preFullscreenY;
             bool m_bShouldClose;
             mutable stick::String m_title;
         };

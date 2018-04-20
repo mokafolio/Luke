@@ -32,16 +32,13 @@ namespace luke
             return ret;
         }
 
+        //@TODO: We might want to lock this for thread safety/portability reasons
         static DynamicArray<WindowImpl *> g_sdlWindows;
 
         WindowImpl::WindowImpl(Window * _window) :
             m_sdlWindow(NULL),
             m_window(_window),
             m_sdlGLContext(NULL),
-            m_preFullscreenWidth(0),
-            m_preFullscreenHeight(0),
-            m_preFullscreenX(0),
-            m_preFullscreenY(0),
             m_bShouldClose(false)
         {
 
@@ -202,10 +199,6 @@ namespace luke
         {
             STICK_ASSERT(m_sdlWindow);
 
-            int x, y;
-            SDL_GetWindowPosition(m_sdlWindow, &x, &y);
-            m_preFullscreenX = x;
-            m_preFullscreenY = y;
             SDL_SetWindowFullscreen(m_sdlWindow,
                                     _mode == FullScreenMode::Borderless ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_FULLSCREEN);
 
@@ -223,9 +216,7 @@ namespace luke
         void WindowImpl::exitFullscreen()
         {
             STICK_ASSERT(m_sdlWindow);
-            printf("EXIT FULLSCREEN\n");
             SDL_SetWindowFullscreen(m_sdlWindow, 0);
-            // move(m_preFullscreenX, m_preFullscreenY);
         }
 
         void WindowImpl::hideCursor()
@@ -265,12 +256,12 @@ namespace luke
 
         bool WindowImpl::isCursorVisible() const
         {
-
+            return SDL_ShowCursor(SDL_QUERY) == SDL_ENABLE;
         }
 
         bool WindowImpl::verticalSync() const
         {
-
+            return SDL_GL_GetSwapInterval();
         }
 
         bool WindowImpl::isFullscreen() const
@@ -1137,7 +1128,6 @@ namespace luke
                 //we catch the quit event first...
                 if (e.type == SDL_QUIT)
                 {
-                    printf("SDL QUIT %lu\n", g_sdlWindows.count());
                     for (WindowImpl * wnd : g_sdlWindows)
                         wnd->setShouldClose(true);
                 }
