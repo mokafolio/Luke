@@ -19,6 +19,19 @@ namespace luke
         Fullsceen //actually changs the display mode
     };
 
+    STICK_API_ENUM_CLASS(CursorType)
+    {
+        Cursor,
+        TextInput,
+        ResizeAll,
+        ResizeNS,
+        ResizeEW,
+        ResizeNESW,
+        ResizeNWSE,
+        Custom, //not used yet
+        _Count
+    };
+
     class STICK_API Window :
         public stick::EventForwarderT<stick::Event, stick::detail::ForwardingPolicyBasic, stick::detail::PublishingPolicyBasic>
     {
@@ -52,9 +65,7 @@ namespace luke
         void focus();
 
 
-        void enableRenderContext();
-
-        void disableRenderContext();
+        stick::Error enableRenderContext();
 
 
         //enters fullscreen.
@@ -70,9 +81,11 @@ namespace luke
         stick::Error enterFullscreen(stick::Float32 _width, stick::Float32 _height, const Display & _display = Display());
 
 
-        void exitFullscreen();
+        stick::Error exitFullscreen();
 
         void setVerticalSync(bool _b);
+
+        void setCursor(CursorType _cursor);
 
         void hideCursor();
 
@@ -94,6 +107,8 @@ namespace luke
         bool isKeyDown(KeyCode _key) const;
 
         const WindowSettings & settings() const;
+
+        CursorType cursor() const;
 
         bool isCursorVisible() const;
 

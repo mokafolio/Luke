@@ -32,6 +32,7 @@ int main(int _argc, const char * _args[])
     auto err = window.open(settings);
 
     window.setVerticalSync(true);
+    // window.setCursor(CursorType::ResizeAll);
     window.addEventCallback([](const MouseScrollEvent & _event)
     {
         printf("MOUSE SCROLL BROOO %f %f\n", _event.scrollX(), _event.scrollY());

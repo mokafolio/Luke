@@ -39,7 +39,8 @@ namespace luke
             m_sdlWindow(NULL),
             m_window(_window),
             m_sdlGLContext(NULL),
-            m_bShouldClose(false)
+            m_bShouldClose(false),
+            m_sdlWindowID(0)
         {
 
         }
@@ -62,6 +63,13 @@ namespace luke
 
                 m_sdlGLContext = NULL;
                 m_sdlWindow = NULL;
+
+                for (Size i = 0; i < m_cursors.count(); ++i)
+                {
+                    SDL_FreeCursor(m_cursors[i]);
+                }
+
+                m_sdlWindowID = 0;
             }
         }
 
@@ -109,6 +117,19 @@ namespace luke
             g_sdlWindows.append(this);
             m_bShouldClose = false;
 
+            //create the default cursors
+            static_assert(CursorArray::capacity() == (Size)CursorType::_Count - 1, "Not all default cursors satisfied!");
+
+            m_cursors[(Size)CursorType::Cursor] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
+            m_cursors[(Size)CursorType::TextInput] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_IBEAM);
+            m_cursors[(Size)CursorType::ResizeAll] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZEALL);
+            m_cursors[(Size)CursorType::ResizeNS] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZENS);
+            m_cursors[(Size)CursorType::ResizeEW] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZEWE);
+            m_cursors[(Size)CursorType::ResizeNESW] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZENESW);
+            m_cursors[(Size)CursorType::ResizeNWSE] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZENWSE);
+
+
+            m_sdlWindowID = SDL_GetWindowID(m_sdlWindow);
             return Error();
         }
 
@@ -171,15 +192,12 @@ namespace luke
             SDL_RaiseWindow(m_sdlWindow);
         }
 
-        void WindowImpl::enableRenderContext()
+        Error WindowImpl::enableRenderContext()
         {
             STICK_ASSERT(m_sdlWindow);
-            SDL_GL_MakeCurrent(m_sdlWindow, m_sdlGLContext);
-        }
-
-        void WindowImpl::disableRenderContext()
-        {
-            //@TODO disabling render context does not really make sense, we should remove it fromt he API
+            int res = SDL_GL_MakeCurrent(m_sdlWindow, m_sdlGLContext);
+            RETURN_SDL_ERROR(res);
+            return Error();
         }
 
         void WindowImpl::swapBuffers()
@@ -213,10 +231,18 @@ namespace luke
             return Error();
         }
 
-        void WindowImpl::exitFullscreen()
+        Error WindowImpl::exitFullscreen()
         {
             STICK_ASSERT(m_sdlWindow);
-            SDL_SetWindowFullscreen(m_sdlWindow, 0);
+            int res = SDL_SetWindowFullscreen(m_sdlWindow, 0);
+            RETURN_SDL_ERROR(res);
+            return Error();
+        }
+
+        void WindowImpl::setCursor(CursorType _cursor)
+        {
+            STICK_ASSERT((Size)_cursor < m_cursors.count());
+            SDL_SetCursor(m_cursors[(Size)_cursor]);
         }
 
         void WindowImpl::hideCursor()
@@ -673,14 +699,26 @@ namespace luke
 
         UInt32 WindowImpl::sdlWindowID() const
         {
-            if (m_sdlWindow)
-                return SDL_GetWindowID(m_sdlWindow);
-            return 0;
+            return m_sdlWindowID;
         }
 
-        static void handleWindowEvent(WindowImpl * _window, SDL_Event * _event)
+        static WindowImpl * windowForEvent(SDL_Event * _event)
+        {
+            auto it = g_sdlWindows.begin();
+            for (; it != g_sdlWindows.end(); ++it)
+            {
+                if ((*it)->sdlWindowID() == _event->window.windowID)
+                    return *it;
+            }
+            return nullptr;
+        }
+
+        static void handleWindowEvent(SDL_Event * _event)
         {
             STICK_ASSERT(_event->type == SDL_WINDOWEVENT);
+
+            WindowImpl * window = windowForEvent(_event);
+            if (!window) return;
 
             switch (_event->window.event)
             {
@@ -699,25 +737,25 @@ namespace luke
                     // SDL_Log("Window %d moved to %d,%d",
                     //         _event->window.windowID, _event->window.data1,
                     //         _event->window.data2);
-                    _window->m_window->publish(WindowMoveEvent(_event->window.data1, _event->window.data2), true);
+                    window->m_window->publish(WindowMoveEvent(_event->window.data1, _event->window.data2), true);
                     break;
                 case SDL_WINDOWEVENT_RESIZED:
                 case SDL_WINDOWEVENT_SIZE_CHANGED:
                     // SDL_Log("Window %d resized to %dx%d",
                     //         _event->window.windowID, _event->window.data1,
                     //         _event->window.data2);
-                    _window->m_window->publish(WindowResizeEvent(_event->window.data1, _event->window.data2), true);
+                    window->m_window->publish(WindowResizeEvent(_event->window.data1, _event->window.data2), true);
                     break;
                 case SDL_WINDOWEVENT_MINIMIZED:
                     // SDL_Log("Window %d minimized", _event->window.windowID);
-                    _window->m_window->publish(WindowIconifyEvent(), true);
+                    window->m_window->publish(WindowIconifyEvent(), true);
                     break;
                 case SDL_WINDOWEVENT_MAXIMIZED:
                     // SDL_Log("Window %d maximized", _event->window.windowID);
                     break;
                 case SDL_WINDOWEVENT_RESTORED:
                     // SDL_Log("Window %d restored", _event->window.windowID);
-                    _window->m_window->publish(WindowRestoreEvent(), true);
+                    window->m_window->publish(WindowRestoreEvent(), true);
                     break;
                 case SDL_WINDOWEVENT_ENTER:
                     // SDL_Log("Mouse entered window %d",
@@ -729,17 +767,17 @@ namespace luke
                 case SDL_WINDOWEVENT_FOCUS_GAINED:
                     // SDL_Log("Window %d gained keyboard focus",
                     //         _event->window.windowID);
-                    _window->m_window->publish(WindowFocusEvent(), true);
+                    window->m_window->publish(WindowFocusEvent(), true);
                     break;
                 case SDL_WINDOWEVENT_FOCUS_LOST:
                     // SDL_Log("Window %d lost keyboard focus",
                     //         _event->window.windowID);
-                    _window->m_window->publish(WindowLostFocusEvent(), true);
+                    window->m_window->publish(WindowLostFocusEvent(), true);
                     break;
                 case SDL_WINDOWEVENT_CLOSE:
                     // SDL_Log("Window %d closed", _event->window.windowID);
-                    _window->hide();
-                    _window->m_bShouldClose = true;
+                    window->m_bShouldClose = true;
+                    window->hide();
                     break;
                 default:
                     // SDL_Log("Window %d got unknown event %d",
@@ -748,9 +786,12 @@ namespace luke
             }
         }
 
-        static void handkeKeyEvent(WindowImpl * _window, SDL_Event * _event)
+        static void handkeKeyEvent(SDL_Event * _event)
         {
             STICK_ASSERT(_event->type == SDL_KEYDOWN || _event->type == SDL_KEYUP);
+
+            WindowImpl * window = windowForEvent(_event);
+            if (!window) return;
 
             KeyCode code;
             switch (_event->key.keysym.sym)
@@ -1058,17 +1099,20 @@ namespace luke
             }
 
             if (_event->type == SDL_KEYUP)
-                _window->m_window->publish(KeyUpEvent(code, _event->key.keysym.scancode), true);
+                window->m_window->publish(KeyUpEvent(code, _event->key.keysym.scancode), true);
             else
-                _window->m_window->publish(KeyDownEvent(code, _event->key.repeat > 0, _event->key.keysym.scancode), true);
+                window->m_window->publish(KeyDownEvent(code, _event->key.repeat > 0, _event->key.keysym.scancode), true);
         }
 
-        static void handleMouseEvent(WindowImpl * _window, SDL_Event * _event)
+        static void handleMouseEvent(SDL_Event * _event)
         {
             STICK_ASSERT(_event->type == SDL_MOUSEMOTION ||
                          _event->type == SDL_MOUSEWHEEL ||
                          _event->type == SDL_MOUSEBUTTONDOWN ||
                          _event->type == SDL_MOUSEBUTTONUP);
+
+            WindowImpl * window = windowForEvent(_event);
+            if (!window) return;
 
             if (_event->type == SDL_MOUSEBUTTONDOWN ||
                     _event->type == SDL_MOUSEBUTTONUP)
@@ -1100,23 +1144,23 @@ namespace luke
 
                 if (_event->type == SDL_MOUSEBUTTONDOWN)
                 {
-                    _window->m_mouseState.setButtonBitMask(_window->m_mouseState.buttonBitMask() | (UInt32)btn);
-                    _window->m_window->publish(MouseDownEvent(_window->m_mouseState, btn), true);
+                    window->m_mouseState.setButtonBitMask(window->m_mouseState.buttonBitMask() | (UInt32)btn);
+                    window->m_window->publish(MouseDownEvent(window->m_mouseState, btn), true);
                 }
                 else
                 {
-                    _window->m_mouseState.setButtonBitMask(_window->m_mouseState.buttonBitMask() & ~(UInt32)btn);
-                    _window->m_window->publish(MouseUpEvent(_window->m_mouseState, btn), true);
+                    window->m_mouseState.setButtonBitMask(window->m_mouseState.buttonBitMask() & ~(UInt32)btn);
+                    window->m_window->publish(MouseUpEvent(window->m_mouseState, btn), true);
                 }
             }
             else if (_event->type == SDL_MOUSEMOTION)
             {
-                _window->m_mouseState.setPosition(_event->motion.x, _event->motion.y);
-                _window->m_window->publish(MouseMoveEvent(_window->m_mouseState), true);
+                window->m_mouseState.setPosition(_event->motion.x, _event->motion.y);
+                window->m_window->publish(MouseMoveEvent(window->m_mouseState), true);
             }
             else if (_event->type == SDL_MOUSEWHEEL)
             {
-                _window->m_window->publish(MouseScrollEvent(_window->m_mouseState, _event->wheel.x, _event->wheel.y), true);
+                window->m_window->publish(MouseScrollEvent(window->m_mouseState, _event->wheel.x, _event->wheel.y), true);
             }
         }
 
@@ -1125,39 +1169,24 @@ namespace luke
             SDL_Event e;
             while (SDL_PollEvent(&e) != 0)
             {
-                //we catch the quit event first...
-                if (e.type == SDL_QUIT)
-                {
-                    for (WindowImpl * wnd : g_sdlWindows)
-                        wnd->setShouldClose(true);
-                }
-
-                //..before ignoring events that are not targeted towards a window for now
-                UInt32 windowID = e.window.windowID;
-                if (windowID == 0) return Error();
-
-                auto it = stick::findIf(g_sdlWindows.begin(), g_sdlWindows.end(), [windowID](WindowImpl * _window)
-                {
-                    return _window->sdlWindowID() == windowID;
-                });
-
-                if (it == g_sdlWindows.end())
-                    return Error();
-
                 switch (e.type)
                 {
+                    case SDL_QUIT:
+                        for (WindowImpl * wnd : g_sdlWindows)
+                            wnd->setShouldClose(true);
+                        break;
                     case SDL_WINDOWEVENT:
-                        handleWindowEvent(*it, &e);
+                        handleWindowEvent(&e);
                         break;
                     case SDL_KEYDOWN:
                     case SDL_KEYUP:
-                        handkeKeyEvent(*it, &e);
+                        handkeKeyEvent(&e);
                         break;
                     case SDL_MOUSEMOTION:
                     case SDL_MOUSEBUTTONDOWN:
                     case SDL_MOUSEBUTTONUP:
                     case SDL_MOUSEWHEEL:
-                        handleMouseEvent(*it, &e);
+                        handleMouseEvent(&e);
                         break;
                 }
             }

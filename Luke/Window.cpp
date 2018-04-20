@@ -74,14 +74,14 @@ namespace luke
         m_pimpl->focus();
     }
 
-    void Window::enableRenderContext()
+    Error Window::enableRenderContext()
     {
-        m_pimpl->enableRenderContext();
+        return m_pimpl->enableRenderContext();
     }
 
-    void Window::disableRenderContext()
+    void Window::setCursor(CursorType _cursor)
     {
-        m_pimpl->disableRenderContext();
+        m_pimpl->setCursor(_cursor);
     }
 
     void Window::setVerticalSync(bool _b)
@@ -101,6 +101,7 @@ namespace luke
 
     Error Window::enterFullscreen(Float32 _width, Float32 _height, const Display & _display)
     {
+        //@TODO: let this decision making be done inside the pimpl...
         DisplayMode mode;
         if (_display.isValid())
         {
@@ -125,9 +126,9 @@ namespace luke
         }
     }
 
-    void Window::exitFullscreen()
+    Error Window::exitFullscreen()
     {
-        m_pimpl->exitFullscreen();
+        return m_pimpl->exitFullscreen();
     }
 
     void Window::hideCursor()
