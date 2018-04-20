@@ -54,7 +54,7 @@ namespace luke
         // Other
         Return = 40, // Enter
         Escape = 41,
-        Delete = 42,
+        Backspace = 42,
         Tab = 43,
         Space = 44,
         Subtract = 45,

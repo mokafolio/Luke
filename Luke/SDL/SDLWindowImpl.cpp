@@ -438,8 +438,8 @@ namespace luke
                 case KeyCode::Escape:
                     code = SDLK_ESCAPE;
                     break;
-                case KeyCode::Delete:
-                    code = SDLK_DELETE;
+                case KeyCode::Backspace:
+                    code = SDLK_BACKSPACE;
                     break;
                 case KeyCode::Tab:
                     code = SDLK_TAB;
@@ -933,8 +933,8 @@ namespace luke
                 case SDLK_ESCAPE:
                     code = KeyCode::Escape;
                     break;
-                case SDLK_DELETE:
-                    code = KeyCode::Delete;
+                case SDLK_BACKSPACE:
+                    code = KeyCode::Backspace;
                     break;
                 case SDLK_TAB:
                     code = KeyCode::Tab;
@@ -1221,7 +1221,7 @@ namespace luke
                         handleMouseEvent(&e);
                         break;
                     case SDL_TEXTINPUT:
-                    case SDL_TEXTEDITING:
+                    // case SDL_TEXTEDITING:
                         handleTextInputEvent(&e);
                         break;
                 }
