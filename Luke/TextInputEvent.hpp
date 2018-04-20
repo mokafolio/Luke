@@ -11,11 +11,11 @@ namespace luke
 
         TextInputEvent(const char * _utf8);
 
-        const String & text() const;
+        const stick::String & text() const;
 
     private:
 
-        String m_utf8;
+        stick::String m_utf8;
     };
 }
 

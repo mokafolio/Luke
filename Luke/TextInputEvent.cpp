@@ -8,7 +8,7 @@ namespace luke
 
     }
 
-    const String & TextInputEvent::text() const
+    const stick::String & TextInputEvent::text() const
     {
         return m_utf8;
     }

@@ -21,6 +21,7 @@ Luke/KeyEvents.hpp
 Luke/Luke.hpp
 Luke/MouseEvents.hpp
 Luke/MouseState.hpp
+Luke/TextInputEvent.hpp
 Luke/Window.hpp
 Luke/WindowEvents.hpp
 Luke/WindowSettings.hpp
@@ -32,6 +33,7 @@ Luke/DisplayMode.cpp
 Luke/KeyEvents.cpp
 Luke/MouseEvents.cpp
 Luke/MouseState.cpp
+Luke/TextInputEvent.cpp
 Luke/Window.cpp
 Luke/WindowEvents.cpp
 Luke/WindowSettings.cpp

@@ -3,6 +3,7 @@
 #include <Luke/SDL/SDLInitializer.hpp>
 #include <Luke/WindowEvents.hpp>
 #include <Luke/KeyEvents.hpp>
+#include <Luke/TextInputEvent.hpp>
 
 //@TODO Proper error code
 #define RETURN_SDL_ERROR(_item) \
@@ -202,7 +203,7 @@ namespace luke
         String WindowImpl::clipboardText() const
         {
             const char * str = SDL_GetClipboardText();
-            if(str)
+            if (str)
                 return String(str);
             return String();
         }
@@ -1184,6 +1185,17 @@ namespace luke
             }
         }
 
+        static void handleTextInputEvent(SDL_Event * _event)
+        {
+            STICK_ASSERT(_event->type == SDL_TEXTEDITING ||
+                         _event->type == SDK: SDL_TEXTINPUT);
+
+            WindowImpl * window = windowForEvent(_event);
+            if (!window) return;
+
+            window->m_window->publish(TextInputEvent(_event->text.text), true);
+        }
+
         Error WindowImpl::pollEvents()
         {
             SDL_Event e;
@@ -1207,6 +1219,10 @@ namespace luke
                     case SDL_MOUSEBUTTONUP:
                     case SDL_MOUSEWHEEL:
                         handleMouseEvent(&e);
+                        break;
+                    case SDL_TEXTINPUT:
+                    case SDL_TEXTEDITING:
+                        handleTextInputEvent(&e);
                         break;
                 }
             }
