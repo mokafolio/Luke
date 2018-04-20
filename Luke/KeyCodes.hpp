@@ -87,6 +87,13 @@ namespace luke
         F15 = 106,
         F16 = 107,
 
+        Insert = 73,
+        Home = 74,
+        PageUp = 75,
+        Delete = 76,
+        End = 77,
+        PageDown = 78,
+
         Caret = 100, //only on ISO keyboards
 
         LeftControl = 224,
@@ -105,7 +112,7 @@ namespace luke
 
         //special
         Help = 117,
-        ForwardDelete = 123,
+        // ForwardDelete = 123,
         Mute = 127,
         VolumeUp = 128,
         VolumeDown = 129,

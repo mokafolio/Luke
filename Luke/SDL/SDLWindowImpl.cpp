@@ -1008,6 +1008,25 @@ namespace luke
                     code = KeyCode::F16;
                     break;
 
+                case SDLK_INSERT:
+                    code = KeyCode::Insert;
+                    break;
+                case SDLK_HOME:
+                    code = KeyCode::Home;
+                    break;
+                case SDLK_PAGEUP:
+                    code = KeyCode::PageUp;
+                    break;
+                case SDLK_DELETE:
+                    code = KeyCode::Delete;
+                    break;
+                case SDLK_END:
+                    code = KeyCode::End;
+                    break;
+                case SDLK_PAGEDOWN:
+                    code = KeyCode::PageDown;
+                    break;
+
                 case SDLK_LCTRL:
                     code = KeyCode::LeftControl;
                     break;
