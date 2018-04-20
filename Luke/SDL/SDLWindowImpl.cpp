@@ -1118,12 +1118,12 @@ namespace luke
                     _window->m_window->publish(MouseUpEvent(_window->m_mouseState, btn), true);
                 }
             }
-            else if(_event->type == SDL_MOUSEMOTION)
+            else if (_event->type == SDL_MOUSEMOTION)
             {
                 _window->m_mouseState.setPosition(_event->motion.x, _event->motion.y);
                 _window->m_window->publish(MouseMoveEvent(_window->m_mouseState), true);
             }
-            else if(_event->type == SDL_MOUSEWHEEL)
+            else if (_event->type == SDL_MOUSEWHEEL)
             {
                 _window->m_window->publish(MouseScrollEvent(_window->m_mouseState, _event->wheel.x, _event->wheel.y), true);
             }
@@ -1134,7 +1134,15 @@ namespace luke
             SDL_Event e;
             while (SDL_PollEvent(&e) != 0)
             {
-                //we ignore events that are not targeted towards a window for now
+                //we catch the quit event first...
+                if (e.type == SDL_QUIT)
+                {
+                    printf("SDL QUIT %lu\n", g_sdlWindows.count());
+                    for (WindowImpl * wnd : g_sdlWindows)
+                        wnd->setShouldClose(true);
+                }
+
+                //..before ignoring events that are not targeted towards a window for now
                 UInt32 windowID = e.window.windowID;
                 if (windowID == 0) return Error();
 
@@ -1151,15 +1159,15 @@ namespace luke
                     case SDL_WINDOWEVENT:
                         handleWindowEvent(*it, &e);
                         break;
-                    case SDL_QUIT:
-                        {
-                            for (WindowImpl * wnd : g_sdlWindows)
-                                wnd->setShouldClose(true);
-                            break;
-                        }
                     case SDL_KEYDOWN:
                     case SDL_KEYUP:
                         handkeKeyEvent(*it, &e);
+                        break;
+                    case SDL_MOUSEMOTION:
+                    case SDL_MOUSEBUTTONDOWN:
+                    case SDL_MOUSEBUTTONUP:
+                    case SDL_MOUSEWHEEL:
+                        handleMouseEvent(*it, &e);
                         break;
                 }
             }

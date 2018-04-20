@@ -150,7 +150,7 @@ int main(int _argc, const char * _args[])
     while (!window.shouldClose())
     {
         window.enableRenderContext();
-        printf("WS %f %f\n", window.widthInPixels(), window.heightInPixels());
+        // printf("WS %f %f\n", window.widthInPixels(), window.heightInPixels());
         glViewport(0, 0, window.widthInPixels(), window.heightInPixels());
         glClearColor(1, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
