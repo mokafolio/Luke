@@ -74,21 +74,6 @@ namespace luke
         m_pimpl->focus();
     }
 
-    Error Window::setClipboardText(const char * _text)
-    {
-        return m_pimpl->setClipboardText(_text);
-    }
-
-    String Window::clipboardText() const
-    {
-        return m_pimpl->clipboardText();
-    }
-
-    bool Window::hasClipboardText() const
-    {
-        return m_pimpl->hasClipboardText();
-    }
-
     Error Window::enableRenderContext()
     {
         return m_pimpl->enableRenderContext();
@@ -231,11 +216,6 @@ namespace luke
         return m_pimpl->heightInPixels();
     }
 
-    Error pollEvents()
-    {
-        return detail::WindowImpl::pollEvents();
-    }
-
     Float32 Window::x() const
     {
         return m_pimpl->x();
@@ -249,5 +229,25 @@ namespace luke
     Display Window::display() const
     {
         return m_pimpl->display();
+    }
+
+    Error pollEvents()
+    {
+        return detail::WindowImpl::pollEvents();
+    }
+
+    Error setClipboardText(const char * _text)
+    {
+        return detail::WindowImpl::setClipboardText(_text);
+    }
+
+    String clipboardText()
+    {
+        return detail::WindowImpl::clipboardText();
+    }
+
+    bool hasClipboardText()
+    {
+        return detail::WindowImpl::hasClipboardText();
     }
 }

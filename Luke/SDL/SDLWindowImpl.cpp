@@ -193,26 +193,6 @@ namespace luke
             SDL_RaiseWindow(m_sdlWindow);
         }
 
-        Error WindowImpl::setClipboardText(const char * _text)
-        {
-            int res = SDL_SetClipboardText(_text);
-            RETURN_SDL_ERROR(res);
-            return Error();
-        }
-
-        String WindowImpl::clipboardText() const
-        {
-            const char * str = SDL_GetClipboardText();
-            if (str)
-                return String(str);
-            return String();
-        }
-
-        bool WindowImpl::hasClipboardText() const
-        {
-            return SDL_HasClipboardText();
-        }
-
         Error WindowImpl::enableRenderContext()
         {
             STICK_ASSERT(m_sdlWindow);
@@ -1221,12 +1201,32 @@ namespace luke
                         handleMouseEvent(&e);
                         break;
                     case SDL_TEXTINPUT:
-                    // case SDL_TEXTEDITING:
+                        // case SDL_TEXTEDITING:
                         handleTextInputEvent(&e);
                         break;
                 }
             }
             return Error();
+        }
+
+        Error WindowImpl::setClipboardText(const char * _text)
+        {
+            int res = SDL_SetClipboardText(_text);
+            RETURN_SDL_ERROR(res);
+            return Error();
+        }
+
+        String WindowImpl::clipboardText()
+        {
+            const char * str = SDL_GetClipboardText();
+            if (str)
+                return String(str);
+            return String();
+        }
+
+        bool WindowImpl::hasClipboardText()
+        {
+            return SDL_HasClipboardText();
         }
     }
 }

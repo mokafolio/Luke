@@ -44,12 +44,6 @@ namespace luke
 
             void focus();
 
-            stick::Error setClipboardText(const char * _text);
-
-            stick::String clipboardText() const;
-
-            bool hasClipboardText() const;
-
 
             stick::Error enableRenderContext();
 
@@ -107,11 +101,18 @@ namespace luke
 
             Display display() const;
 
-            static stick::Error pollEvents();
-
             void deallocateSDLWindowAndContext();
 
             stick::UInt32 sdlWindowID() const;
+
+
+            static stick::Error pollEvents();
+
+            static stick::Error setClipboardText(const char * _text);
+
+            static stick::String clipboardText();
+
+            static bool hasClipboardText();
 
 
             using CursorArray = stick::FixedArray<SDL_Cursor *, 7>;

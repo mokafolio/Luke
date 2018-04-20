@@ -144,6 +144,12 @@ namespace luke
     };
 
     STICK_API stick::Error pollEvents();
+
+    STICK_API stick::Error setClipboardText(const char * _txt);
+
+    STICK_API stick::String clipboardText();
+
+    STICK_API bool hasClipboardText();
 }
 
 #endif //LUKE_WINDOW_HPP
