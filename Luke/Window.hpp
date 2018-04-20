@@ -57,11 +57,18 @@ namespace luke
         void disableRenderContext();
 
 
+        //enters fullscreen.
+        //_mode allow to specify if its "real" fullscreen or borderless fullscreen window (sometimes called desktop fullscreen).
+        //If _mode is borderless the display mode won't be changed and the window will take on the desktop resolution.
+        //If _mode is fullscreen, it will try to switch to the display mode that most closely matches the current window resolution.
+        //_display allows you to specify a display to go fullscreen on. If not provided, window goes fullscreen
+        //on the display that it is on.
         stick::Error enterFullscreen(FullScreenMode _mode = FullScreenMode::Borderless, const Display & _display = Display());
 
         stick::Error enterFullscreen(const DisplayMode & _mode, const Display & _display = Display());
 
         stick::Error enterFullscreen(stick::Float32 _width, stick::Float32 _height, const Display & _display = Display());
+
 
         void exitFullscreen();
 

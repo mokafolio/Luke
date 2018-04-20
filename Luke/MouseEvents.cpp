@@ -59,12 +59,6 @@ namespace luke
 
     }
 
-    MouseDragEvent::MouseDragEvent(const MouseState & _state, MouseButton _button) :
-        MouseEvent(_state, _button)
-    {
-
-    }
-
     MouseDownEvent::MouseDownEvent(const MouseState & _state, MouseButton _button) :
         MouseEvent(_state, _button)
     {

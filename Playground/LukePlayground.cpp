@@ -28,7 +28,7 @@ int main(int _argc, const char * _args[])
     Window window;
     WindowSettings settings;
     settings.setResizeable(true);
-    settings.setSize(1440, 900);
+    settings.setSize(800, 600);
     auto err = window.open(settings);
 
     window.setVerticalSync(true);
@@ -80,23 +80,6 @@ int main(int _argc, const char * _args[])
     window.addEventCallback([](const MouseMoveEvent & _event)
     {
         printf("MOUSE MOOOOOOOOOOOOVE BROOO %f %f\n", _event.x(), _event.y());
-    });
-
-    window.addEventCallback([](const MouseDragEvent & _event)
-    {
-        printf("MOUSE DRAAAG BROOO\n");
-        if (_event.button() == MouseButton::Left)
-        {
-            printf("LEFT BUTTON\n");
-        }
-        if (_event.button() == MouseButton::Middle)
-        {
-            printf("MIDDLE BUTTON\n");
-        }
-        if (_event.button() == MouseButton::Right)
-        {
-            printf("RIGHT BUTTON\n");
-        }
     });
 
     if (err)

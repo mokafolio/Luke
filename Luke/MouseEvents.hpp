@@ -67,15 +67,6 @@ namespace luke
         // MouseMoveEvent & operator = (MouseMoveEvent &&) = default;
     };
 
-    class STICK_API MouseDragEvent :
-        public MouseEvent,
-        public stick::EventT<MouseDragEvent>
-    {
-    public:
-
-        MouseDragEvent(const MouseState & _state, MouseButton _button);
-    };
-
     class STICK_API MouseDownEvent :
         public MouseEvent,
         public stick::EventT<MouseDownEvent>

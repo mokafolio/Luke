@@ -20,14 +20,16 @@ namespace luke
     {
         using namespace stick;
 
-        static const char * sdlError()
+        static const String sdlError()
         {
+            String ret;
             const char * error = SDL_GetError();
             if (*error != '\0')
             {
-                printf("SDL Error: %s\n", error);
+                ret = String::formatted("SDL Error: %s\n", error);
                 SDL_ClearError();
             }
+            return ret;
         }
 
         static DynamicArray<WindowImpl *> g_sdlWindows;
@@ -93,11 +95,15 @@ namespace luke
                 SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, _settings.sampleCount());
             }
 
+            UInt32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI;
+
+            if (_settings.isResizeable()) flags |= SDL_WINDOW_RESIZABLE;
+            if (!_settings.isDecorated()) flags |= SDL_WINDOW_BORDERLESS;
+
             //@TODO take settings poistion into account
             m_sdlWindow = SDL_CreateWindow(_settings.title().length() ? _settings.title().cString() : "Luke Window",
                                            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                           _settings.width(), _settings.height(),
-                                           SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI);
+                                           _settings.width(), _settings.height(), flags);
             RETURN_SDL_ERROR(m_sdlWindow);
 
             m_sdlGLContext = SDL_GL_CreateContext(m_sdlWindow);
@@ -681,413 +687,445 @@ namespace luke
             return 0;
         }
 
-        static void handleWindowEvent(SDL_Event * _event)
+        static void handleWindowEvent(WindowImpl * _window, SDL_Event * _event)
         {
             STICK_ASSERT(_event->type == SDL_WINDOWEVENT);
-            UInt32 windowID = _event->window.windowID;
-            if (windowID > 0)
+
+            switch (_event->window.event)
             {
-                auto it = stick::findIf(g_sdlWindows.begin(), g_sdlWindows.end(), [windowID](WindowImpl * _window)
-                {
-                    return _window->sdlWindowID() == windowID;
-                });
-
-                //if there is no window to send this event to, ignore
-                if (it == g_sdlWindows.end())
-                    return;
-
-                switch (_event->window.event)
-                {
-                    case SDL_WINDOWEVENT_SHOWN:
-                        // SDL_Log("Window %d shown", _event->window.windowID);
-                        break;
-                    case SDL_WINDOWEVENT_HIDDEN:
-                        // SDL_Log("Window %d hidden", _event->window.windowID);
-                        break;
-                    case SDL_WINDOWEVENT_EXPOSED:
-                        SDL_Log("Window %d exposed", _event->window.windowID);
-                        //this should not be necessary but on osx the window flickers after
-                        //exitting from fullscreen unless we move it (or force a refresh somehow)
-                        break;
-                    case SDL_WINDOWEVENT_MOVED:
-                        // SDL_Log("Window %d moved to %d,%d",
-                        //         _event->window.windowID, _event->window.data1,
-                        //         _event->window.data2);
-                        (*it)->m_window->publish(WindowMoveEvent(_event->window.data1, _event->window.data2), true);
-                        break;
-                    case SDL_WINDOWEVENT_RESIZED:
-                    case SDL_WINDOWEVENT_SIZE_CHANGED:
-                        // SDL_Log("Window %d resized to %dx%d",
-                        //         _event->window.windowID, _event->window.data1,
-                        //         _event->window.data2);
-                        (*it)->m_window->publish(WindowResizeEvent(_event->window.data1, _event->window.data2), true);
-                        break;
-                    case SDL_WINDOWEVENT_MINIMIZED:
-                        // SDL_Log("Window %d minimized", _event->window.windowID);
-                        (*it)->m_window->publish(WindowIconifyEvent(), true);
-                        break;
-                    case SDL_WINDOWEVENT_MAXIMIZED:
-                        // SDL_Log("Window %d maximized", _event->window.windowID);
-                        break;
-                    case SDL_WINDOWEVENT_RESTORED:
-                        // SDL_Log("Window %d restored", _event->window.windowID);
-                        (*it)->m_window->publish(WindowRestoreEvent(), true);
-                        break;
-                    case SDL_WINDOWEVENT_ENTER:
-                        // SDL_Log("Mouse entered window %d",
-                        // _event->window.windowID);
-                        break;
-                    case SDL_WINDOWEVENT_LEAVE:
-                        // SDL_Log("Mouse left window %d", _event->window.windowID);
-                        break;
-                    case SDL_WINDOWEVENT_FOCUS_GAINED:
-                        // SDL_Log("Window %d gained keyboard focus",
-                        //         _event->window.windowID);
-                        (*it)->m_window->publish(WindowFocusEvent(), true);
-                        break;
-                    case SDL_WINDOWEVENT_FOCUS_LOST:
-                        // SDL_Log("Window %d lost keyboard focus",
-                        //         _event->window.windowID);
-                        (*it)->m_window->publish(WindowLostFocusEvent(), true);
-                        break;
-                    case SDL_WINDOWEVENT_CLOSE:
-                        // SDL_Log("Window %d closed", _event->window.windowID);
-                        (*it)->hide();
-                        (*it)->m_bShouldClose = true;
-                        break;
-                    default:
-                        // SDL_Log("Window %d got unknown event %d",
-                        //         _event->window.windowID, _event->window.event);
-                        break;
-                }
-
+                case SDL_WINDOWEVENT_SHOWN:
+                    // SDL_Log("Window %d shown", _event->window.windowID);
+                    break;
+                case SDL_WINDOWEVENT_HIDDEN:
+                    // SDL_Log("Window %d hidden", _event->window.windowID);
+                    break;
+                case SDL_WINDOWEVENT_EXPOSED:
+                    // SDL_Log("Window %d exposed", _event->window.windowID);
+                    //this should not be necessary but on osx the window flickers after
+                    //exitting from fullscreen unless we move it (or force a refresh somehow)
+                    break;
+                case SDL_WINDOWEVENT_MOVED:
+                    // SDL_Log("Window %d moved to %d,%d",
+                    //         _event->window.windowID, _event->window.data1,
+                    //         _event->window.data2);
+                    _window->m_window->publish(WindowMoveEvent(_event->window.data1, _event->window.data2), true);
+                    break;
+                case SDL_WINDOWEVENT_RESIZED:
+                case SDL_WINDOWEVENT_SIZE_CHANGED:
+                    // SDL_Log("Window %d resized to %dx%d",
+                    //         _event->window.windowID, _event->window.data1,
+                    //         _event->window.data2);
+                    _window->m_window->publish(WindowResizeEvent(_event->window.data1, _event->window.data2), true);
+                    break;
+                case SDL_WINDOWEVENT_MINIMIZED:
+                    // SDL_Log("Window %d minimized", _event->window.windowID);
+                    _window->m_window->publish(WindowIconifyEvent(), true);
+                    break;
+                case SDL_WINDOWEVENT_MAXIMIZED:
+                    // SDL_Log("Window %d maximized", _event->window.windowID);
+                    break;
+                case SDL_WINDOWEVENT_RESTORED:
+                    // SDL_Log("Window %d restored", _event->window.windowID);
+                    _window->m_window->publish(WindowRestoreEvent(), true);
+                    break;
+                case SDL_WINDOWEVENT_ENTER:
+                    // SDL_Log("Mouse entered window %d",
+                    // _event->window.windowID);
+                    break;
+                case SDL_WINDOWEVENT_LEAVE:
+                    // SDL_Log("Mouse left window %d", _event->window.windowID);
+                    break;
+                case SDL_WINDOWEVENT_FOCUS_GAINED:
+                    // SDL_Log("Window %d gained keyboard focus",
+                    //         _event->window.windowID);
+                    _window->m_window->publish(WindowFocusEvent(), true);
+                    break;
+                case SDL_WINDOWEVENT_FOCUS_LOST:
+                    // SDL_Log("Window %d lost keyboard focus",
+                    //         _event->window.windowID);
+                    _window->m_window->publish(WindowLostFocusEvent(), true);
+                    break;
+                case SDL_WINDOWEVENT_CLOSE:
+                    // SDL_Log("Window %d closed", _event->window.windowID);
+                    _window->hide();
+                    _window->m_bShouldClose = true;
+                    break;
+                default:
+                    // SDL_Log("Window %d got unknown event %d",
+                    //         _event->window.windowID, _event->window.event);
+                    break;
             }
         }
 
-        static void handkeKeyEvent(SDL_Event * _event)
+        static void handkeKeyEvent(WindowImpl * _window, SDL_Event * _event)
         {
             STICK_ASSERT(_event->type == SDL_KEYDOWN || _event->type == SDL_KEYUP);
-            UInt32 windowID = _event->window.windowID;
-            if (windowID > 0)
+
+            KeyCode code;
+            switch (_event->key.keysym.sym)
             {
-                auto it = stick::findIf(g_sdlWindows.begin(), g_sdlWindows.end(), [windowID](WindowImpl * _window)
+                case SDLK_0:
+                    code = KeyCode::Zero;
+                    break;
+                case SDLK_1:
+                    code = KeyCode::One;
+                    break;
+                case SDLK_2:
+                    code = KeyCode::Two;
+                    break;
+                case SDLK_3:
+                    code = KeyCode::Three;
+                    break;
+                case SDLK_4:
+                    code = KeyCode::Four;
+                    break;
+                case SDLK_5:
+                    code = KeyCode::Five;
+                    break;
+                case SDLK_6:
+                    code = KeyCode::Six;
+                    break;
+                case SDLK_7:
+                    code = KeyCode::Seven;
+                    break;
+                case SDLK_8:
+                    code = KeyCode::Eight;
+                    break;
+                case SDLK_9:
+                    code = KeyCode::Nine;
+                    break;
+
+                case SDLK_a:
+                    code = KeyCode::A;
+                    break;
+                case SDLK_b:
+                    code = KeyCode::B;
+                    break;
+                case SDLK_c:
+                    code = KeyCode::C;
+                    break;
+                case SDLK_d:
+                    code = KeyCode::D;
+                    break;
+                case SDLK_e:
+                    code = KeyCode::E;
+                    break;
+                case SDLK_f:
+                    code = KeyCode::F;
+                    break;
+                case SDLK_g:
+                    code = KeyCode::G;
+                    break;
+                case SDLK_h:
+                    code = KeyCode::H;
+                    break;
+                case SDLK_i:
+                    code = KeyCode::I;
+                    break;
+                case SDLK_j:
+                    code = KeyCode::J;
+                    break;
+                case SDLK_k:
+                    code = KeyCode::K;
+                    break;
+                case SDLK_l:
+                    code = KeyCode::L;
+                    break;
+                case SDLK_m:
+                    code = KeyCode::M;
+                    break;
+                case SDLK_n:
+                    code = KeyCode::N;
+                    break;
+                case SDLK_o:
+                    code = KeyCode::O;
+                    break;
+                case SDLK_p:
+                    code = KeyCode::P;
+                    break;
+                case SDLK_q:
+                    code = KeyCode::Q;
+                    break;
+                case SDLK_r:
+                    code = KeyCode::R;
+                    break;
+                case SDLK_s:
+                    code = KeyCode::S;
+                    break;
+                case SDLK_t:
+                    code = KeyCode::T;
+                    break;
+                case SDLK_u:
+                    code = KeyCode::U;
+                    break;
+                case SDLK_v:
+                    code = KeyCode::V;
+                    break;
+                case SDLK_w:
+                    code = KeyCode::W;
+                    break;
+                case SDLK_x:
+                    code = KeyCode::X;
+                    break;
+                case SDLK_y:
+                    code = KeyCode::Y;
+                    break;
+                case SDLK_z:
+                    code = KeyCode::Z;
+                    break;
+
+                case SDLK_RETURN:
+                    code = KeyCode::Return;
+                    break;
+                case SDLK_ESCAPE:
+                    code = KeyCode::Escape;
+                    break;
+                case SDLK_DELETE:
+                    code = KeyCode::Delete;
+                    break;
+                case SDLK_TAB:
+                    code = KeyCode::Tab;
+                    break;
+                case SDLK_SPACE:
+                    code = KeyCode::Space;
+                    break;
+                case SDLK_MINUS:
+                    code = KeyCode::Subtract;
+                    break;
+                case SDLK_EQUALS:
+                    code = KeyCode::Equal;
+                    break;
+                case SDLK_LEFTBRACKET:
+                    code = KeyCode::LeftBracket;
+                    break;
+                case SDLK_RIGHTBRACKET:
+                    code = KeyCode::RightBracket;
+                    break;
+                case SDLK_BACKSLASH:
+                    code = KeyCode::Backslash;
+                    break;
+                case SDLK_SEMICOLON:
+                    code = KeyCode::Semicolon;
+                    break;
+                case SDLK_QUOTE:
+                    code = KeyCode::Apostrophe;
+                    break;
+                case SDLK_BACKQUOTE:
+                    code = KeyCode::GraveAccent; //Not sure about this one
+                    break;
+                case SDLK_COMMA:
+                    code = KeyCode::Comma;
+                    break;
+                case SDLK_PERIOD:
+                    code = KeyCode::Period;
+                    break;
+                case SDLK_SLASH:
+                    code = KeyCode::Slash;
+                    break;
+                case SDLK_CAPSLOCK:
+                    code = KeyCode::CapsLock;
+                    break;
+
+                case SDLK_F1:
+                    code = KeyCode::F1;
+                    break;
+                case SDLK_F2:
+                    code = KeyCode::F2;
+                    break;
+                case SDLK_F3:
+                    code = KeyCode::F3;
+                    break;
+                case SDLK_F4:
+                    code = KeyCode::F4;
+                    break;
+                case SDLK_F5:
+                    code = KeyCode::F5;
+                    break;
+                case SDLK_F6:
+                    code = KeyCode::F6;
+                    break;
+                case SDLK_F7:
+                    code = KeyCode::F7;
+                    break;
+                case SDLK_F8:
+                    code = KeyCode::F8;
+                    break;
+                case SDLK_F9:
+                    code = KeyCode::F9;
+                    break;
+                case SDLK_F10:
+                    code = KeyCode::F10;
+                    break;
+                case SDLK_F11:
+                    code = KeyCode::F11;
+                    break;
+                case SDLK_F12:
+                    code = KeyCode::F12;
+                    break;
+                case SDLK_F13:
+                    code = KeyCode::F13;
+                    break;
+                case SDLK_F14:
+                    code = KeyCode::F14;
+                    break;
+                case SDLK_F15:
+                    code = KeyCode::F15;
+                    break;
+                case SDLK_F16:
+                    code = KeyCode::F16;
+                    break;
+
+                case SDLK_LCTRL:
+                    code = KeyCode::LeftControl;
+                    break;
+                case SDLK_LSHIFT:
+                    code = KeyCode::LeftShift;
+                    break;
+                case SDLK_LALT:
+                    code = KeyCode::LeftAlt;
+                    break;
+                case SDLK_LGUI:
+                    code = KeyCode::LeftCommand;
+                    break;
+                case SDLK_RCTRL:
+                    code = KeyCode::RightControl;
+                    break;
+                case SDLK_RSHIFT:
+                    code = KeyCode::RightShift;
+                    break;
+                case SDLK_RALT:
+                    code = KeyCode::RightAlt;
+                    break;
+                case SDLK_RGUI:
+                    code = KeyCode::RightCommand;
+                    break;
+
+                case SDLK_RIGHT:
+                    code = KeyCode::Right;
+                    break;
+                case SDLK_LEFT:
+                    code = KeyCode::Left;
+                    break;
+                case SDLK_DOWN:
+                    code = KeyCode::Down;
+                    break;
+                case SDLK_UP:
+                    code = KeyCode::Up;
+                    break;
+
+                case SDLK_KP_DIVIDE:
+                    code = KeyCode::KPDivide;
+                    break;
+                case SDLK_KP_MULTIPLY:
+                    code = KeyCode::KPMultiply;
+                    break;
+                case SDLK_KP_MINUS:
+                    code = KeyCode::KPSubtract;
+                    break;
+                case SDLK_KP_PLUS:
+                    code = KeyCode::KPAdd;
+                    break;
+                case SDLK_KP_ENTER:
+                    code = KeyCode::KPReturn;
+                    break;
+                case SDLK_KP_1:
+                    code = KeyCode::KPOne;
+                    break;
+                case SDLK_KP_2:
+                    code = KeyCode::KPTwo;
+                    break;
+                case SDLK_KP_3:
+                    code = KeyCode::KPThree;
+                    break;
+                case SDLK_KP_4:
+                    code = KeyCode::KPFour;
+                    break;
+                case SDLK_KP_5:
+                    code = KeyCode::KPFive;
+                    break;
+                case SDLK_KP_6:
+                    code = KeyCode::KPSix;
+                    break;
+                case SDLK_KP_7:
+                    code = KeyCode::KPSeven;
+                    break;
+                case SDLK_KP_8:
+                    code = KeyCode::KPEight;
+                    break;
+                case SDLK_KP_9:
+                    code = KeyCode::KPNine;
+                    break;
+                case SDLK_KP_0:
+                    code = KeyCode::KPZero;
+                    break;
+                case SDLK_KP_EQUALS:
+                    code = KeyCode::KPEqual;
+                    break;
+
+                default:
+                    code = KeyCode::Unknown;
+            }
+
+            if (_event->type == SDL_KEYUP)
+                _window->m_window->publish(KeyUpEvent(code, _event->key.keysym.scancode), true);
+            else
+                _window->m_window->publish(KeyDownEvent(code, _event->key.repeat > 0, _event->key.keysym.scancode), true);
+        }
+
+        static void handleMouseEvent(WindowImpl * _window, SDL_Event * _event)
+        {
+            STICK_ASSERT(_event->type == SDL_MOUSEMOTION ||
+                         _event->type == SDL_MOUSEWHEEL ||
+                         _event->type == SDL_MOUSEBUTTONDOWN ||
+                         _event->type == SDL_MOUSEBUTTONUP);
+
+            if (_event->type == SDL_MOUSEBUTTONDOWN ||
+                    _event->type == SDL_MOUSEBUTTONUP)
+            {
+                MouseButton btn;
+
+                switch (_event->button.button)
                 {
-                    return _window->sdlWindowID() == windowID;
-                });
-
-                //if there is no window to send this event to, ignore
-                if (it == g_sdlWindows.end())
-                    return;
-
-                KeyCode code;
-                switch (_event->key.keysym.sym)
-                {
-                    case SDLK_0:
-                        code = KeyCode::Zero;
+                    case SDL_BUTTON_LEFT:
+                        btn = MouseButton::Left;
                         break;
-                    case SDLK_1:
-                        code = KeyCode::One;
+                    case SDL_BUTTON_RIGHT:
+                        btn = MouseButton::Right;
                         break;
-                    case SDLK_2:
-                        code = KeyCode::Two;
+                    case SDL_BUTTON_MIDDLE:
+                        btn = MouseButton::Middle;
                         break;
-                    case SDLK_3:
-                        code = KeyCode::Three;
+                    case SDL_BUTTON_X1:
+                        btn = MouseButton::Button3;
                         break;
-                    case SDLK_4:
-                        code = KeyCode::Four;
+                    case SDL_BUTTON_X2:
+                        btn = MouseButton::Button4;
                         break;
-                    case SDLK_5:
-                        code = KeyCode::Five;
-                        break;
-                    case SDLK_6:
-                        code = KeyCode::Six;
-                        break;
-                    case SDLK_7:
-                        code = KeyCode::Seven;
-                        break;
-                    case SDLK_8:
-                        code = KeyCode::Eight;
-                        break;
-                    case SDLK_9:
-                        code = KeyCode::Nine;
-                        break;
-
-                    case SDLK_a:
-                        code = KeyCode::A;
-                        break;
-                    case SDLK_b:
-                        code = KeyCode::B;
-                        break;
-                    case SDLK_c:
-                        code = KeyCode::C;
-                        break;
-                    case SDLK_d:
-                        code = KeyCode::D;
-                        break;
-                    case SDLK_e:
-                        code = KeyCode::E;
-                        break;
-                    case SDLK_f:
-                        code = KeyCode::F;
-                        break;
-                    case SDLK_g:
-                        code = KeyCode::G;
-                        break;
-                    case SDLK_h:
-                        code = KeyCode::H;
-                        break;
-                    case SDLK_i:
-                        code = KeyCode::I;
-                        break;
-                    case SDLK_j:
-                        code = KeyCode::J;
-                        break;
-                    case SDLK_k:
-                        code = KeyCode::K;
-                        break;
-                    case SDLK_l:
-                        code = KeyCode::L;
-                        break;
-                    case SDLK_m:
-                        code = KeyCode::M;
-                        break;
-                    case SDLK_n:
-                        code = KeyCode::N;
-                        break;
-                    case SDLK_o:
-                        code = KeyCode::O;
-                        break;
-                    case SDLK_p:
-                        code = KeyCode::P;
-                        break;
-                    case SDLK_q:
-                        code = KeyCode::Q;
-                        break;
-                    case SDLK_r:
-                        code = KeyCode::R;
-                        break;
-                    case SDLK_s:
-                        code = KeyCode::S;
-                        break;
-                    case SDLK_t:
-                        code = KeyCode::T;
-                        break;
-                    case SDLK_u:
-                        code = KeyCode::U;
-                        break;
-                    case SDLK_v:
-                        code = KeyCode::V;
-                        break;
-                    case SDLK_w:
-                        code = KeyCode::W;
-                        break;
-                    case SDLK_x:
-                        code = KeyCode::X;
-                        break;
-                    case SDLK_y:
-                        code = KeyCode::Y;
-                        break;
-                    case SDLK_z:
-                        code = KeyCode::Z;
-                        break;
-
-                    case SDLK_RETURN:
-                        code = KeyCode::Return;
-                        break;
-                    case SDLK_ESCAPE:
-                        code = KeyCode::Escape;
-                        break;
-                    case SDLK_DELETE:
-                        code = KeyCode::Delete;
-                        break;
-                    case SDLK_TAB:
-                        code = KeyCode::Tab;
-                        break;
-                    case SDLK_SPACE:
-                        code = KeyCode::Space;
-                        break;
-                    case SDLK_MINUS:
-                        code = KeyCode::Subtract;
-                        break;
-                    case SDLK_EQUALS:
-                        code = KeyCode::Equal;
-                        break;
-                    case SDLK_LEFTBRACKET:
-                        code = KeyCode::LeftBracket;
-                        break;
-                    case SDLK_RIGHTBRACKET:
-                        code = KeyCode::RightBracket;
-                        break;
-                    case SDLK_BACKSLASH:
-                        code = KeyCode::Backslash;
-                        break;
-                    case SDLK_SEMICOLON:
-                        code = KeyCode::Semicolon;
-                        break;
-                    case SDLK_QUOTE:
-                        code = KeyCode::Apostrophe;
-                        break;
-                    case SDLK_BACKQUOTE:
-                        code = KeyCode::GraveAccent; //Not sure about this one
-                        break;
-                    case SDLK_COMMA:
-                        code = KeyCode::Comma;
-                        break;
-                    case SDLK_PERIOD:
-                        code = KeyCode::Period;
-                        break;
-                    case SDLK_SLASH:
-                        code = KeyCode::Slash;
-                        break;
-                    case SDLK_CAPSLOCK:
-                        code = KeyCode::CapsLock;
-                        break;
-
-                    case SDLK_F1:
-                        code = KeyCode::F1;
-                        break;
-                    case SDLK_F2:
-                        code = KeyCode::F2;
-                        break;
-                    case SDLK_F3:
-                        code = KeyCode::F3;
-                        break;
-                    case SDLK_F4:
-                        code = KeyCode::F4;
-                        break;
-                    case SDLK_F5:
-                        code = KeyCode::F5;
-                        break;
-                    case SDLK_F6:
-                        code = KeyCode::F6;
-                        break;
-                    case SDLK_F7:
-                        code = KeyCode::F7;
-                        break;
-                    case SDLK_F8:
-                        code = KeyCode::F8;
-                        break;
-                    case SDLK_F9:
-                        code = KeyCode::F9;
-                        break;
-                    case SDLK_F10:
-                        code = KeyCode::F10;
-                        break;
-                    case SDLK_F11:
-                        code = KeyCode::F11;
-                        break;
-                    case SDLK_F12:
-                        code = KeyCode::F12;
-                        break;
-                    case SDLK_F13:
-                        code = KeyCode::F13;
-                        break;
-                    case SDLK_F14:
-                        code = KeyCode::F14;
-                        break;
-                    case SDLK_F15:
-                        code = KeyCode::F15;
-                        break;
-                    case SDLK_F16:
-                        code = KeyCode::F16;
-                        break;
-
-                    case SDLK_LCTRL:
-                        code = KeyCode::LeftControl;
-                        break;
-                    case SDLK_LSHIFT:
-                        code = KeyCode::LeftShift;
-                        break;
-                    case SDLK_LALT:
-                        code = KeyCode::LeftAlt;
-                        break;
-                    case SDLK_LGUI:
-                        code = KeyCode::LeftCommand;
-                        break;
-                    case SDLK_RCTRL:
-                        code = KeyCode::RightControl;
-                        break;
-                    case SDLK_RSHIFT:
-                        code = KeyCode::RightShift;
-                        break;
-                    case SDLK_RALT:
-                        code = KeyCode::RightAlt;
-                        break;
-                    case SDLK_RGUI:
-                        code = KeyCode::RightCommand;
-                        break;
-
-                    case SDLK_RIGHT:
-                        code = KeyCode::Right;
-                        break;
-                    case SDLK_LEFT:
-                        code = KeyCode::Left;
-                        break;
-                    case SDLK_DOWN:
-                        code = KeyCode::Down;
-                        break;
-                    case SDLK_UP:
-                        code = KeyCode::Up;
-                        break;
-
-                    case SDLK_KP_DIVIDE:
-                        code = KeyCode::KPDivide;
-                        break;
-                    case SDLK_KP_MULTIPLY:
-                        code = KeyCode::KPMultiply;
-                        break;
-                    case SDLK_KP_MINUS:
-                        code = KeyCode::KPSubtract;
-                        break;
-                    case SDLK_KP_PLUS:
-                        code = KeyCode::KPAdd;
-                        break;
-                    case SDLK_KP_ENTER:
-                        code = KeyCode::KPReturn;
-                        break;
-                    case SDLK_KP_1:
-                        code = KeyCode::KPOne;
-                        break;
-                    case SDLK_KP_2:
-                        code = KeyCode::KPTwo;
-                        break;
-                    case SDLK_KP_3:
-                        code = KeyCode::KPThree;
-                        break;
-                    case SDLK_KP_4:
-                        code = KeyCode::KPFour;
-                        break;
-                    case SDLK_KP_5:
-                        code = KeyCode::KPFive;
-                        break;
-                    case SDLK_KP_6:
-                        code = KeyCode::KPSix;
-                        break;
-                    case SDLK_KP_7:
-                        code = KeyCode::KPSeven;
-                        break;
-                    case SDLK_KP_8:
-                        code = KeyCode::KPEight;
-                        break;
-                    case SDLK_KP_9:
-                        code = KeyCode::KPNine;
-                        break;
-                    case SDLK_KP_0:
-                        code = KeyCode::KPZero;
-                        break;
-                    case SDLK_KP_EQUALS:
-                        code = KeyCode::KPEqual;
-                        break;
-
+                    //@TODO: We should mostly still propagate the button value as
+                    //something implementation dependant
                     default:
-                        code = KeyCode::Unknown;
+                        btn = MouseButton::None;
                 }
 
-                if (_event->type == SDL_KEYUP)
-                    (*it)->m_window->publish(KeyUpEvent(code, _event->key.keysym.scancode), true);
+                if (_event->type == SDL_MOUSEBUTTONDOWN)
+                {
+                    _window->m_mouseState.setButtonBitMask(_window->m_mouseState.buttonBitMask() | (UInt32)btn);
+                    _window->m_window->publish(MouseDownEvent(_window->m_mouseState, btn), true);
+                }
                 else
-                    (*it)->m_window->publish(KeyDownEvent(code, _event->key.repeat > 0, _event->key.keysym.scancode), true);
+                {
+                    _window->m_mouseState.setButtonBitMask(_window->m_mouseState.buttonBitMask() & ~(UInt32)btn);
+                    _window->m_window->publish(MouseUpEvent(_window->m_mouseState, btn), true);
+                }
+            }
+            else if(_event->type == SDL_MOUSEMOTION)
+            {
+                _window->m_mouseState.setPosition(_event->motion.x, _event->motion.y);
+                _window->m_window->publish(MouseMoveEvent(_window->m_mouseState), true);
+            }
+            else if(_event->type == SDL_MOUSEWHEEL)
+            {
+                _window->m_window->publish(MouseScrollEvent(_window->m_mouseState, _event->wheel.x, _event->wheel.y), true);
             }
         }
 
@@ -1096,10 +1134,22 @@ namespace luke
             SDL_Event e;
             while (SDL_PollEvent(&e) != 0)
             {
+                //we ignore events that are not targeted towards a window for now
+                UInt32 windowID = e.window.windowID;
+                if (windowID == 0) return Error();
+
+                auto it = stick::findIf(g_sdlWindows.begin(), g_sdlWindows.end(), [windowID](WindowImpl * _window)
+                {
+                    return _window->sdlWindowID() == windowID;
+                });
+
+                if (it == g_sdlWindows.end())
+                    return Error();
+
                 switch (e.type)
                 {
                     case SDL_WINDOWEVENT:
-                        handleWindowEvent(&e);
+                        handleWindowEvent(*it, &e);
                         break;
                     case SDL_QUIT:
                         {
@@ -1109,7 +1159,7 @@ namespace luke
                         }
                     case SDL_KEYDOWN:
                     case SDL_KEYUP:
-                        handkeKeyEvent(&e);
+                        handkeKeyEvent(*it, &e);
                         break;
                 }
             }
