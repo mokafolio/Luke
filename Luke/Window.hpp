@@ -95,6 +95,12 @@ namespace luke
 
         void swapBuffers();
 
+        stick::Error setClipboardText(const char * _text);
+
+        stick::String clipboardText() const;
+
+        bool hasClipboardText() const;
+
 
         bool shouldClose() const;
 

@@ -74,6 +74,21 @@ namespace luke
         m_pimpl->focus();
     }
 
+    Error Window::setClipboardText(const char * _text)
+    {
+        return m_pimpl->setClipboardText(_text);
+    }
+
+    String Window::clipboardText() const
+    {
+        return m_pimpl->clipboardText();
+    }
+
+    bool Window::hasClipboardText() const
+    {
+        return m_pimpl->hasClipboardText();
+    }
+
     Error Window::enableRenderContext()
     {
         return m_pimpl->enableRenderContext();
