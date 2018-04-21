@@ -4,6 +4,7 @@
 #include <Luke/WindowEvents.hpp>
 #include <Luke/KeyEvents.hpp>
 #include <Luke/TextInputEvent.hpp>
+#include <Stick/Maybe.hpp>
 
 //@TODO Proper error code
 #define RETURN_SDL_ERROR(_item) \
@@ -36,6 +37,7 @@ namespace luke
         //@TODO: We might want to lock this for thread safety/portability reasons
         static DynamicArray<WindowImpl *> g_sdlWindows;
         static MouseState g_mouseState;
+        static Maybe<MouseButton> g_initialDragButton;
 
         WindowImpl::WindowImpl(Window * _window) :
             m_sdlWindow(NULL),
@@ -859,11 +861,23 @@ namespace luke
                 {
                     g_mouseState.setButtonBitMask(g_mouseState.buttonBitMask() | (UInt32)btn);
                     window->m_window->publish(MouseDownEvent(g_mouseState, btn), true);
+                    if(!g_initialDragButton)
+                    {
+                        printf("INITIAL START\n");
+                        g_initialDragButton = btn;
+                        SDL_CaptureMouse(SDL_TRUE);
+                    }
                 }
                 else
                 {
                     g_mouseState.setButtonBitMask(g_mouseState.buttonBitMask() & ~(UInt32)btn);
                     window->m_window->publish(MouseUpEvent(g_mouseState, btn), true);
+                    if(g_initialDragButton && btn == *g_initialDragButton)
+                    {
+                        printf("INITIAL END\n");
+                        g_initialDragButton.reset();
+                        SDL_CaptureMouse(SDL_FALSE);
+                    }
                 }
             }
             else if (_event->type == SDL_MOUSEMOTION)
