@@ -231,11 +231,6 @@ namespace luke
         return m_pimpl->display();
     }
 
-    const MouseState & Window::mouseState() const
-    {
-        return m_pimpl->mouseState();
-    }
-
     Error pollEvents()
     {
         return detail::WindowImpl::pollEvents();
@@ -254,5 +249,10 @@ namespace luke
     bool hasClipboardText()
     {
         return detail::WindowImpl::hasClipboardText();
+    }
+
+    const MouseState & mouseState()
+    {
+        return detail::WindowImpl::mouseState();
     }
 }

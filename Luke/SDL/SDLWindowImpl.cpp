@@ -35,6 +35,7 @@ namespace luke
 
         //@TODO: We might want to lock this for thread safety/portability reasons
         static DynamicArray<WindowImpl *> g_sdlWindows;
+        static MouseState g_mouseState;
 
         WindowImpl::WindowImpl(Window * _window) :
             m_sdlWindow(NULL),
@@ -698,11 +699,6 @@ namespace luke
             return Display();
         }
 
-        const MouseState & WindowImpl::mouseState() const
-        {
-            return m_mouseState;
-        }
-
         UInt32 WindowImpl::sdlWindowID() const
         {
             return m_sdlWindowID;
@@ -1169,23 +1165,23 @@ namespace luke
 
                 if (_event->type == SDL_MOUSEBUTTONDOWN)
                 {
-                    window->m_mouseState.setButtonBitMask(window->m_mouseState.buttonBitMask() | (UInt32)btn);
-                    window->m_window->publish(MouseDownEvent(window->m_mouseState, btn), true);
+                    g_mouseState.setButtonBitMask(g_mouseState.buttonBitMask() | (UInt32)btn);
+                    window->m_window->publish(MouseDownEvent(g_mouseState, btn), true);
                 }
                 else
                 {
-                    window->m_mouseState.setButtonBitMask(window->m_mouseState.buttonBitMask() & ~(UInt32)btn);
-                    window->m_window->publish(MouseUpEvent(window->m_mouseState, btn), true);
+                    g_mouseState.setButtonBitMask(g_mouseState.buttonBitMask() & ~(UInt32)btn);
+                    window->m_window->publish(MouseUpEvent(g_mouseState, btn), true);
                 }
             }
             else if (_event->type == SDL_MOUSEMOTION)
             {
-                window->m_mouseState.setPosition(_event->motion.x, _event->motion.y);
-                window->m_window->publish(MouseMoveEvent(window->m_mouseState), true);
+                g_mouseState.setPosition(_event->motion.x, _event->motion.y);
+                window->m_window->publish(MouseMoveEvent(g_mouseState), true);
             }
             else if (_event->type == SDL_MOUSEWHEEL)
             {
-                window->m_window->publish(MouseScrollEvent(window->m_mouseState, _event->wheel.x, _event->wheel.y), true);
+                window->m_window->publish(MouseScrollEvent(g_mouseState, _event->wheel.x, _event->wheel.y), true);
             }
         }
 
@@ -1251,6 +1247,11 @@ namespace luke
         bool WindowImpl::hasClipboardText()
         {
             return SDL_HasClipboardText();
+        }
+
+        const MouseState & WindowImpl::mouseState()
+        {
+            return g_mouseState;
         }
     }
 }

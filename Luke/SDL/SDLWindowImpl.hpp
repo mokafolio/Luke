@@ -101,8 +101,6 @@ namespace luke
 
             Display display() const;
 
-            const MouseState & mouseState() const;
-
             void deallocateSDLWindowAndContext();
 
             stick::UInt32 sdlWindowID() const;
@@ -116,13 +114,14 @@ namespace luke
 
             static bool hasClipboardText();
 
+            static const MouseState & mouseState();
+
 
             using CursorArray = stick::FixedArray<SDL_Cursor *, 7>;
 
             SDL_Window * m_sdlWindow;
             SDL_GLContext m_sdlGLContext;
             Window * m_window;
-            MouseState m_mouseState;
             bool m_bShouldClose;
             stick::UInt32 m_sdlWindowID;
             mutable stick::String m_title;

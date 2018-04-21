@@ -139,8 +139,6 @@ namespace luke
 
         stick::Float32 y() const;
 
-        const MouseState & mouseState() const;
-
     private:
 
         detail::WindowImplUniquePtr m_pimpl;
@@ -153,6 +151,8 @@ namespace luke
     STICK_API stick::String clipboardText();
 
     STICK_API bool hasClipboardText();
+
+    STICK_API const MouseState & mouseState();
 }
 
 #endif //LUKE_WINDOW_HPP
