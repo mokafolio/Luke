@@ -698,6 +698,11 @@ namespace luke
             return Display();
         }
 
+        const MouseState & WindowImpl::mouseState() const
+        {
+            return m_mouseState;
+        }
+
         UInt32 WindowImpl::sdlWindowID() const
         {
             return m_sdlWindowID;

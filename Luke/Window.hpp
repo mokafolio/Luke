@@ -4,6 +4,7 @@
 #include <Stick/EventForwarder.hpp>
 #include <Luke/WindowSettings.hpp>
 #include <Luke/KeyCodes.hpp>
+#include <Luke/MouseState.hpp>
 
 namespace luke
 {
@@ -137,6 +138,8 @@ namespace luke
         stick::Float32 x() const;
 
         stick::Float32 y() const;
+
+        const MouseState & mouseState() const;
 
     private:
 

@@ -101,6 +101,8 @@ namespace luke
 
             Display display() const;
 
+            const MouseState & mouseState() const;
+
             void deallocateSDLWindowAndContext();
 
             stick::UInt32 sdlWindowID() const;

@@ -231,6 +231,11 @@ namespace luke
         return m_pimpl->display();
     }
 
+    const MouseState & Window::mouseState() const
+    {
+        return m_pimpl->mouseState();
+    }
+
     Error pollEvents()
     {
         return detail::WindowImpl::pollEvents();
