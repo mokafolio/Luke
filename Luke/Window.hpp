@@ -111,8 +111,6 @@ namespace luke
 
         bool isFullscreen() const;
 
-        bool isKeyDown(KeyCode _key) const;
-
         const WindowSettings & settings() const;
 
         CursorType cursor() const;
@@ -153,6 +151,8 @@ namespace luke
     STICK_API bool hasClipboardText();
 
     STICK_API const MouseState & mouseState();
+
+    STICK_API bool isKeyDown(KeyCode _key);
 }
 
 #endif //LUKE_WINDOW_HPP

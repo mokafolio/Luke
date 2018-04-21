@@ -166,11 +166,6 @@ namespace luke
         return m_pimpl->isFullscreen();
     }
 
-    bool Window::isKeyDown(KeyCode _key) const
-    {
-        return m_pimpl->isKeyDown(_key);
-    }
-
     const WindowSettings & Window::settings() const
     {
         return m_pimpl->settings();
@@ -254,5 +249,10 @@ namespace luke
     const MouseState & mouseState()
     {
         return detail::WindowImpl::mouseState();
+    }
+
+    bool isKeyDown(KeyCode _key)
+    {
+        return detail::WindowImpl::isKeyDown(_key);
     }
 }

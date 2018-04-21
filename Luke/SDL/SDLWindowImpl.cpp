@@ -298,314 +298,6 @@ namespace luke
             return (SDL_GetWindowFlags(m_sdlWindow) & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN;
         }
 
-        bool WindowImpl::isKeyDown(KeyCode _code) const
-        {
-            int code;
-            switch (_code)
-            {
-                case KeyCode::Zero:
-                    code = SDLK_0;
-                    break;
-                case KeyCode::One:
-                    code = SDLK_1;
-                    break;
-                case KeyCode::Two:
-                    code = SDLK_2;
-                    break;
-                case KeyCode::Three:
-                    code = SDLK_3;
-                    break;
-                case KeyCode::Four:
-                    code = SDLK_4;
-                    break;
-                case KeyCode::Five:
-                    code = SDLK_5;
-                    break;
-                case KeyCode::Six:
-                    code = SDLK_6;
-                    break;
-                case KeyCode::Seven:
-                    code = SDLK_7;
-                    break;
-                case KeyCode::Eight:
-                    code = SDLK_8;
-                    break;
-                case KeyCode::Nine:
-                    code = SDLK_9;
-                    break;
-
-                case KeyCode::A:
-                    code = SDLK_a;
-                    break;
-                case KeyCode::B:
-                    code = SDLK_b;
-                    break;
-                case KeyCode::C:
-                    code = SDLK_c;
-                    break;
-                case KeyCode::D:
-                    code = SDLK_d;
-                    break;
-                case KeyCode::E:
-                    code = SDLK_e;
-                    break;
-                case KeyCode::F:
-                    code = SDLK_f;
-                    break;
-                case KeyCode::G:
-                    code = SDLK_g;
-                    break;
-                case KeyCode::H:
-                    code = SDLK_h;
-                    break;
-                case KeyCode::I:
-                    code = SDLK_i;
-                    break;
-                case KeyCode::J:
-                    code = SDLK_j;
-                    break;
-                case KeyCode::K:
-                    code = SDLK_k;
-                    break;
-                case KeyCode::L:
-                    code = SDLK_l;
-                    break;
-                case KeyCode::M:
-                    code = SDLK_m;
-                    break;
-                case KeyCode::N:
-                    code = SDLK_n;
-                    break;
-                case KeyCode::O:
-                    code = SDLK_o;
-                    break;
-                case KeyCode::P:
-                    code = SDLK_p;
-                    break;
-                case KeyCode::Q:
-                    code = SDLK_q;
-                    break;
-                case KeyCode::R:
-                    code = SDLK_r;
-                    break;
-                case KeyCode::S:
-                    code = SDLK_s;
-                    break;
-                case KeyCode::T:
-                    code = SDLK_t;
-                    break;
-                case KeyCode::U:
-                    code = SDLK_u;
-                    break;
-                case KeyCode::V:
-                    code = SDLK_v;
-                    break;
-                case KeyCode::W:
-                    code = SDLK_w;
-                    break;
-                case KeyCode::X:
-                    code = SDLK_x;
-                    break;
-                case KeyCode::Y:
-                    code = SDLK_y;
-                    break;
-                case KeyCode::Z:
-                    code = SDLK_z;
-                    break;
-
-                case KeyCode::Return:
-                    code = SDLK_RETURN;
-                    break;
-                case KeyCode::Escape:
-                    code = SDLK_ESCAPE;
-                    break;
-                case KeyCode::Backspace:
-                    code = SDLK_BACKSPACE;
-                    break;
-                case KeyCode::Tab:
-                    code = SDLK_TAB;
-                    break;
-                case KeyCode::Space:
-                    code = SDLK_SPACE;
-                    break;
-                case KeyCode::Subtract:
-                    code = SDLK_MINUS;
-                    break;
-                case KeyCode::Equal:
-                    code = SDLK_EQUALS;
-                    break;
-                case KeyCode::LeftBracket:
-                    code = SDLK_LEFTBRACKET;
-                    break;
-                case KeyCode::RightBracket:
-                    code = SDLK_RIGHTBRACKET;
-                    break;
-                case KeyCode::Backslash:
-                    code = SDLK_BACKSLASH;
-                    break;
-                case KeyCode::Semicolon:
-                    code = SDLK_SEMICOLON;
-                    break;
-                case KeyCode::Apostrophe:
-                    code = SDLK_QUOTE;
-                    break;
-                case KeyCode::GraveAccent:
-                    code = SDLK_BACKQUOTE; //Not sure about this one
-                    break;
-                case KeyCode::Comma:
-                    code = SDLK_COMMA;
-                    break;
-                case KeyCode::Period:
-                    code = SDLK_PERIOD;
-                    break;
-                case KeyCode::Slash:
-                    code = SDLK_SLASH;
-                    break;
-                case KeyCode::CapsLock:
-                    code = SDLK_CAPSLOCK;
-                    break;
-
-                case KeyCode::F1:
-                    code = SDLK_F1;
-                    break;
-                case KeyCode::F2:
-                    code = SDLK_F2;
-                    break;
-                case KeyCode::F3:
-                    code = SDLK_F3;
-                    break;
-                case KeyCode::F4:
-                    code = SDLK_F4;
-                    break;
-                case KeyCode::F5:
-                    code = SDLK_F5;
-                    break;
-                case KeyCode::F6:
-                    code = SDLK_F6;
-                    break;
-                case KeyCode::F7:
-                    code = SDLK_F7;
-                    break;
-                case KeyCode::F8:
-                    code = SDLK_F8;
-                    break;
-                case KeyCode::F9:
-                    code = SDLK_F9;
-                    break;
-                case KeyCode::F10:
-                    code = SDLK_F10;
-                    break;
-                case KeyCode::F11:
-                    code = SDLK_F11;
-                    break;
-                case KeyCode::F12:
-                    code = SDLK_F12;
-                    break;
-                case KeyCode::F13:
-                    code = SDLK_F13;
-                    break;
-                case KeyCode::F14:
-                    code = SDLK_F14;
-                    break;
-                case KeyCode::F15:
-                    code = SDLK_F15;
-                    break;
-                case KeyCode::F16:
-                    code = SDLK_F16;
-                    break;
-
-                case KeyCode::LeftControl:
-                    code = SDLK_LCTRL;
-                    break;
-                case KeyCode::LeftShift:
-                    code = SDLK_LSHIFT;
-                    break;
-                case KeyCode::LeftAlt:
-                    code = SDLK_LALT;
-                    break;
-                case KeyCode::LeftCommand:
-                    code = SDLK_LGUI;
-                    break;
-                case KeyCode::RightControl:
-                    code = SDLK_RCTRL;
-                    break;
-                case KeyCode::RightShift:
-                    code = SDLK_RSHIFT;
-                    break;
-                case KeyCode::RightAlt:
-                    code = SDLK_RALT;
-                    break;
-                case KeyCode::RightCommand:
-                    code = SDLK_RGUI;
-                    break;
-
-                case KeyCode::Right:
-                    code = SDLK_RIGHT;
-                    break;
-                case KeyCode::Left:
-                    code = SDLK_LEFT;
-                    break;
-                case KeyCode::Down:
-                    code = SDLK_DOWN;
-                    break;
-                case KeyCode::Up:
-                    code = SDLK_UP;
-                    break;
-
-                case KeyCode::KPDivide:
-                    code = SDLK_KP_DIVIDE;
-                    break;
-                case KeyCode::KPMultiply:
-                    code = SDLK_KP_MULTIPLY;
-                    break;
-                case KeyCode::KPSubtract:
-                    code = SDLK_KP_MINUS;
-                    break;
-                case KeyCode::KPAdd:
-                    code = SDLK_KP_PLUS;
-                    break;
-                case KeyCode::KPReturn:
-                    code = SDLK_KP_ENTER;
-                    break;
-                case KeyCode::KPOne:
-                    code = SDLK_KP_1;
-                    break;
-                case KeyCode::KPTwo:
-                    code = SDLK_KP_2;
-                    break;
-                case KeyCode::KPThree:
-                    code = SDLK_KP_3;
-                    break;
-                case KeyCode::KPFour:
-                    code = SDLK_KP_4;
-                    break;
-                case KeyCode::KPFive:
-                    code = SDLK_KP_5;
-                    break;
-                case KeyCode::KPSix:
-                    code = SDLK_KP_6;
-                    break;
-                case KeyCode::KPSeven:
-                    code = SDLK_KP_7;
-                    break;
-                case KeyCode::KPEight:
-                    code = SDLK_KP_8;
-                    break;
-                case KeyCode::KPNine:
-                    code = SDLK_KP_9;
-                    break;
-                case KeyCode::KPZero:
-                    code = SDLK_KP_0;
-                    break;
-                case KeyCode::KPEqual:
-                    code = SDLK_KP_EQUALS;
-                    break;
-
-                default:
-                    code = -1;
-            }
-        }
-
         const String & WindowImpl::title() const
         {
             STICK_ASSERT(m_sdlWindow);
@@ -1252,6 +944,338 @@ namespace luke
         const MouseState & WindowImpl::mouseState()
         {
             return g_mouseState;
+        }
+
+        bool WindowImpl::isKeyDown(KeyCode _code)
+        {
+            int code;
+            switch (_code)
+            {
+                case KeyCode::Zero:
+                    code = SDLK_0;
+                    break;
+                case KeyCode::One:
+                    code = SDLK_1;
+                    break;
+                case KeyCode::Two:
+                    code = SDLK_2;
+                    break;
+                case KeyCode::Three:
+                    code = SDLK_3;
+                    break;
+                case KeyCode::Four:
+                    code = SDLK_4;
+                    break;
+                case KeyCode::Five:
+                    code = SDLK_5;
+                    break;
+                case KeyCode::Six:
+                    code = SDLK_6;
+                    break;
+                case KeyCode::Seven:
+                    code = SDLK_7;
+                    break;
+                case KeyCode::Eight:
+                    code = SDLK_8;
+                    break;
+                case KeyCode::Nine:
+                    code = SDLK_9;
+                    break;
+
+                case KeyCode::A:
+                    code = SDLK_a;
+                    break;
+                case KeyCode::B:
+                    code = SDLK_b;
+                    break;
+                case KeyCode::C:
+                    code = SDLK_c;
+                    break;
+                case KeyCode::D:
+                    code = SDLK_d;
+                    break;
+                case KeyCode::E:
+                    code = SDLK_e;
+                    break;
+                case KeyCode::F:
+                    code = SDLK_f;
+                    break;
+                case KeyCode::G:
+                    code = SDLK_g;
+                    break;
+                case KeyCode::H:
+                    code = SDLK_h;
+                    break;
+                case KeyCode::I:
+                    code = SDLK_i;
+                    break;
+                case KeyCode::J:
+                    code = SDLK_j;
+                    break;
+                case KeyCode::K:
+                    code = SDLK_k;
+                    break;
+                case KeyCode::L:
+                    code = SDLK_l;
+                    break;
+                case KeyCode::M:
+                    code = SDLK_m;
+                    break;
+                case KeyCode::N:
+                    code = SDLK_n;
+                    break;
+                case KeyCode::O:
+                    code = SDLK_o;
+                    break;
+                case KeyCode::P:
+                    code = SDLK_p;
+                    break;
+                case KeyCode::Q:
+                    code = SDLK_q;
+                    break;
+                case KeyCode::R:
+                    code = SDLK_r;
+                    break;
+                case KeyCode::S:
+                    code = SDLK_s;
+                    break;
+                case KeyCode::T:
+                    code = SDLK_t;
+                    break;
+                case KeyCode::U:
+                    code = SDLK_u;
+                    break;
+                case KeyCode::V:
+                    code = SDLK_v;
+                    break;
+                case KeyCode::W:
+                    code = SDLK_w;
+                    break;
+                case KeyCode::X:
+                    code = SDLK_x;
+                    break;
+                case KeyCode::Y:
+                    code = SDLK_y;
+                    break;
+                case KeyCode::Z:
+                    code = SDLK_z;
+                    break;
+
+                case KeyCode::Return:
+                    code = SDLK_RETURN;
+                    break;
+                case KeyCode::Escape:
+                    code = SDLK_ESCAPE;
+                    break;
+                case KeyCode::Backspace:
+                    code = SDLK_BACKSPACE;
+                    break;
+                case KeyCode::Tab:
+                    code = SDLK_TAB;
+                    break;
+                case KeyCode::Space:
+                    code = SDLK_SPACE;
+                    break;
+                case KeyCode::Subtract:
+                    code = SDLK_MINUS;
+                    break;
+                case KeyCode::Equal:
+                    code = SDLK_EQUALS;
+                    break;
+                case KeyCode::LeftBracket:
+                    code = SDLK_LEFTBRACKET;
+                    break;
+                case KeyCode::RightBracket:
+                    code = SDLK_RIGHTBRACKET;
+                    break;
+                case KeyCode::Backslash:
+                    code = SDLK_BACKSLASH;
+                    break;
+                case KeyCode::Semicolon:
+                    code = SDLK_SEMICOLON;
+                    break;
+                case KeyCode::Apostrophe:
+                    code = SDLK_QUOTE;
+                    break;
+                case KeyCode::GraveAccent:
+                    code = SDLK_BACKQUOTE; //Not sure about this one
+                    break;
+                case KeyCode::Comma:
+                    code = SDLK_COMMA;
+                    break;
+                case KeyCode::Period:
+                    code = SDLK_PERIOD;
+                    break;
+                case KeyCode::Slash:
+                    code = SDLK_SLASH;
+                    break;
+                case KeyCode::CapsLock:
+                    code = SDLK_CAPSLOCK;
+                    break;
+
+                case KeyCode::F1:
+                    code = SDLK_F1;
+                    break;
+                case KeyCode::F2:
+                    code = SDLK_F2;
+                    break;
+                case KeyCode::F3:
+                    code = SDLK_F3;
+                    break;
+                case KeyCode::F4:
+                    code = SDLK_F4;
+                    break;
+                case KeyCode::F5:
+                    code = SDLK_F5;
+                    break;
+                case KeyCode::F6:
+                    code = SDLK_F6;
+                    break;
+                case KeyCode::F7:
+                    code = SDLK_F7;
+                    break;
+                case KeyCode::F8:
+                    code = SDLK_F8;
+                    break;
+                case KeyCode::F9:
+                    code = SDLK_F9;
+                    break;
+                case KeyCode::F10:
+                    code = SDLK_F10;
+                    break;
+                case KeyCode::F11:
+                    code = SDLK_F11;
+                    break;
+                case KeyCode::F12:
+                    code = SDLK_F12;
+                    break;
+                case KeyCode::F13:
+                    code = SDLK_F13;
+                    break;
+                case KeyCode::F14:
+                    code = SDLK_F14;
+                    break;
+                case KeyCode::F15:
+                    code = SDLK_F15;
+                    break;
+                case KeyCode::F16:
+                    code = SDLK_F16;
+                    break;
+
+                case KeyCode::Insert:
+                    code = SDLK_INSERT;
+                    break;
+                case KeyCode::Home:
+                    code = SDLK_HOME;
+                    break;
+                case KeyCode::PageUp:
+                    code = SDLK_PAGEUP;
+                    break;
+                case KeyCode::Delete:
+                    code = SDLK_DELETE;
+                    break;
+                case KeyCode::End:
+                    code = SDLK_END;
+                    break;
+                case KeyCode::PageDown:
+                    code = SDLK_PAGEDOWN;
+                    break;
+
+                case KeyCode::LeftControl:
+                    code = SDLK_LCTRL;
+                    break;
+                case KeyCode::LeftShift:
+                    code = SDLK_LSHIFT;
+                    break;
+                case KeyCode::LeftAlt:
+                    code = SDLK_LALT;
+                    break;
+                case KeyCode::LeftCommand:
+                    code = SDLK_LGUI;
+                    break;
+                case KeyCode::RightControl:
+                    code = SDLK_RCTRL;
+                    break;
+                case KeyCode::RightShift:
+                    code = SDLK_RSHIFT;
+                    break;
+                case KeyCode::RightAlt:
+                    code = SDLK_RALT;
+                    break;
+                case KeyCode::RightCommand:
+                    code = SDLK_RGUI;
+                    break;
+
+                case KeyCode::Right:
+                    code = SDLK_RIGHT;
+                    break;
+                case KeyCode::Left:
+                    code = SDLK_LEFT;
+                    break;
+                case KeyCode::Down:
+                    code = SDLK_DOWN;
+                    break;
+                case KeyCode::Up:
+                    code = SDLK_UP;
+                    break;
+
+                case KeyCode::KPDivide:
+                    code = SDLK_KP_DIVIDE;
+                    break;
+                case KeyCode::KPMultiply:
+                    code = SDLK_KP_MULTIPLY;
+                    break;
+                case KeyCode::KPSubtract:
+                    code = SDLK_KP_MINUS;
+                    break;
+                case KeyCode::KPAdd:
+                    code = SDLK_KP_PLUS;
+                    break;
+                case KeyCode::KPReturn:
+                    code = SDLK_KP_ENTER;
+                    break;
+                case KeyCode::KPOne:
+                    code = SDLK_KP_1;
+                    break;
+                case KeyCode::KPTwo:
+                    code = SDLK_KP_2;
+                    break;
+                case KeyCode::KPThree:
+                    code = SDLK_KP_3;
+                    break;
+                case KeyCode::KPFour:
+                    code = SDLK_KP_4;
+                    break;
+                case KeyCode::KPFive:
+                    code = SDLK_KP_5;
+                    break;
+                case KeyCode::KPSix:
+                    code = SDLK_KP_6;
+                    break;
+                case KeyCode::KPSeven:
+                    code = SDLK_KP_7;
+                    break;
+                case KeyCode::KPEight:
+                    code = SDLK_KP_8;
+                    break;
+                case KeyCode::KPNine:
+                    code = SDLK_KP_9;
+                    break;
+                case KeyCode::KPZero:
+                    code = SDLK_KP_0;
+                    break;
+                case KeyCode::KPEqual:
+                    code = SDLK_KP_EQUALS;
+                    break;
+
+                default:
+                    code = -1;
+            }
+
+            if(code == -1) return false;
+
+            const Uint8 * state = SDL_GetKeyboardState(NULL);
+            return state[code];
         }
     }
 }

@@ -81,8 +81,6 @@ namespace luke
 
             bool isFullscreen() const;
 
-            bool isKeyDown(KeyCode _code) const;
-
             const stick::String & title() const;
 
             stick::Float32 backingScaleFactor() const;
@@ -115,6 +113,8 @@ namespace luke
             static bool hasClipboardText();
 
             static const MouseState & mouseState();
+
+            static bool isKeyDown(KeyCode _code);
 
 
             using CursorArray = stick::FixedArray<SDL_Cursor *, 7>;

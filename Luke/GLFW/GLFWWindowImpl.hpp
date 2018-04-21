@@ -74,8 +74,6 @@ namespace luke
 
             bool isFullscreen() const;
 
-            bool isKeyDown(KeyCode _code) const;
-
             const stick::String & title() const;
 
             stick::Float32 backingScaleFactor() const;
