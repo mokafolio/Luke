@@ -5,7 +5,9 @@
 #include <Luke/MouseState.hpp>
 
 namespace luke
-{
+{   
+    class STICK_API MouseEventCategory {};
+
     class STICK_API MouseEvent
     {
     public:
@@ -31,18 +33,13 @@ namespace luke
 
     class STICK_API MouseScrollEvent :
         public MouseEvent,
-        public stick::EventT<MouseScrollEvent>
+        public stick::EventT<MouseScrollEvent, MouseEventCategory>
     {
     public:
 
 
         MouseScrollEvent(const MouseState & _state, stick::Float32 _scrollX, stick::Float32 _scrollY);
-
-        // MouseScrollEvent(const MouseScrollEvent &) = default;
-        // MouseScrollEvent(MouseScrollEvent &&) = default;
-        // MouseScrollEvent & operator = (const MouseScrollEvent &) = default;
-        // MouseScrollEvent & operator = (MouseScrollEvent &&) = default;
-
+        
         stick::Float32 scrollX() const;
 
         stick::Float32 scrollY() const;
@@ -55,21 +52,16 @@ namespace luke
 
     class STICK_API MouseMoveEvent :
         public MouseEvent,
-        public stick::EventT<MouseMoveEvent>
+        public stick::EventT<MouseMoveEvent, MouseEventCategory>
     {
     public:
 
         MouseMoveEvent(const MouseState & _state);
-
-        // MouseMoveEvent(const MouseMoveEvent &) = default;
-        // MouseMoveEvent(MouseMoveEvent &&) = default;
-        // MouseMoveEvent & operator = (const MouseMoveEvent &) = default;
-        // MouseMoveEvent & operator = (MouseMoveEvent &&) = default;
     };
 
     class STICK_API MouseDownEvent :
         public MouseEvent,
-        public stick::EventT<MouseDownEvent>
+        public stick::EventT<MouseDownEvent, MouseEventCategory>
     {
     public:
 

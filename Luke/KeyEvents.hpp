@@ -6,6 +6,8 @@
 
 namespace luke
 {
+    struct STICK_API KeyEventCategory {};
+
     class STICK_API KeyEvent
     {
     public:
@@ -24,7 +26,7 @@ namespace luke
 
     class STICK_API KeyDownEvent :
         public KeyEvent,
-        public stick::EventT<KeyDownEvent>
+        public stick::EventT<KeyDownEvent, KeyEventCategory>
     {
     public:
 
@@ -39,7 +41,7 @@ namespace luke
 
     class STICK_API KeyUpEvent :
         public KeyEvent,
-        public stick::EventT<KeyUpEvent>
+        public stick::EventT<KeyUpEvent, KeyEventCategory>
     {
     public:
 
