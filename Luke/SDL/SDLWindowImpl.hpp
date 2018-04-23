@@ -116,6 +116,10 @@ namespace luke
 
             static bool isKeyDown(KeyCode _code);
 
+            static stick::UInt32 modifiers();
+
+            static bool modifier(KeyModifier _mod);
+
 
             using CursorArray = stick::FixedArray<SDL_Cursor *, 7>;
 

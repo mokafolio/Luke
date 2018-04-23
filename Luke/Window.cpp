@@ -255,4 +255,14 @@ namespace luke
     {
         return detail::WindowImpl::isKeyDown(_key);
     }
+
+    UInt32 modifiers()
+    {
+        return detail::WindowImpl::modifiers();
+    }
+
+    bool modifier(KeyModifier _mod)
+    {
+        return detail::WindowImpl::modifier(_mod);
+    }
 }

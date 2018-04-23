@@ -142,6 +142,8 @@ namespace luke
         detail::WindowImplUniquePtr m_pimpl;
     };
 
+    //@TODO: Should these sit somewhere else?
+
     STICK_API stick::Error pollEvents();
 
     STICK_API stick::Error setClipboardText(const char * _txt);
@@ -153,6 +155,10 @@ namespace luke
     STICK_API const MouseState & mouseState();
 
     STICK_API bool isKeyDown(KeyCode _key);
+
+    STICK_API stick::UInt32 modifiers();
+
+    STICK_API bool modifier(KeyModifier _mod);
 }
 
 #endif //LUKE_WINDOW_HPP

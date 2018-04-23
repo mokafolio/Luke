@@ -861,9 +861,8 @@ namespace luke
                 {
                     g_mouseState.setButtonBitMask(g_mouseState.buttonBitMask() | (UInt32)btn);
                     window->m_window->publish(MouseDownEvent(g_mouseState, btn), true);
-                    if(!g_initialDragButton)
+                    if (!g_initialDragButton)
                     {
-                        printf("INITIAL START\n");
                         g_initialDragButton = btn;
                         SDL_CaptureMouse(SDL_TRUE);
                     }
@@ -872,9 +871,8 @@ namespace luke
                 {
                     g_mouseState.setButtonBitMask(g_mouseState.buttonBitMask() & ~(UInt32)btn);
                     window->m_window->publish(MouseUpEvent(g_mouseState, btn), true);
-                    if(g_initialDragButton && btn == *g_initialDragButton)
+                    if (g_initialDragButton && btn == *g_initialDragButton)
                     {
-                        printf("INITIAL END\n");
                         g_initialDragButton.reset();
                         SDL_CaptureMouse(SDL_FALSE);
                     }
@@ -1290,6 +1288,60 @@ namespace luke
 
             const Uint8 * state = SDL_GetKeyboardState(NULL);
             return state[code];
+        }
+
+        UInt32 WindowImpl::modifiers()
+        {
+            UInt32 ret = 0;
+            SDL_Keymod mods = SDL_GetModState();
+
+            if(mods & KMOD_LSHIFT)
+            {
+                ret |= (UInt32)KeyModifier::LeftShift;
+            }
+            else if(mods & KMOD_RSHIFT)
+            {
+                ret |= (UInt32)KeyModifier::RightShift;
+            }
+            else if(mods & KMOD_LGUI)
+            {
+                ret |= (UInt32)KeyModifier::LeftCommand;
+            }
+            else if(mods & KMOD_RGUI)
+            {
+                ret |= (UInt32)KeyModifier::RightCommand;
+            }
+            else if(mods & KMOD_LCTRL)
+            {
+                ret |= (UInt32)KeyModifier::LeftControl;
+            }
+            else if(mods & KMOD_RCTRL)
+            {
+                ret |= (UInt32)KeyModifier::RightControl;
+            }
+            else if(mods & KMOD_LALT)
+            {
+                ret |= (UInt32)KeyModifier::LeftAlt;
+            }
+            else if(mods & KMOD_RALT)
+            {
+                ret |= (UInt32)KeyModifier::RightAlt;
+            }
+            else if(mods & KMOD_CAPS)
+            {
+                ret |= (UInt32)KeyModifier::CapsLock;
+            }
+            else if(mods & KMOD_NUM)
+            {
+                ret |= (UInt32)KeyModifier::Numbers;
+            }
+
+            return ret;
+        }
+
+        bool WindowImpl::modifier(KeyModifier _mod)
+        {
+            return (modifiers() & (UInt32)_mod) != 0;
         }
     }
 }

@@ -137,6 +137,25 @@ namespace luke
         KPEqual = 103,
         KPComma = 133
     };
+
+    STICK_API_ENUM_CLASS(KeyModifier)
+    {
+        None = 0,
+        LeftShift = 1,
+        RightShift = 1 << 1,
+        LeftCommand = 1 << 2,
+        RightCommand = 1 << 3,
+        LeftControl = 1 << 4,
+        RightControl = 1 << 5,
+        LeftAlt = 1 << 6,
+        RightAlt = 1 << 7,
+        CapsLock = 1 << 8,
+        Numbers = 1 << 9,
+        Shift = (LeftShift | RightShift),
+        Command = (LeftCommand | RightCommand),
+        Control = (LeftControl | RightControl),
+        Alt = (LeftAlt | RightAlt)
+    };
 }
 
 #endif //LUKE_KEYCODES_HPP
