@@ -1,12 +1,15 @@
 #ifndef LUKE_WINDOWEVENTS_HPP
 #define LUKE_WINDOWEVENTS_HPP
 
+#include <Luke/Constants.hpp>
 #include <Stick/Event.hpp>
 
 namespace luke
 {
+    class WindowEventCategory {};
+
     class STICK_API WindowMoveEvent :
-        public stick::EventT<WindowMoveEvent>
+        public stick::EventT<WindowMoveEvent, LukeEventCategory, WindowEventCategory>
     {
     public:
 
@@ -30,7 +33,7 @@ namespace luke
     //@TODO: Window show/hide events, maximize event
 
     class STICK_API WindowResizeEvent :
-        public stick::EventT<WindowResizeEvent>
+        public stick::EventT<WindowResizeEvent, LukeEventCategory, WindowEventCategory>
     {
     public:
 
@@ -52,7 +55,7 @@ namespace luke
     };
 
     class STICK_API WindowFocusEvent :
-        public stick::EventT<WindowFocusEvent>
+        public stick::EventT<WindowFocusEvent, LukeEventCategory, WindowEventCategory>
     {
     public:
 
@@ -64,7 +67,7 @@ namespace luke
     };
 
     class STICK_API WindowLostFocusEvent :
-        public stick::EventT<WindowLostFocusEvent>
+        public stick::EventT<WindowLostFocusEvent, LukeEventCategory, WindowEventCategory>
     {
     public:
 
@@ -76,7 +79,7 @@ namespace luke
     };
 
     class STICK_API WindowIconifyEvent :
-        public stick::EventT<WindowIconifyEvent>
+        public stick::EventT<WindowIconifyEvent, LukeEventCategory, WindowEventCategory>
     {
     public:
 
@@ -88,7 +91,7 @@ namespace luke
     };
 
     class STICK_API WindowRestoreEvent :
-        public stick::EventT<WindowRestoreEvent>
+        public stick::EventT<WindowRestoreEvent, LukeEventCategory, WindowEventCategory>
     {
     public:
 

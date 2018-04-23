@@ -14,6 +14,7 @@ set (LUKEINC
 Luke/GLFW/GLFWDisplayImpl.hpp
 Luke/GLFW/GLFWInitializer.hpp
 Luke/GLFW/GLFWWindowImpl.hpp
+Luke/Constants.hpp
 Luke/Display.hpp
 Luke/DisplayMode.hpp
 Luke/KeyCodes.hpp

@@ -2,6 +2,7 @@
 #define LUKE_MOUSEEVENTS_HPP
 
 #include <Stick/Event.hpp>
+#include <Luke/Constants.hpp>
 #include <Luke/MouseState.hpp>
 
 namespace luke
@@ -33,13 +34,13 @@ namespace luke
 
     class STICK_API MouseScrollEvent :
         public MouseEvent,
-        public stick::EventT<MouseScrollEvent, MouseEventCategory>
+        public stick::EventT<MouseScrollEvent, LukeEventCategory, MouseEventCategory>
     {
     public:
 
 
         MouseScrollEvent(const MouseState & _state, stick::Float32 _scrollX, stick::Float32 _scrollY);
-        
+
         stick::Float32 scrollX() const;
 
         stick::Float32 scrollY() const;
@@ -52,7 +53,7 @@ namespace luke
 
     class STICK_API MouseMoveEvent :
         public MouseEvent,
-        public stick::EventT<MouseMoveEvent, MouseEventCategory>
+        public stick::EventT<MouseMoveEvent, LukeEventCategory, MouseEventCategory>
     {
     public:
 
@@ -61,7 +62,7 @@ namespace luke
 
     class STICK_API MouseDownEvent :
         public MouseEvent,
-        public stick::EventT<MouseDownEvent, MouseEventCategory>
+        public stick::EventT<MouseDownEvent, LukeEventCategory, MouseEventCategory>
     {
     public:
 
@@ -70,7 +71,7 @@ namespace luke
 
     class STICK_API MouseUpEvent :
         public MouseEvent,
-        public stick::EventT<MouseUpEvent>
+        public stick::EventT<MouseUpEvent, LukeEventCategory, MouseEventCategory>
     {
     public:
 

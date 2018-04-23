@@ -2,6 +2,7 @@
 #define LUKE_KEYEVENTS_HPP
 
 #include <Stick/Event.hpp>
+#include <Luke/Constants.hpp>
 #include <Luke/KeyCodes.hpp>
 
 namespace luke
@@ -26,7 +27,7 @@ namespace luke
 
     class STICK_API KeyDownEvent :
         public KeyEvent,
-        public stick::EventT<KeyDownEvent, KeyEventCategory>
+        public stick::EventT<KeyDownEvent, LukeEventCategory, KeyEventCategory>
     {
     public:
 
@@ -41,7 +42,7 @@ namespace luke
 
     class STICK_API KeyUpEvent :
         public KeyEvent,
-        public stick::EventT<KeyUpEvent, KeyEventCategory>
+        public stick::EventT<KeyUpEvent, LukeEventCategory, KeyEventCategory>
     {
     public:
 

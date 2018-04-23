@@ -1,11 +1,12 @@
 #ifndef LUKE_TEXTINPUTEVENT_HPP
 #define LUKE_TEXTINPUTEVENT_HPP
 
+#include <Luke/Constants.hpp>
 #include <Stick/Event.hpp>
 
 namespace luke
 {
-    class TextInputEvent : public stick::EventT<TextInputEvent>
+    class TextInputEvent : public stick::EventT<TextInputEvent, LukeEventCategory>
     {
     public:
 
