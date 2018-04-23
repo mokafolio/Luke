@@ -108,7 +108,7 @@ namespace luke
 
             static stick::Error setClipboardText(const char * _text);
 
-            static stick::String clipboardText();
+            static const char * clipboardText();
 
             static bool hasClipboardText();
 

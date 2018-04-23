@@ -148,7 +148,7 @@ namespace luke
 
     STICK_API stick::Error setClipboardText(const char * _txt);
 
-    STICK_API stick::String clipboardText();
+    STICK_API const char * clipboardText();
 
     STICK_API bool hasClipboardText();
 

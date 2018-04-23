@@ -236,7 +236,7 @@ namespace luke
         return detail::WindowImpl::setClipboardText(_text);
     }
 
-    String clipboardText()
+    const char * clipboardText()
     {
         return detail::WindowImpl::clipboardText();
     }

@@ -940,12 +940,9 @@ namespace luke
             return Error();
         }
 
-        String WindowImpl::clipboardText()
+        const char * WindowImpl::clipboardText()
         {
-            const char * str = SDL_GetClipboardText();
-            if (str)
-                return String(str);
-            return String();
+            return SDL_GetClipboardText();
         }
 
         bool WindowImpl::hasClipboardText()
