@@ -134,6 +134,7 @@ namespace luke
 
 
             m_sdlWindowID = SDL_GetWindowID(m_sdlWindow);
+
             return Error();
         }
 
@@ -435,7 +436,7 @@ namespace luke
                     //         _event->window.data2);
                     window->m_window->publish(WindowMoveEvent(_event->window.data1, _event->window.data2), true);
                     break;
-                case SDL_WINDOWEVENT_RESIZED:
+                // case SDL_WINDOWEVENT_RESIZED:
                 case SDL_WINDOWEVENT_SIZE_CHANGED:
                     // SDL_Log("Window %d resized to %dx%d",
                     //         _event->window.windowID, _event->window.data1,

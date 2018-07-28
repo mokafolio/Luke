@@ -143,9 +143,9 @@ int main(int _argc, const char * _args[])
         }
     });
 
-    luke::setClipboardText("test");
-    auto str = luke::clipboardText();
-    printf("CLIPBOARD %s\n", str);
+    // luke::setClipboardText("test");
+    // auto str = luke::clipboardText();
+    // printf("CLIPBOARD %s\n", str);
 
     window.addEventCallback([](const KeyDownEvent & _event)
     {
