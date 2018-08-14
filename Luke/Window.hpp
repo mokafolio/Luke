@@ -14,10 +14,10 @@ namespace luke
         using WindowImplUniquePtr = stick::UniquePtr<WindowImpl>;
     }
 
-    STICK_API_ENUM_CLASS(FullScreenMode)
+    STICK_API_ENUM_CLASS(FullscreenMode)
     {
         Borderless, //borderless fullscreenwindow in the current desktop resolution
-        Fullsceen //actually changs the display mode
+        Fullscreen //actually changs the display mode
     };
 
     STICK_API_ENUM_CLASS(CursorType)
@@ -75,7 +75,7 @@ namespace luke
         //If _mode is fullscreen, it will try to switch to the display mode that most closely matches the current window resolution.
         //_display allows you to specify a display to go fullscreen on. If not provided, window goes fullscreen
         //on the display that it is on.
-        stick::Error enterFullscreen(FullScreenMode _mode = FullScreenMode::Borderless, const Display & _display = Display());
+        stick::Error enterFullscreen(FullscreenMode _mode = FullscreenMode::Borderless, const Display & _display = Display());
 
         stick::Error enterFullscreen(const DisplayMode & _mode, const Display & _display = Display());
 

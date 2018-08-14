@@ -1,4 +1,5 @@
 find_package(OpenGL REQUIRED)
-
 add_executable (LukePlayground LukePlayground.cpp)
+set_target_properties(LukePlayground PROPERTIES COMPILE_FLAGS "-fsanitize=address")
+set_target_properties(LukePlayground PROPERTIES LINK_FLAGS "-fsanitize=address")
 target_link_libraries(LukePlayground LukeStatic ${LUKEDEPS} ${OPENGL_LIBRARIES})

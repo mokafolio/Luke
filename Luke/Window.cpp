@@ -89,7 +89,7 @@ namespace luke
         m_pimpl->setVerticalSync(_b);
     }
 
-    Error Window::enterFullscreen(FullScreenMode _mode, const Display & _display)
+    Error Window::enterFullscreen(FullscreenMode _mode, const Display & _display)
     {
         return m_pimpl->enterFullscreen(_mode, _display);
     }

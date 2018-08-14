@@ -52,7 +52,7 @@ namespace luke
 
             void setVerticalSync(bool _b);
 
-            stick::Error enterFullscreen(FullScreenMode _mode, const Display & _display);
+            stick::Error enterFullscreen(FullscreenMode _mode, const Display & _display);
 
             stick::Error enterFullscreen(const DisplayMode & _mode, const Display & _display);
 

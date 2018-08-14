@@ -218,12 +218,12 @@ namespace luke
         }
 
         //@TODO: Merge the code for both enter fullscreen functions into a helper
-        Error WindowImpl::enterFullscreen(FullScreenMode _mode, const Display & _display)
+        Error WindowImpl::enterFullscreen(FullscreenMode _mode, const Display & _display)
         {
             STICK_ASSERT(m_sdlWindow);
 
             SDL_SetWindowFullscreen(m_sdlWindow,
-                                    _mode == FullScreenMode::Borderless ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_FULLSCREEN);
+                                    _mode == FullscreenMode::Borderless ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_FULLSCREEN);
 
             return Error();
         }
