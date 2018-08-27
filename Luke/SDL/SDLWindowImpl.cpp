@@ -893,7 +893,7 @@ namespace luke
         static void handleTextInputEvent(SDL_Event * _event)
         {
             STICK_ASSERT(_event->type == SDL_TEXTEDITING ||
-                         _event->type == SDK: SDL_TEXTINPUT);
+                         _event->type == SDL_TEXTINPUT);
 
             WindowImpl * window = windowForEvent(_event);
             if (!window) return;
