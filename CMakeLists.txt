@@ -6,7 +6,7 @@ option(BuildSubmodules "BuildSubmodules" OFF)
 
 set(LUKEIMPL "SDL" CACHE STRING "The implementation to compile")
 
-#include_directories (${CMAKE_CURRENT_SOURCE_DIR} /usr/local/include /usr/local/include/SDL2)
+include_directories (${CMAKE_CURRENT_SOURCE_DIR} /usr/local/include/SDL2)
 
 if(BuildSubmodules)
     link_directories(Submodules/Stick)
