@@ -6,18 +6,15 @@ option(BuildSubmodules "BuildSubmodules" OFF)
 
 set(LUKEIMPL "SDL" CACHE STRING "The implementation to compile")
 
-include_directories (${CMAKE_CURRENT_SOURCE_DIR} /usr/local/include/SDL2)
+include_directories (${CMAKE_CURRENT_SOURCE_DIR} /usr/local/include/)
 
 if(BuildSubmodules)
-    link_directories(Submodules/Stick)
+    link_directories(subprojects/Stick)
 else()
     link_directories(/usr/local/lib)
 endif()
 
 set (LUKEINC 
-Luke/GLFW/GLFWDisplayImpl.hpp
-Luke/GLFW/GLFWInitializer.hpp
-Luke/GLFW/GLFWWindowImpl.hpp
 Luke/Constants.hpp
 Luke/Display.hpp
 Luke/DisplayMode.hpp
@@ -78,7 +75,7 @@ elseif(${LUKEIMPL} STREQUAL "SDL")
 endif()
 
 if(BuildSubmodules)
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Submodules/Stick)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/subprojects/Stick)
 endif()
 
 add_library (Luke SHARED ${LUKESRC})

@@ -1,7 +1,0 @@
-Short Term:
-- Finish WindowSettings and corresponding GLFW implementation
-- Write some basic tests
-- Reset mouse state in glfw implementation when going fullscreen (bugged on their end)
-
-Long Term:
-- Native implementations for OSX / Linux
