@@ -85,4 +85,4 @@ lukeDep = declare_dependency(link_with : luke,
     dependencies: lukeDeps, 
     include_directories: incDirs)
 
-# subdir('Playground')
+subdir('Playground')
