@@ -41,8 +41,8 @@ namespace luke
 
         WindowImpl::WindowImpl(Window * _window) :
             m_sdlWindow(NULL),
-            m_window(_window),
             m_sdlGLContext(NULL),
+            m_window(_window),
             m_bShouldClose(false),
             m_sdlWindowID(0)
         {
@@ -80,6 +80,9 @@ namespace luke
         Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
         {
             SDLInitializer::instance();
+            
+            //@TODO: for now we simply cache the settings that were passed in...
+            m_settings = _settings;
 
             deallocateSDLWindowAndContext();
 
@@ -282,7 +285,7 @@ namespace luke
 
         const WindowSettings & WindowImpl::settings() const
         {
-
+            return m_settings;
         }
 
         bool WindowImpl::isCursorVisible() const

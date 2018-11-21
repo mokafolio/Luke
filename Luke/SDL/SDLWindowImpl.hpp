@@ -130,6 +130,7 @@ namespace luke
             stick::UInt32 m_sdlWindowID;
             mutable stick::String m_title;
             CursorArray m_cursors;
+            WindowSettings m_settings;
         };
     }
 }

@@ -14,8 +14,8 @@ namespace luke
         m_samples(0),
         m_colorPrecision(32),
         m_alphaPrecision(8),
-        m_depthPrecision(24),
-        m_stencilPrecision(8)
+        m_stencilPrecision(8),
+        m_depthPrecision(24)
     {
 
     }

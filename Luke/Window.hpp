@@ -111,6 +111,7 @@ namespace luke
 
         bool isFullscreen() const;
 
+        //@TODO: Should this return the settings that the window was opened with or the current ones???
         const WindowSettings & settings() const;
 
         CursorType cursor() const;
