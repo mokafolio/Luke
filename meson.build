@@ -83,4 +83,6 @@ lukeDep = declare_dependency(link_with : luke,
     dependencies: lukeDeps, 
     include_directories: incDirs)
 
-subdir('Playground')
+if meson.is_subproject() == false
+    subdir('Playground')
+endif
