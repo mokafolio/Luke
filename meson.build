@@ -77,11 +77,7 @@ endif
 
 incDirs = include_directories('.')
 
-if get_option('static')
-    luke = static_library('Luke', lukeSrc, dependencies: lukeDeps, include_directories : incDirs, install: true)
-else
-    luke = shared_library('Luke', lukeSrc, dependencies: lukeDeps, include_directories : incDirs, install: true)
-endif
+luke = library('Luke', lukeSrc, dependencies: lukeDeps, include_directories : incDirs, install: true)
 
 lukeDep = declare_dependency(link_with : luke, 
     dependencies: lukeDeps, 
