@@ -5,7 +5,7 @@
 
 namespace luke
 {
-    class WindowSettings
+    class STICK_API WindowSettings
     {
     public:
 
