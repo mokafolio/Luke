@@ -5,17 +5,17 @@
 
 namespace luke
 {
-    namespace detail
-    {
-        struct STICK_LOCAL SDLInitializer
-        {
-            SDLInitializer();
+namespace detail
+{
+struct STICK_LOCAL SDLInitializer
+{
+    SDLInitializer();
 
-            ~SDLInitializer();
+    ~SDLInitializer();
 
-            static SDLInitializer & instance();
-        };
-    }
-}
+    static SDLInitializer & instance();
+};
+} // namespace detail
+} // namespace luke
 
-#endif //LUKE_SDL_SDLINITIALIZER_HPP
+#endif // LUKE_SDL_SDLINITIALIZER_HPP

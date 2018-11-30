@@ -1,65 +1,64 @@
 #ifndef LUKE_DISPLAY_HPP
 #define LUKE_DISPLAY_HPP
 
+#include <Luke/DisplayMode.hpp>
 #include <Stick/Error.hpp>
 #include <Stick/UniquePtr.hpp>
-#include <Luke/DisplayMode.hpp>
 
 namespace luke
 {
-    class Display;
-    using DisplayArray = stick::DynamicArray<Display>;
+class Display;
+using DisplayArray = stick::DynamicArray<Display>;
 
-    namespace detail
-    {
-        class WindowImpl;
-        class DisplayImpl;
-        using DisplayImplUniquePtr = stick::UniquePtr<DisplayImpl>;
-    }
+namespace detail
+{
+class WindowImpl;
+class DisplayImpl;
+using DisplayImplUniquePtr = stick::UniquePtr<DisplayImpl>;
+} // namespace detail
 
-    class STICK_API Display
-    {
-        friend class detail::DisplayImpl;
-        friend class detail::WindowImpl;
+class STICK_API Display
+{
+    friend class detail::DisplayImpl;
+    friend class detail::WindowImpl;
 
-    public:
+  public:
+    Display();
 
-        Display();
+    ~Display();
 
-        ~Display();
+    Display(const Display & _other);
 
-        Display(const Display & _other);
+    Display & operator=(const Display & _other);
 
-        Display & operator = (const Display & _other);
+    stick::Error setDisplayMode(const DisplayMode & _mode);
 
-        stick::Error setDisplayMode(const DisplayMode & _mode);
+    DisplayMode currentDisplayMode() const;
 
-        DisplayMode currentDisplayMode() const;
+    DisplayMode findBestDisplayMode(stick::Float32 _width,
+                                    stick::Float32 _height,
+                                    stick::UInt32 _redBits = 8,
+                                    stick::UInt32 _greenBits = 8,
+                                    stick::UInt32 _blueBits = 8,
+                                    stick::UInt32 _refreshRate = RefreshRate::DontCare) const;
 
-        DisplayMode findBestDisplayMode(stick::Float32 _width, stick::Float32 _height,
-                                        stick::UInt32 _redBits = 8, stick::UInt32 _greenBits = 8, stick::UInt32 _blueBits = 8,
-                                        stick::UInt32 _refreshRate = RefreshRate::DontCare) const;
+    DisplayModeArray displayModes() const;
 
-        DisplayModeArray displayModes() const;
+    bool isValidDisplayMode(const DisplayMode & _mode) const;
 
-        bool isValidDisplayMode(const DisplayMode & _mode) const;
+    bool isValid() const;
 
-        bool isValid() const;
+    stick::Float32 x() const;
 
-        stick::Float32 x() const;
+    stick::Float32 y() const;
 
-        stick::Float32 y() const;
+    static Display mainDisplay();
 
+    static DisplayArray displays();
 
-        static Display mainDisplay();
+  private:
+    detail::DisplayImplUniquePtr m_pimpl;
+};
+} // namespace luke
 
-        static DisplayArray displays();
-
-
-    private:
-
-        detail::DisplayImplUniquePtr m_pimpl;
-    };
-}
-
-#endif //LUKE_DISPLAY_HPP
+#endif // LUKE_DISPLAY_HPP

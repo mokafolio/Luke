@@ -7,4 +7,4 @@
 #include <Luke/Window.hpp>
 #include <Luke/WindowEvents.hpp>
 
-#endif //LUKE_LUKE_HPP
+#endif // LUKE_LUKE_HPP

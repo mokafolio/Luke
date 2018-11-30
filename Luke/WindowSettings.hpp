@@ -5,78 +5,74 @@
 
 namespace luke
 {
-    class STICK_API WindowSettings
-    {
-    public:
+class STICK_API WindowSettings
+{
+  public:
+    WindowSettings();
 
-        WindowSettings();
+    void setResizeable(bool _b);
 
-        void setResizeable(bool _b);
+    void setDecorated(bool _b);
 
-        void setDecorated(bool _b);
+    void setTitle(const stick::String & _title);
 
-        void setTitle(const stick::String & _title);
+    void setPosition(stick::Float32 _left, stick::Float32 _bottom);
 
-        void setPosition(stick::Float32 _left, stick::Float32 _bottom);
+    void setSize(stick::Float32 _width, stick::Float32 _height);
 
-        void setSize(stick::Float32 _width, stick::Float32 _height);
+    void setDisplay(const Display & _display);
 
-        void setDisplay(const Display & _display);
+    void setSampleCount(stick::UInt32 _num);
 
-        void setSampleCount(stick::UInt32 _num);
+    void setColorPrecision(stick::UInt32 _colorDepth);
 
-        void setColorPrecision(stick::UInt32 _colorDepth);
+    void setAlphaPrecision(stick::UInt32 _alphaDepth);
 
-        void setAlphaPrecision(stick::UInt32 _alphaDepth);
+    void setDepthPrecision(stick::UInt32 _depth);
 
-        void setDepthPrecision(stick::UInt32  _depth);
+    void setStencilPrecision(stick::UInt32 _stencil);
 
-        void setStencilPrecision(stick::UInt32 _stencil);
+    bool isResizeable() const;
 
+    bool isDecorated() const;
 
-        bool isResizeable() const;
+    const Display & display() const;
 
-        bool isDecorated() const;
+    const stick::String & title() const;
 
-        const Display & display() const;
+    stick::Float32 x() const;
 
-        const stick::String & title() const;
+    stick::Float32 y() const;
 
-        stick::Float32 x() const;
+    stick::Float32 width() const;
 
-        stick::Float32 y() const;
+    stick::Float32 height() const;
 
-        stick::Float32 width() const;
+    stick::UInt32 sampleCount() const;
 
-        stick::Float32 height() const;
+    stick::UInt32 colorPrecision() const;
 
-        stick::UInt32 sampleCount() const;
+    stick::UInt32 alphaPrecision() const;
 
-        stick::UInt32 colorPrecision() const;
+    stick::UInt32 depthPrecision() const;
 
-        stick::UInt32 alphaPrecision() const;
+    stick::UInt32 stencilPrecision() const;
 
-        stick::UInt32 depthPrecision() const;
+  private:
+    bool m_bIsResizeableByDragging; // if true, the window can be resized by dragging
+    bool m_bDecorated;
+    stick::String m_title;
+    stick::Float32 m_initialWidth;
+    stick::Float32 m_initialHeight;
+    stick::Float32 m_initialX;
+    stick::Float32 m_initialY;
+    Display m_display;
+    stick::UInt32 m_samples;
+    stick::UInt32 m_colorPrecision;
+    stick::UInt32 m_alphaPrecision;
+    stick::UInt32 m_stencilPrecision;
+    stick::UInt32 m_depthPrecision;
+};
+} // namespace luke
 
-        stick::UInt32 stencilPrecision() const;
-
-
-    private:
-
-        bool m_bIsResizeableByDragging; //if true, the window can be resized by dragging
-        bool m_bDecorated;
-        stick::String m_title;
-        stick::Float32 m_initialWidth;
-        stick::Float32 m_initialHeight;
-        stick::Float32 m_initialX;
-        stick::Float32 m_initialY;
-        Display m_display;
-        stick::UInt32 m_samples;
-        stick::UInt32 m_colorPrecision;
-        stick::UInt32 m_alphaPrecision;
-        stick::UInt32 m_stencilPrecision;
-        stick::UInt32 m_depthPrecision;
-    };
-}
-
-#endif //LUKE_WINDOWSETTINGS_HPP
+#endif // LUKE_WINDOWSETTINGS_HPP

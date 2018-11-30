@@ -1,111 +1,105 @@
 #ifndef LUKE_GLFW_GLFWWINDOWIMPL_HPP
 #define LUKE_GLFW_GLFWWINDOWIMPL_HPP
 
-#include <Luke/Window.hpp>
 #include <Luke/MouseEvents.hpp>
+#include <Luke/Window.hpp>
 
 struct GLFWwindow;
 
 namespace luke
 {
-    namespace detail
-    {
-        class STICK_LOCAL WindowImpl
-        {
-        public:
+namespace detail
+{
+class STICK_LOCAL WindowImpl
+{
+  public:
+    WindowImpl(Window * _window);
 
-            WindowImpl(Window * _window);
+    ~WindowImpl();
 
-            ~WindowImpl();
+    stick::Error open(const WindowSettings & _settings, WindowImpl * _shared);
 
-            stick::Error open(const WindowSettings & _settings, WindowImpl * _shared);
+    void close();
 
-            void close();
+    void move(stick::Float32 _x, stick::Float32 _y);
 
+    void moveToCenter();
 
-            void move(stick::Float32 _x, stick::Float32 _y);
+    void show();
 
-            void moveToCenter();
+    void hide();
 
-            void show();
+    void resize(stick::Float32 _width, stick::Float32 _height);
 
-            void hide();
+    void maximize();
 
-            void resize(stick::Float32 _width, stick::Float32 _height);
+    void focus();
 
-            void maximize();
+    void enableRenderContext();
 
-            void focus();
+    void disableRenderContext();
 
+    void swapBuffers();
 
-            void enableRenderContext();
+    void setVerticalSync(bool _b);
 
-            void disableRenderContext();
+    stick::Error enterFullscreen(const Display & _display);
 
-            void swapBuffers();
+    stick::Error enterFullscreen(const DisplayMode & _mode, const Display & _display);
 
+    void exitFullscreen();
 
-            void setVerticalSync(bool _b);
+    void hideCursor();
 
-            stick::Error enterFullscreen(const Display & _display);
+    void showCursor();
 
-            stick::Error enterFullscreen(const DisplayMode & _mode, const Display & _display);
+    void setTitle(const stick::String & _str);
 
-            void exitFullscreen();
+    bool shouldClose() const;
 
-            void hideCursor();
+    bool isVisible() const;
 
-            void showCursor();
+    bool isFocussed() const;
 
-            void setTitle(const stick::String & _str);
+    const WindowSettings & settings() const;
 
+    bool isCursorVisible() const;
 
-            bool shouldClose() const;
+    bool verticalSync() const;
 
-            bool isVisible() const;
+    bool isFullscreen() const;
 
-            bool isFocussed() const;
+    bool isKeyDown(KeyCode _code) const;
 
-            const WindowSettings & settings() const;
+    const stick::String & title() const;
 
-            bool isCursorVisible() const;
+    stick::Float32 backingScaleFactor() const;
 
-            bool verticalSync() const;
+    stick::Float32 width() const;
 
-            bool isFullscreen() const;
+    stick::Float32 height() const;
 
-            bool isKeyDown(KeyCode _code) const;
+    stick::Float32 widthInPixels() const;
 
-            const stick::String & title() const;
+    stick::Float32 heightInPixels() const;
 
-            stick::Float32 backingScaleFactor() const;
+    stick::Float32 x() const;
 
-            stick::Float32 width() const;
+    stick::Float32 y() const;
 
-            stick::Float32 height() const;
+    Display display() const;
 
-            stick::Float32 widthInPixels() const;
+    static stick::Error pollEvents();
 
-            stick::Float32 heightInPixels() const;
+    GLFWwindow * m_glfwWindow;
+    Window * m_window;
+    MouseState m_mouseState;
+    stick::Float32 m_preFullscreenWidth;
+    stick::Float32 m_preFullscreenHeight;
+    stick::Float32 m_preFullscreenX;
+    stick::Float32 m_preFullscreenY;
+};
+} // namespace detail
+} // namespace luke
 
-            stick::Float32 x() const;
-
-            stick::Float32 y() const;
-
-            Display display() const;
-
-            static stick::Error pollEvents();
-
-
-            GLFWwindow * m_glfwWindow;
-            Window * m_window;
-            MouseState m_mouseState;
-            stick::Float32 m_preFullscreenWidth;
-            stick::Float32 m_preFullscreenHeight;
-            stick::Float32 m_preFullscreenX;
-            stick::Float32 m_preFullscreenY;
-        };
-    }
-}
-
-#endif //LUKE_GLFW_GLFWWINDOWIMPL_HPP
+#endif // LUKE_GLFW_GLFWWINDOWIMPL_HPP

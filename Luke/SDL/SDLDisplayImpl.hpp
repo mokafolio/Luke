@@ -7,38 +7,36 @@
 
 namespace luke
 {
-    namespace detail
-    {
-        class STICK_LOCAL DisplayImpl
-        {
-        public:
+namespace detail
+{
+class STICK_LOCAL DisplayImpl
+{
+  public:
+    DisplayImpl();
 
-            DisplayImpl();
+    ~DisplayImpl();
 
-            ~DisplayImpl();
+    stick::Error setDisplayMode(const DisplayMode & _mode);
 
-            stick::Error setDisplayMode(const DisplayMode & _mode);
+    DisplayMode currentDisplayMode() const;
 
-            DisplayMode currentDisplayMode() const;
+    DisplayModeArray displayModes() const;
 
-            DisplayModeArray displayModes() const;
+    bool isValid() const;
 
-            bool isValid() const;
+    stick::Float32 x() const;
 
-            stick::Float32 x() const;
+    stick::Float32 y() const;
 
-            stick::Float32 y() const;
+    static Display mainDisplay();
 
-            static Display mainDisplay();
+    static DisplayArray displays();
 
-            static DisplayArray displays();
+    DisplayImplUniquePtr clone() const;
 
-            DisplayImplUniquePtr clone() const;
+    int m_displayID;
+};
+} // namespace detail
+} // namespace luke
 
-
-            int m_displayID;
-        };
-    }
-}
-
-#endif //LUKE_SDL_SDLDISPLAYIMPL_HPP
+#endif // LUKE_SDL_SDLDISPLAYIMPL_HPP

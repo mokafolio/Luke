@@ -1,8 +1,8 @@
 #ifndef LUKE_SDL_SDLWINDOWIMPL_HPP
 #define LUKE_SDL_SDLWINDOWIMPL_HPP
 
-#include <Luke/Window.hpp>
 #include <Luke/MouseEvents.hpp>
+#include <Luke/Window.hpp>
 
 #include <Stick/FixedArray.hpp>
 
@@ -13,126 +13,119 @@
 
 namespace luke
 {
-    namespace detail
-    {
-        class STICK_LOCAL WindowImpl
-        {
-        public:
+namespace detail
+{
+class STICK_LOCAL WindowImpl
+{
+  public:
+    WindowImpl(Window * _window);
 
-            WindowImpl(Window * _window);
+    ~WindowImpl();
 
-            ~WindowImpl();
+    stick::Error open(const WindowSettings & _settings, WindowImpl * _shared);
 
-            stick::Error open(const WindowSettings & _settings, WindowImpl * _shared);
+    void close();
 
-            void close();
+    void setShouldClose(bool _b);
 
-            void setShouldClose(bool _b);
+    void move(stick::Float32 _x, stick::Float32 _y);
 
+    void moveToCenter();
 
-            void move(stick::Float32 _x, stick::Float32 _y);
+    void show();
 
-            void moveToCenter();
+    void hide();
 
-            void show();
+    void resize(stick::Float32 _width, stick::Float32 _height);
 
-            void hide();
+    void maximize();
 
-            void resize(stick::Float32 _width, stick::Float32 _height);
+    void focus();
 
-            void maximize();
+    stick::Error enableRenderContext();
 
-            void focus();
+    void swapBuffers();
 
+    void setVerticalSync(bool _b);
 
-            stick::Error enableRenderContext();
+    stick::Error enterFullscreen(FullscreenMode _mode, const Display & _display);
 
-            void swapBuffers();
+    stick::Error enterFullscreen(const DisplayMode & _mode, const Display & _display);
 
+    stick::Error exitFullscreen();
 
-            void setVerticalSync(bool _b);
+    void setCursor(CursorType _cursor);
 
-            stick::Error enterFullscreen(FullscreenMode _mode, const Display & _display);
+    void hideCursor();
 
-            stick::Error enterFullscreen(const DisplayMode & _mode, const Display & _display);
+    void showCursor();
 
-            stick::Error exitFullscreen();
+    void setTitle(const stick::String & _str);
 
-            void setCursor(CursorType _cursor);
+    bool shouldClose() const;
 
-            void hideCursor();
+    bool isVisible() const;
 
-            void showCursor();
+    bool isFocussed() const;
 
-            void setTitle(const stick::String & _str);
+    const WindowSettings & settings() const;
 
+    bool isCursorVisible() const;
 
-            bool shouldClose() const;
+    bool verticalSync() const;
 
-            bool isVisible() const;
+    bool isFullscreen() const;
 
-            bool isFocussed() const;
+    const stick::String & title() const;
 
-            const WindowSettings & settings() const;
+    stick::Float32 backingScaleFactor() const;
 
-            bool isCursorVisible() const;
+    stick::Float32 width() const;
 
-            bool verticalSync() const;
+    stick::Float32 height() const;
 
-            bool isFullscreen() const;
+    stick::Float32 widthInPixels() const;
 
-            const stick::String & title() const;
+    stick::Float32 heightInPixels() const;
 
-            stick::Float32 backingScaleFactor() const;
+    stick::Float32 x() const;
 
-            stick::Float32 width() const;
+    stick::Float32 y() const;
 
-            stick::Float32 height() const;
+    Display display() const;
 
-            stick::Float32 widthInPixels() const;
+    void deallocateSDLWindowAndContext();
 
-            stick::Float32 heightInPixels() const;
+    stick::UInt32 sdlWindowID() const;
 
-            stick::Float32 x() const;
+    static stick::Error pollEvents();
 
-            stick::Float32 y() const;
+    static stick::Error setClipboardText(const char * _text);
 
-            Display display() const;
+    static const char * clipboardText();
 
-            void deallocateSDLWindowAndContext();
+    static bool hasClipboardText();
 
-            stick::UInt32 sdlWindowID() const;
+    static const MouseState & mouseState();
 
+    static bool isKeyDown(KeyCode _code);
 
-            static stick::Error pollEvents();
+    static stick::UInt32 modifiers();
 
-            static stick::Error setClipboardText(const char * _text);
+    static bool modifier(KeyModifier _mod);
 
-            static const char * clipboardText();
+    using CursorArray = stick::FixedArray<SDL_Cursor *, 7>;
 
-            static bool hasClipboardText();
+    SDL_Window * m_sdlWindow;
+    SDL_GLContext m_sdlGLContext;
+    Window * m_window;
+    bool m_bShouldClose;
+    stick::UInt32 m_sdlWindowID;
+    mutable stick::String m_title;
+    CursorArray m_cursors;
+    WindowSettings m_settings;
+};
+} // namespace detail
+} // namespace luke
 
-            static const MouseState & mouseState();
-
-            static bool isKeyDown(KeyCode _code);
-
-            static stick::UInt32 modifiers();
-
-            static bool modifier(KeyModifier _mod);
-
-
-            using CursorArray = stick::FixedArray<SDL_Cursor *, 7>;
-
-            SDL_Window * m_sdlWindow;
-            SDL_GLContext m_sdlGLContext;
-            Window * m_window;
-            bool m_bShouldClose;
-            stick::UInt32 m_sdlWindowID;
-            mutable stick::String m_title;
-            CursorArray m_cursors;
-            WindowSettings m_settings;
-        };
-    }
-}
-
-#endif //LUKE_SDL_SDLWINDOWIMPL_HPP
+#endif // LUKE_SDL_SDLWINDOWIMPL_HPP

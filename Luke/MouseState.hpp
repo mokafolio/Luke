@@ -5,48 +5,44 @@
 
 namespace luke
 {
-    enum class STICK_API MouseButton
-    {
-        Left = 1,
-        Right = 1 << 1,
-        Middle = 1 << 2,
-        Button3 = 1 << 3,
-        Button4 = 1 << 4,
-        Button5 = 1 << 5,
-        Button6 = 1 << 6,
-        Button7 = 1 << 7,
-        None = 1 << 8 //also used for unknown buttons
-    };
+enum class STICK_API MouseButton
+{
+    Left = 1,
+    Right = 1 << 1,
+    Middle = 1 << 2,
+    Button3 = 1 << 3,
+    Button4 = 1 << 4,
+    Button5 = 1 << 5,
+    Button6 = 1 << 6,
+    Button7 = 1 << 7,
+    None = 1 << 8 // also used for unknown buttons
+};
 
-    class STICK_API MouseState
-    {
-    public:
+class STICK_API MouseState
+{
+  public:
+    MouseState();
 
-        MouseState();
+    MouseState(stick::Float32 _x, stick::Float32 _y, stick::UInt32 _buttonStateBitMask);
 
-        MouseState(stick::Float32 _x, stick::Float32 _y, stick::UInt32 _buttonStateBitMask);
+    void reset();
 
+    void setPosition(stick::Float32 _x, stick::Float32 _y);
 
-        void reset();
+    void setButtonBitMask(stick::UInt32 _mask);
 
-        void setPosition(stick::Float32 _x, stick::Float32 _y);
+    stick::Float32 x() const;
 
-        void setButtonBitMask(stick::UInt32 _mask);
+    stick::Float32 y() const;
 
-        stick::Float32 x() const;
+    bool isButtonDown(MouseButton _button) const;
 
-        stick::Float32 y() const;
+    stick::UInt32 buttonBitMask() const;
 
-        bool isButtonDown(MouseButton _button) const;
+  private:
+    stick::Float32 m_x, m_y;
+    stick::UInt32 m_buttonStateBitMask;
+};
+} // namespace luke
 
-        stick::UInt32 buttonBitMask() const;
-
-
-    private:
-
-        stick::Float32 m_x, m_y;
-        stick::UInt32 m_buttonStateBitMask;
-    };
-}
-
-#endif //LUKE_MOUSESTATE_HPP
+#endif // LUKE_MOUSESTATE_HPP

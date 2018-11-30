@@ -5,17 +5,17 @@
 
 namespace luke
 {
-    namespace detail
-    {
-        struct STICK_LOCAL GLFWInitializer
-        {
-            GLFWInitializer();
+namespace detail
+{
+struct STICK_LOCAL GLFWInitializer
+{
+    GLFWInitializer();
 
-            ~GLFWInitializer();
+    ~GLFWInitializer();
 
-            static GLFWInitializer & instance();
-        };
-    }
-}
+    static GLFWInitializer & instance();
+};
+} // namespace detail
+} // namespace luke
 
-#endif //LUKE_GLFW_GLFWINITIALIZER_HPP
+#endif // LUKE_GLFW_GLFWINITIALIZER_HPP

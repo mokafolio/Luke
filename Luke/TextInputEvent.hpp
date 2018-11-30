@@ -6,18 +6,16 @@
 
 namespace luke
 {
-    class TextInputEvent : public stick::EventT<TextInputEvent, LukeEventCategory>
-    {
-    public:
+class TextInputEvent : public stick::EventT<TextInputEvent, LukeEventCategory>
+{
+  public:
+    TextInputEvent(const char * _utf8);
 
-        TextInputEvent(const char * _utf8);
+    const stick::String & text() const;
 
-        const stick::String & text() const;
+  private:
+    stick::String m_utf8;
+};
+} // namespace luke
 
-    private:
-
-        stick::String m_utf8;
-    };
-}
-
-#endif //LUKE_TEXTINPUTEVENT_HPP
+#endif // LUKE_TEXTINPUTEVENT_HPP
