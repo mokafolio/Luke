@@ -4,13 +4,16 @@ namespace luke
 {
     using namespace stick;
 
+    static_assert(std::numeric_limits<Float32>::has_quiet_NaN, "Need Quiet NaN!");
+
     WindowSettings::WindowSettings() :
         m_bIsResizeableByDragging(false),
         m_bDecorated(true),
         m_initialWidth(1280),
         m_initialHeight(720),
-        m_initialX(0),
-        m_initialY(0),
+        //if the position values are nan, use the window backends default positioning
+        m_initialX(std::numeric_limits<Float32>::quiet_NaN()),
+        m_initialY(std::numeric_limits<Float32>::quiet_NaN()),
         m_samples(0),
         m_colorPrecision(32),
         m_alphaPrecision(8),
