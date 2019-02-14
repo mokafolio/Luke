@@ -3,7 +3,8 @@
 #include <Luke/MouseEvents.hpp>
 #include <Luke/KeyEvents.hpp>
 #include <Luke/WindowEvents.hpp>
-#include <GLAnnotate/GLAnnotate.hpp>
+
+#include <GL/gl3w.h>
 
 using namespace luke;
 
