@@ -76,6 +76,10 @@ else
     error('Unsupported implementation, sdl and glfw are the only supported ones as of now')
 endif
 
+if host_machine.system() == 'linux'
+    lukeDeps += cc.find_library('dl', required : true)
+endif
+
 install_headers('Luke/Libs/GL/gl3w.h', subdir: 'Luke/Libs/GL')
 
 incDirs = include_directories('.', 'Luke/Libs')
