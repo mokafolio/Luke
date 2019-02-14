@@ -84,6 +84,7 @@ Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
 {
     SDLInitializer::instance();
 
+    printf("opening SDL window %u %u \n", _settings.colorPrecision(), _settings.alphaPrecision());
     //@TODO: for now we simply cache the settings that were passed in...
     m_settings = _settings;
 
@@ -91,7 +92,7 @@ Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
 
     SDL_SetHint(SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK, "1");
 
-    //@TODO allow to pass in opengl version in the settings
+    //@TODO allow to pass in opengl version in the settings and only default to this on OSX
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -151,6 +152,8 @@ Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
     {
         return Error(stick::ec::InvalidOperation, "Failed to initialize OpenGL", STICK_FILE, STICK_LINE);
     }
+
+    printf("initializing GL\n");
 
     return Error();
 }

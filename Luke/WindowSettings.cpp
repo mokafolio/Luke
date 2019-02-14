@@ -15,7 +15,7 @@ WindowSettings::WindowSettings() :
     m_initialX(std::numeric_limits<Float32>::quiet_NaN()),
     m_initialY(std::numeric_limits<Float32>::quiet_NaN()),
     m_samples(0),
-    m_colorPrecision(32),
+    m_colorPrecision(8),
     m_alphaPrecision(8),
     m_stencilPrecision(8),
     m_depthPrecision(24)

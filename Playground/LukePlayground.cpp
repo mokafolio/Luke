@@ -31,7 +31,11 @@ int main(int _argc, const char * _args[])
     settings.setResizeable(true);
     settings.setSize(800, 600);
     auto err = window.open(settings);
-
+    if(err)
+    {
+        printf("failed to open luke window: %s", err.message().cString());
+        return EXIT_FAILURE;
+    }
     window.setVerticalSync(true);
     // window.setCursor(CursorType::ResizeAll);
     window.addEventCallback([](const MouseScrollEvent & _event)
