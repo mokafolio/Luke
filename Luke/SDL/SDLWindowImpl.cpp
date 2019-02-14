@@ -84,7 +84,6 @@ Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
 {
     SDLInitializer::instance();
 
-    printf("opening SDL window %u %u \n", _settings.colorPrecision(), _settings.alphaPrecision());
     //@TODO: for now we simply cache the settings that were passed in...
     m_settings = _settings;
 
@@ -152,9 +151,7 @@ Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
     {
         return Error(stick::ec::InvalidOperation, "Failed to initialize OpenGL", STICK_FILE, STICK_LINE);
     }
-
-    printf("initializing GL\n");
-
+    
     return Error();
 }
 
