@@ -1,4 +1,4 @@
-project('Luke', 'cpp', default_options : ['cpp_std=c++14'])
+project('Luke', ['cpp', 'c'], default_options : ['cpp_std=c++14'])
 
 if meson.is_subproject() == false
     # disable this bogus warning (should be deprecated in newer clang versions)
@@ -32,7 +32,8 @@ lukeSrc = [
     'Luke/TextInputEvent.cpp',
     'Luke/Window.cpp',
     'Luke/WindowEvents.cpp',
-    'Luke/WindowSettings.cpp'
+    'Luke/WindowSettings.cpp',
+    'Luke/Libs/GL/gl3w.c'
 ]
 
 if get_option('buildSubmodules') == false
@@ -75,7 +76,9 @@ else
     error('Unsupported implementation, sdl and glfw are the only supported ones as of now')
 endif
 
-incDirs = include_directories('.')
+install_headers('Luke/Libs/GL/gl3w.h', subdir: 'Luke/Libs/GL')
+
+incDirs = include_directories('.', 'Luke/Libs')
 
 luke = library('Luke', lukeSrc, dependencies: lukeDeps, include_directories : incDirs, install: true)
 

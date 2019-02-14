@@ -8,6 +8,8 @@
 
 #include <cmath> //for std::isnan
 
+#include <GL/gl3w.h>
+
 //@TODO Proper error code
 #define RETURN_SDL_ERROR(_item)                                                                    \
     do                                                                                             \
@@ -144,6 +146,11 @@ Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
     m_cursors[(Size)CursorType::ResizeNWSE] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZENWSE);
 
     m_sdlWindowID = SDL_GetWindowID(m_sdlWindow);
+
+    if (gl3wInit()) 
+    {
+        return Error(stick::ec::InvalidOperation, "Failed to initialize OpenGL", STICK_FILE, STICK_LINE);
+    }
 
     return Error();
 }
