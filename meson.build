@@ -77,7 +77,7 @@ else
 endif
 
 if host_machine.system() == 'linux'
-    lukeDeps += cc.find_library('dl', required : true)
+    lukeDeps += meson.get_compiler('cpp').find_library('dl', required : true)
 endif
 
 install_headers('Luke/Libs/GL/gl3w.h', subdir: 'Luke/Libs/GL')
