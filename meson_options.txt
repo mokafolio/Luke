@@ -1,2 +1,3 @@
 option('buildSubmodules', type : 'boolean', value : false)
 option('implementation', type : 'string', value : 'sdl')
+option('buildPlayground', type : 'boolean', value : false)
