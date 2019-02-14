@@ -137,7 +137,7 @@ int main(int _argc, const char * _args[])
         else if (_event.key() == KeyCode::Space)
         {
             if (!window.isFullscreen())
-                window.enterFullscreen();
+                window.enterFullscreen(FullscreenMode::Borderless, Display::mainDisplay());
             else
                 window.exitFullscreen();
         }
