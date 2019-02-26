@@ -224,7 +224,7 @@ Error WindowImpl::enableRenderContext()
 
 void WindowImpl::swapBuffers()
 {
-    STICK_ASSERT(m_sdlWindow);
+    // STICK_ASSERT(m_sdlWindow);
     SDL_GL_SwapWindow(m_sdlWindow);
 }
 
