@@ -158,7 +158,8 @@ Error WindowImpl::open(const WindowSettings & _settings, WindowImpl * _shared)
 void WindowImpl::close()
 {
     STICK_ASSERT(m_sdlWindow);
-    deallocateSDLWindowAndContext();
+    m_bShouldClose = true;
+    // deallocateSDLWindowAndContext();
 }
 
 void WindowImpl::setShouldClose(bool _b)
