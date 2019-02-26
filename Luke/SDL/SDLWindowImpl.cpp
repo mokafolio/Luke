@@ -168,7 +168,6 @@ void WindowImpl::setShouldClose(bool _b)
 
 bool WindowImpl::shouldClose() const
 {
-    STICK_ASSERT(m_sdlWindow);
     return m_bShouldClose;
 }
 
