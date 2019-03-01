@@ -80,11 +80,13 @@ if host_machine.system() == 'linux'
     lukeDeps += meson.get_compiler('cpp').find_library('dl', required : true)
 endif
 
-install_headers('Luke/Libs/GL/gl3w.h', subdir: 'Luke/Libs/GL')
+if meson.is_subproject() == false
+    install_headers('Luke/Libs/GL/gl3w.h', subdir: 'Luke/Libs/GL')
+endif
 
 incDirs = include_directories('.', 'Luke/Libs')
 
-luke = library('Luke', lukeSrc, dependencies: lukeDeps, include_directories : incDirs, install: true)
+luke = library('Luke', lukeSrc, dependencies: lukeDeps, include_directories : incDirs, install: meson.is_subproject() == false)
 
 lukeDep = declare_dependency(link_with : luke, 
     dependencies: lukeDeps, 
