@@ -21,7 +21,6 @@ lukeInc = [
     'Luke/WindowEvents.hpp',
     'Luke/WindowSettings.hpp'
 ]
-install_headers(lukeInc, subdir: 'Luke')
 
 lukeSrc = [
     'Luke/Display.cpp',
@@ -52,7 +51,9 @@ if get_option('implementation') == 'sdl'
         'Luke/SDL/SDLInitializer.hpp',
         'Luke/SDL/SDLWindowImpl.hpp'
     ]
-    install_headers(lukeSDLInc, subdir: 'Luke/SDL')
+    if meson.is_subproject() == false
+        install_headers(lukeSDLInc, subdir: 'Luke/SDL')
+    endif
     lukeSrc += [
         'Luke/SDL/SDLDisplayImpl.cpp',
         'Luke/SDL/SDLInitializer.cpp',
@@ -66,7 +67,9 @@ elif get_option('implementation') == 'glfw'
         'Luke/GLFW/GLFWInitializer.hpp',
         'Luke/GLFW/GLFWWindowImpl.hpp'
     ]
-    install_headers(lukeGLFWInc, subdir: 'Luke/GLFW')
+    if meson.is_subproject() == false
+        install_headers(lukeGLFWInc, subdir: 'Luke/GLFW')
+    endif
     lukeSrc += [
         'Luke/GLFW/GLFWDisplayImpl.cpp',
         'Luke/GLFW/GLFWInitializer.cpp',
@@ -81,6 +84,7 @@ if host_machine.system() == 'linux'
 endif
 
 if meson.is_subproject() == false
+    install_headers(lukeInc, subdir: 'Luke')
     install_headers('Luke/Libs/GL/gl3w.h', subdir: 'Luke/Libs/GL')
 endif
 
