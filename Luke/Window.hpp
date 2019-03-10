@@ -31,10 +31,11 @@ class STICK_API Window : public stick::EventForwarderT<stick::Event,
   public:
     Window();
 
-    ~Window();
+    // virtual so its ok to derive from window and stuff
+    virtual ~Window();
 
-    stick::Error open(const WindowSettings & _settings = WindowSettings(),
-                      Window * _shared = nullptr);
+    virtual stick::Error open(const WindowSettings & _settings = WindowSettings(),
+                              Window * _shared = nullptr);
 
     void close();
 
@@ -60,10 +61,10 @@ class STICK_API Window : public stick::EventForwarderT<stick::Event,
 
     // enters fullscreen.
     //_mode allow to specify if its "real" fullscreen or borderless fullscreen window (sometimes
-    //called desktop fullscreen). If _mode is borderless the display mode won't be changed and the
+    // called desktop fullscreen). If _mode is borderless the display mode won't be changed and the
     // window will take on the desktop resolution. If _mode is fullscreen, it will try to switch to
     // the display mode that most closely matches the current window resolution. _display allows you
-    //to specify a display to go fullscreen on. If not provided, window goes fullscreen on the
+    // to specify a display to go fullscreen on. If not provided, window goes fullscreen on the
     // display that it is on.
     stick::Error enterFullscreen(FullscreenMode _mode = FullscreenMode::Borderless,
                                  const Display & _display = Display());
