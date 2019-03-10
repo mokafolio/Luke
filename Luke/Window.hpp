@@ -34,7 +34,7 @@ class STICK_API Window : public stick::EventForwarderT<stick::Event,
     // virtual so its ok to derive from window and stuff
     virtual ~Window();
 
-    virtual stick::Error open(const WindowSettings & _settings = WindowSettings(),
+    stick::Error open(const WindowSettings & _settings = WindowSettings(),
                               Window * _shared = nullptr);
 
     void close();
