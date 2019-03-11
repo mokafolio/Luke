@@ -6,5 +6,6 @@
 #include <Luke/MouseEvents.hpp>
 #include <Luke/Window.hpp>
 #include <Luke/WindowEvents.hpp>
+#include <Luke/TextInputEvent.hpp>
 
 #endif // LUKE_LUKE_HPP
