@@ -984,320 +984,320 @@ bool WindowImpl::isKeyDown(KeyCode _code)
     switch (_code)
     {
     case KeyCode::Zero:
-        code = SDLK_0;
+        code = SDL_SCANCODE_0;
         break;
     case KeyCode::One:
-        code = SDLK_1;
+        code = SDL_SCANCODE_1;
         break;
     case KeyCode::Two:
-        code = SDLK_2;
+        code = SDL_SCANCODE_2;
         break;
     case KeyCode::Three:
-        code = SDLK_3;
+        code = SDL_SCANCODE_3;
         break;
     case KeyCode::Four:
-        code = SDLK_4;
+        code = SDL_SCANCODE_4;
         break;
     case KeyCode::Five:
-        code = SDLK_5;
+        code = SDL_SCANCODE_5;
         break;
     case KeyCode::Six:
-        code = SDLK_6;
+        code = SDL_SCANCODE_6;
         break;
     case KeyCode::Seven:
-        code = SDLK_7;
+        code = SDL_SCANCODE_7;
         break;
     case KeyCode::Eight:
-        code = SDLK_8;
+        code = SDL_SCANCODE_8;
         break;
     case KeyCode::Nine:
-        code = SDLK_9;
+        code = SDL_SCANCODE_9;
         break;
 
     case KeyCode::A:
-        code = SDLK_a;
+        code = SDL_SCANCODE_A;
         break;
     case KeyCode::B:
-        code = SDLK_b;
+        code = SDL_SCANCODE_B;
         break;
     case KeyCode::C:
-        code = SDLK_c;
+        code = SDL_SCANCODE_C;
         break;
     case KeyCode::D:
-        code = SDLK_d;
+        code = SDL_SCANCODE_D;
         break;
     case KeyCode::E:
-        code = SDLK_e;
+        code = SDL_SCANCODE_E;
         break;
     case KeyCode::F:
-        code = SDLK_f;
+        code = SDL_SCANCODE_F;
         break;
     case KeyCode::G:
-        code = SDLK_g;
+        code = SDL_SCANCODE_G;
         break;
     case KeyCode::H:
-        code = SDLK_h;
+        code = SDL_SCANCODE_H;
         break;
     case KeyCode::I:
-        code = SDLK_i;
+        code = SDL_SCANCODE_I;
         break;
     case KeyCode::J:
-        code = SDLK_j;
+        code = SDL_SCANCODE_J;
         break;
     case KeyCode::K:
-        code = SDLK_k;
+        code = SDL_SCANCODE_K;
         break;
     case KeyCode::L:
-        code = SDLK_l;
+        code = SDL_SCANCODE_L;
         break;
     case KeyCode::M:
-        code = SDLK_m;
+        code = SDL_SCANCODE_M;
         break;
     case KeyCode::N:
-        code = SDLK_n;
+        code = SDL_SCANCODE_N;
         break;
     case KeyCode::O:
-        code = SDLK_o;
+        code = SDL_SCANCODE_O;
         break;
     case KeyCode::P:
-        code = SDLK_p;
+        code = SDL_SCANCODE_P;
         break;
     case KeyCode::Q:
-        code = SDLK_q;
+        code = SDL_SCANCODE_Q;
         break;
     case KeyCode::R:
-        code = SDLK_r;
+        code = SDL_SCANCODE_R;
         break;
     case KeyCode::S:
-        code = SDLK_s;
+        code = SDL_SCANCODE_S;
         break;
     case KeyCode::T:
-        code = SDLK_t;
+        code = SDL_SCANCODE_T;
         break;
     case KeyCode::U:
-        code = SDLK_u;
+        code = SDL_SCANCODE_U;
         break;
     case KeyCode::V:
-        code = SDLK_v;
+        code = SDL_SCANCODE_V;
         break;
     case KeyCode::W:
-        code = SDLK_w;
+        code = SDL_SCANCODE_W;
         break;
     case KeyCode::X:
-        code = SDLK_x;
+        code = SDL_SCANCODE_X;
         break;
     case KeyCode::Y:
-        code = SDLK_y;
+        code = SDL_SCANCODE_Y;
         break;
     case KeyCode::Z:
-        code = SDLK_z;
+        code = SDL_SCANCODE_Z;
         break;
 
     case KeyCode::Return:
-        code = SDLK_RETURN;
+        code = SDL_SCANCODE_RETURN;
         break;
     case KeyCode::Escape:
-        code = SDLK_ESCAPE;
+        code = SDL_SCANCODE_ESCAPE;
         break;
     case KeyCode::Backspace:
-        code = SDLK_BACKSPACE;
+        code = SDL_SCANCODE_BACKSPACE;
         break;
     case KeyCode::Tab:
-        code = SDLK_TAB;
+        code = SDL_SCANCODE_TAB;
         break;
     case KeyCode::Space:
-        code = SDLK_SPACE;
+        code = SDL_SCANCODE_SPACE;
         break;
     case KeyCode::Subtract:
-        code = SDLK_MINUS;
+        code = SDL_SCANCODE_MINUS;
         break;
     case KeyCode::Equal:
-        code = SDLK_EQUALS;
+        code = SDL_SCANCODE_EQUALS;
         break;
     case KeyCode::LeftBracket:
-        code = SDLK_LEFTBRACKET;
+        code = SDL_SCANCODE_LEFTBRACKET;
         break;
     case KeyCode::RightBracket:
-        code = SDLK_RIGHTBRACKET;
+        code = SDL_SCANCODE_RIGHTBRACKET;
         break;
     case KeyCode::Backslash:
-        code = SDLK_BACKSLASH;
+        code = SDL_SCANCODE_BACKSLASH;
         break;
     case KeyCode::Semicolon:
-        code = SDLK_SEMICOLON;
+        code = SDL_SCANCODE_SEMICOLON;
         break;
     case KeyCode::Apostrophe:
-        code = SDLK_QUOTE;
+        code = SDL_SCANCODE_APOSTROPHE;
         break;
     case KeyCode::GraveAccent:
-        code = SDLK_BACKQUOTE; // Not sure about this one
+        code = SDL_SCANCODE_GRAVE;
         break;
     case KeyCode::Comma:
-        code = SDLK_COMMA;
+        code = SDL_SCANCODE_COMMA;
         break;
     case KeyCode::Period:
-        code = SDLK_PERIOD;
+        code = SDL_SCANCODE_PERIOD;
         break;
     case KeyCode::Slash:
-        code = SDLK_SLASH;
+        code = SDL_SCANCODE_SLASH;
         break;
     case KeyCode::CapsLock:
-        code = SDLK_CAPSLOCK;
+        code = SDL_SCANCODE_CAPSLOCK;
         break;
 
     case KeyCode::F1:
-        code = SDLK_F1;
+        code = SDL_SCANCODE_F1;
         break;
     case KeyCode::F2:
-        code = SDLK_F2;
+        code = SDL_SCANCODE_F2;
         break;
     case KeyCode::F3:
-        code = SDLK_F3;
+        code = SDL_SCANCODE_F3;
         break;
     case KeyCode::F4:
-        code = SDLK_F4;
+        code = SDL_SCANCODE_F4;
         break;
     case KeyCode::F5:
-        code = SDLK_F5;
+        code = SDL_SCANCODE_F5;
         break;
     case KeyCode::F6:
-        code = SDLK_F6;
+        code = SDL_SCANCODE_F6;
         break;
     case KeyCode::F7:
-        code = SDLK_F7;
+        code = SDL_SCANCODE_F7;
         break;
     case KeyCode::F8:
-        code = SDLK_F8;
+        code = SDL_SCANCODE_F8;
         break;
     case KeyCode::F9:
-        code = SDLK_F9;
+        code = SDL_SCANCODE_F9;
         break;
     case KeyCode::F10:
-        code = SDLK_F10;
+        code = SDL_SCANCODE_F10;
         break;
     case KeyCode::F11:
-        code = SDLK_F11;
+        code = SDL_SCANCODE_F11;
         break;
     case KeyCode::F12:
-        code = SDLK_F12;
+        code = SDL_SCANCODE_F12;
         break;
     case KeyCode::F13:
-        code = SDLK_F13;
+        code = SDL_SCANCODE_F13;
         break;
     case KeyCode::F14:
-        code = SDLK_F14;
+        code = SDL_SCANCODE_F14;
         break;
     case KeyCode::F15:
-        code = SDLK_F15;
+        code = SDL_SCANCODE_F15;
         break;
     case KeyCode::F16:
-        code = SDLK_F16;
+        code = SDL_SCANCODE_F16;
         break;
 
     case KeyCode::Insert:
-        code = SDLK_INSERT;
+        code = SDL_SCANCODE_INSERT;
         break;
     case KeyCode::Home:
-        code = SDLK_HOME;
+        code = SDL_SCANCODE_HOME;
         break;
     case KeyCode::PageUp:
-        code = SDLK_PAGEUP;
+        code = SDL_SCANCODE_PAGEUP;
         break;
     case KeyCode::Delete:
-        code = SDLK_DELETE;
+        code = SDL_SCANCODE_DELETE;
         break;
     case KeyCode::End:
-        code = SDLK_END;
+        code = SDL_SCANCODE_END;
         break;
     case KeyCode::PageDown:
-        code = SDLK_PAGEDOWN;
+        code = SDL_SCANCODE_PAGEDOWN;
         break;
 
     case KeyCode::LeftControl:
-        code = SDLK_LCTRL;
+        code = SDL_SCANCODE_LCTRL;
         break;
     case KeyCode::LeftShift:
-        code = SDLK_LSHIFT;
+        code = SDL_SCANCODE_LSHIFT;
         break;
     case KeyCode::LeftAlt:
-        code = SDLK_LALT;
+        code = SDL_SCANCODE_LALT;
         break;
     case KeyCode::LeftCommand:
-        code = SDLK_LGUI;
+        code = SDL_SCANCODE_LGUI;
         break;
     case KeyCode::RightControl:
-        code = SDLK_RCTRL;
+        code = SDL_SCANCODE_RCTRL;
         break;
     case KeyCode::RightShift:
-        code = SDLK_RSHIFT;
+        code = SDL_SCANCODE_RSHIFT;
         break;
     case KeyCode::RightAlt:
-        code = SDLK_RALT;
+        code = SDL_SCANCODE_RALT;
         break;
     case KeyCode::RightCommand:
-        code = SDLK_RGUI;
+        code = SDL_SCANCODE_RGUI;
         break;
 
     case KeyCode::Right:
-        code = SDLK_RIGHT;
+        code = SDL_SCANCODE_RIGHT;
         break;
     case KeyCode::Left:
-        code = SDLK_LEFT;
+        code = SDL_SCANCODE_LEFT;
         break;
     case KeyCode::Down:
-        code = SDLK_DOWN;
+        code = SDL_SCANCODE_DOWN;
         break;
     case KeyCode::Up:
-        code = SDLK_UP;
+        code = SDL_SCANCODE_UP;
         break;
 
     case KeyCode::KPDivide:
-        code = SDLK_KP_DIVIDE;
+        code = SDL_SCANCODE_KP_DIVIDE;
         break;
     case KeyCode::KPMultiply:
-        code = SDLK_KP_MULTIPLY;
+        code = SDL_SCANCODE_KP_MULTIPLY;
         break;
     case KeyCode::KPSubtract:
-        code = SDLK_KP_MINUS;
+        code = SDL_SCANCODE_KP_MINUS;
         break;
     case KeyCode::KPAdd:
-        code = SDLK_KP_PLUS;
+        code = SDL_SCANCODE_KP_PLUS;
         break;
     case KeyCode::KPReturn:
-        code = SDLK_KP_ENTER;
+        code = SDL_SCANCODE_KP_ENTER;
         break;
     case KeyCode::KPOne:
-        code = SDLK_KP_1;
+        code = SDL_SCANCODE_KP_1;
         break;
     case KeyCode::KPTwo:
-        code = SDLK_KP_2;
+        code = SDL_SCANCODE_KP_2;
         break;
     case KeyCode::KPThree:
-        code = SDLK_KP_3;
+        code = SDL_SCANCODE_KP_3;
         break;
     case KeyCode::KPFour:
-        code = SDLK_KP_4;
+        code = SDL_SCANCODE_KP_4;
         break;
     case KeyCode::KPFive:
-        code = SDLK_KP_5;
+        code = SDL_SCANCODE_KP_5;
         break;
     case KeyCode::KPSix:
-        code = SDLK_KP_6;
+        code = SDL_SCANCODE_KP_6;
         break;
     case KeyCode::KPSeven:
-        code = SDLK_KP_7;
+        code = SDL_SCANCODE_KP_7;
         break;
     case KeyCode::KPEight:
-        code = SDLK_KP_8;
+        code = SDL_SCANCODE_KP_8;
         break;
     case KeyCode::KPNine:
-        code = SDLK_KP_9;
+        code = SDL_SCANCODE_KP_9;
         break;
     case KeyCode::KPZero:
-        code = SDLK_KP_0;
+        code = SDL_SCANCODE_KP_0;
         break;
     case KeyCode::KPEqual:
-        code = SDLK_KP_EQUALS;
+        code = SDL_SCANCODE_KP_EQUALS;
         break;
 
     default:
