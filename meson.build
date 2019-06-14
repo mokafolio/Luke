@@ -83,7 +83,7 @@ if host_machine.system() == 'linux'
     lukeDeps += meson.get_compiler('cpp').find_library('dl', required : true)
 endif
 
-if meson.is_subproject() == false
+if meson.is_subproject() == false or get_option('forceInstallHeaders')
     install_headers(lukeInc, subdir: 'Luke')
     install_headers('Luke/Libs/GL/gl3w.h', subdir: 'Luke/Libs/GL')
 endif
